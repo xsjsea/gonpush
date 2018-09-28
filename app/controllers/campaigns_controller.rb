@@ -6,14 +6,17 @@ class CampaignsController < ApplicationController
   # GET /campaigns.json
   def index
     #@campaigns = Campaign.all
-    @campaign = Campaign.new  
+    current_user
     @user=User.find_by_id(session[:user_id])
+    @campaign = Campaign.new  
+  
   end
 
   # GET /campaigns/1
   # GET /campaigns/1.json
   def show
-  
+  current_user
+  user_id=session[:user_id]
   searchword=params[:searchword]
   if searchword==nil
   @creators=User.select("users.id,users.username,users.description,creator_exts.avatar,view_metric.fans, view_metric.reader,view_metric.price")
@@ -37,11 +40,10 @@ end
  
   # GET /campaigns/new
   def new
- 
+    current_user
+    user_id=session[:user_id]
     @campaign = Campaign.new
-    @user_id = session[:user_id]
-    @user=User.find_by_id(@user_id)
-  
+   
   end
 
   # GET /campaigns/1/edit
@@ -91,7 +93,7 @@ end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_campaign
-      logged_in_user 
+      #logged_in_user 
       @campaign = Campaign.find(params[:id])
     end
 
