@@ -1,6 +1,6 @@
 class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :edit, :update, :destroy]
-
+  layout :products_layout
   # GET /services
   # GET /services.json
   def index
@@ -71,4 +71,12 @@ class ServicesController < ApplicationController
     def service_params
       params.require(:service).permit(:service_name, :service_description, :service_price, :creator_id)
     end
+     def products_layout 
+    @user=User.find_by_id(session[:user_id]) 
+    if @user.usertype=="0"
+       return 'creator'
+    else
+      return 'marketer'
+    end
+  end
 end

@@ -10,13 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_28_073720) do
+ActiveRecord::Schema.define(version: 2018_09_28_100106) do
 
   create_table "areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "areaName"
     t.integer "area_level"
     t.integer "area_sequence"
     t.integer "parent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "bizcases", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "bizcase_author"
+    t.string "bizcase_date"
+    t.string "bizcase_title"
+    t.string "bizcase_content"
+    t.string "bizcase_status"
+    t.datetime "bizcase_modified"
+    t.string "bizcase_type"
+    t.string "bizcase_link"
+    t.string "string"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

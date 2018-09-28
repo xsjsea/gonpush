@@ -8,8 +8,8 @@ class CasesController < ApplicationController
     #@cases = Case.all
      current_user
     #@reports = Report.all
-    @reports =Report.select("reports.report_title,reports.id,users.username,reports.report_source,reports.report_source")
-    .joins("left join users on reports.report_author=users.id where reports.report_author=#{@current_user.id}")
+    @cases =Case.select("cases.id,cases.case_title,cases.id,users.username")
+    .joins("left join users on cases.case_author=users.id where cases.case_author=#{@current_user.id}")
 
   end
 

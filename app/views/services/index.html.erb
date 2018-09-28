@@ -1,4 +1,6 @@
- <div class="wrapper wrapper-content animated fadeInRight">
+ 
+  <div id="page-wrapper" class="gray-bg">
+      <div class="wrapper wrapper-content animated fadeInRight">
         <div class="ibox-title">
           <h5>报价设置</h5>
         </div>
@@ -6,7 +8,7 @@
         <div class="ibox-content">
           <div class="row">
             <div class="col-sm-3">
-              <a class="btn btn-sm btn-primary m-t-n-xs" href="creator_add_service.html" role="button">
+              <a class="btn btn-sm btn-primary m-t-n-xs" href="/services/new" role="button">
                 <strong>新增</strong>
               </a>
             </div>
@@ -30,8 +32,8 @@
                 <td>990,000</td>
                 <td>不接硬广</td>
                 <td>
-                  <a href="javascript:;">编辑</a>
-                  <a href="javascript:;">删除</a>
+                  <a href=" /services/1/edit">编辑</a>
+                  <a href="/services/destroy/<%=service.id%>">删除</a>
                 </td>
               </tr>
               <tr>
