@@ -1,0 +1,62 @@
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h5>填写需求</h5>
+    </div>
+    <div class="ibox-content">
+      <%= form_with(model: campaign, local: true,class:'form-horizontal') do |form| %>
+        <% if campaign.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(campaign.errors.count, "error") %> prohibited this campaign from being saved:</h2>
+
+            <ul>
+            <% campaign.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">项目名称</label>
+          <div class="col-sm-10">
+            <%= form.text_field :name,class:'form-control',placeholder:'10个字以内' %>
+            <span class="help-block m-b-none small">
+            如：西门子自清洁油烟机、唯品会319活动节、天猫双十一活动...
+            </span>
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group"><label class="col-sm-2 control-label">关键信息</label>
+          <div class="col-sm-10">
+            <%= form.text_field :description,class:'form-control',placeholder:'20个字以内' %>
+            <span class="help-block m-b-none small">
+            如：“一件8折，两件7折”、“四大定律......” 、企业/活动口号、“VR看房”
+            </span>
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">投放日期</label>
+          <div class="col-sm-10">
+            <%= form.date_select :start %>
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">投放预算</label>
+          <div class="col-sm-10">
+            <%= form.text_field :budget,class:'form-control',placeholder:'万元' %>
+          </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+         <%= form.hidden_field :user_id,value:"1"%>
+        <div class="form-group">
+          <div class="col-sm-4 col-sm-offset-2">
+            <%= form.submit '下一步',class:'btn btn-primary' %>
+            <button class="btn btn-white" type="submit">取消</button>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+</div>
