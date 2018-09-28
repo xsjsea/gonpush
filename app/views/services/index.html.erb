@@ -26,36 +26,19 @@
               </tr>
               </thead>
               <tbody>
+            <% @services.each do |service,i| %>     
               <tr>
-                <td>1</td>
-                <td>多图文头条</td>
-                <td>990,000</td>
-                <td>不接硬广</td>
+                <td><%=i%></td>
+                <td><%=service.service_name%></td>
+                <td><%=service.service_price%></td>
+                <td><%=service.service_description%></td>
                 <td>
-                  <a href=" /services/1/edit">编辑</a>
+                  <a href=" /services/1/edit/<%=service.id%>">编辑</a>
                   <a href="/services/destroy/<%=service.id%>">删除</a>
                 </td>
               </tr>
               <tr>
-                <td>2</td>
-                <td>多图文头条</td>
-                <td>990,000</td>
-                <td>不接硬广</td>
-                <td>
-                  <a href="javascript:;">编辑</a>
-                  <a href="javascript:;">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>多图文头条</td>
-                <td>990,000</td>
-                <td>不接硬广</td>
-                <td>
-                  <a href="javascript:;">编辑</a>
-                  <a href="javascript:;">删除</a>
-                </td>
-              </tr>
+              <%end%>
               </tbody>
             </table>
           </div>

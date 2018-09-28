@@ -8,8 +8,9 @@ class CreatorMetricsController < ApplicationController
   # GET /creator_metrics.json
   def index
    # @creator_metrics = CreatorMetric.all
+   current_user
     user_id=session[:user_id]
-    CreatorMetric.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id})
+    CreatorMetric.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
   end
 
   # GET /creator_metrics/1

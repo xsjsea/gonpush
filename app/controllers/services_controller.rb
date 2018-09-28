@@ -4,7 +4,12 @@ class ServicesController < ApplicationController
   # GET /services
   # GET /services.json
   def index
-    @services = Service.all
+    #@services = Service.all
+    current_user
+
+   # @services =Service.find_all_by_creator_id(session[:user_id])
+   user_id=session[:user_id]
+   @services =Service.select("services.service_name,services.service_description,service_price").joins("where services.creator_id=#{user_id}")
   end
 
   # GET /services/1

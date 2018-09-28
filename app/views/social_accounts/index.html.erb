@@ -30,21 +30,20 @@
               <tbody>
 
       <% @social_accounts.each do |social_account,i| %>
-      
               <tr>
                 <td><%=i%></td>
                 <td><%=social_account.channel_name%></td>
-                <td><a href="javascript:;"><%=social_account.nickname%></a></td>
-                <td><%=social_account.fans%</td>
-                <td><%=social_account.readers%</td>
-                <td><%=social_account.praise%</td>
-                <td><%=social_account.comments%</td>
+                <td><a href="javascript:void(0)"><%=social_account.nickname%></a></td>
+                <td><%=social_account.fans%></td>
+                <td><%=social_account.readers%></td>
+                <td><%=social_account.praises%></td>
+                <td><%=social_account.comments%></td>
                 <td>
                   <a href="javascript:;">编辑</a>
                   <a href="javascript:;">删除</a>
                 </td>
               </tr>
-            <%end%>  
+              <%end%>  
               </tbody>
             </table>
           </div>

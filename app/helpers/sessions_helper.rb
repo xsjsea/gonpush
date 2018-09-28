@@ -8,7 +8,7 @@ def current_user
 end
 
 def logged_in?
-	!@currrent_user.nil?
+	!@current_user.nil?
 end
 
 def logged_in_user

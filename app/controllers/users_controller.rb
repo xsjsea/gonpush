@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   layout :products_layout
-
- 
+  skip_before_action :verify_authenticity_token,:only =>:savepassword
+  skip_before_action :verify_authenticity_token,:only =>:saveinviterequired
   # GET /users
   # GET /users.json
   def index
@@ -72,6 +72,8 @@ class UsersController < ApplicationController
   end
    def inviterequired
     current_user
+    user_id=session[:user_id]
+    @inviterequired=CreatorExt.find_by_userid(user_id)
 
    end
    def saveinviterequired
@@ -86,23 +88,26 @@ class UsersController < ApplicationController
    end
   def savepassword
     current_user
-    password =params[:password]
-    User.where(id:@current_user.id).update_all(password:password)
+    user_id=session[:user_id]
+    password = params[:password]
+    User.where(id:user_id).update_all(password:password)
+
    end
     def userinfo
     current_user
-    user_id=@current_user.id
+    user_id=session[:user_id]
     User.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
 
    end
   def saveuserinfo
     current_user
 
+
    end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      logged_in_user
+      logged_in_userz
       @user = User.find(params[:id])
     end
 
