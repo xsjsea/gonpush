@@ -1,4 +1,42 @@
+<style>
+.hidepart{display:none;}
+</style>
 <script type="text/javascript">
+  function editPost(seq){
+   document.getElementById("post_div_"+seq).classList.remove("hidepart");
+   document.getElementById("post_p_"+seq).classList.remove("hidepart");
+
+  }
+   var xmlHttpReg = null; 
+   var currentseq=-1;
+function updatepost(seq){
+     currentseq=seq;
+     var schedule_id=document.getElementById("post_schedule_"+seq).value;
+     var post_content=document.getElementById("post_input_"+seq).value;
+ 
+        
+     if (window.ActiveXObject) {
+                         xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");            
+                          } 
+                          else if (window.XMLHttpRequest) {               
+                           xmlHttpReg = new XMLHttpRequest(); 
+                                     }           
+
+                               if (xmlHttpReg != null) {                
+                                   xmlHttpReg.open("post", "updatepost?schedule_id="+schedule_id +"&post_content="+post_content, true);                
+                                 xmlHttpReg.send();         
+                                 xmlHttpReg.onreadystatechange = doResult; 
+                                                }      
+       }         
+function doResult() {                
+ if (xmlHttpReg.readyState == 4 && xmlHttpReg.status == 200) {  
+   alert('更改成功');
+   document.getElementById("post_div_"+currentseq).classList.add("hidepart");
+   document.getElementById("post_p_"+currentseq).classList.add("hidepart");
+   document.getElementById("post_a_"+currentseq).innerHTML=xmlHttpReg.responseText;
+ }
+}
+
 Date.prototype.format = function(format)
 {
  var o = {
@@ -278,224 +316,194 @@ Date.prototype.format = function(format)
                       </div>
 
                       <h3>要点提炼</h3>
-                      <p class="small">提交在线文档链接，推荐使用石墨文档</p>
-                      <p>
-                        <input type="text" class="form-control form-control-sm" placeholder="https://">
-                      </p>
+                  <p class="small">提交在线文档链接，推荐使用石墨文档</p>
+                  <p>
+                    <input type="hidden" name="post_schedule_1" id="post_schedule_1" value="<%=@schedules[0].id%>"/>
+                    <input type="text" class="form-control form-control-sm" placeholder="https://">
+                  </p>
 
-                      <div class="form-group">
-                          <button class="btn btn-sm btn-primary" type="button">提交</button>
-                      </div>
+                  <div class="form-group">
+                      <button class="btn btn-sm btn-primary" type="button">提交</button>
+                  </div>
 
-                      <div class="hr-line-dashed"></div>
-                      <div class="feed-activity-list">
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a1.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right text-navy">刚刚</small>
-                            <strong>释老毛</strong>
-                            <p>哈哈哈哈 现在流行这种说法</p>
-                          </div>
-                        </div>
+                  <div class="hr-line-dashed"></div>
 
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a2.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right">10分钟前</small>
-                            <strong>雪球社区</strong>
-                            <p>有几处语句麻烦改下</p>
-                          </div>
-                        </div>
 
-                        <div class="input-group">
-                          <input type="text" class="form-control">
-                          <span class="input-group-btn">
-                          <button type="button" class="btn btn-primary">发布</button>
-                          </span>
-                        </div>
-
-                      </div>
+                  <div class="feed-activity-list">
+                    <!-- STEP 1 -->
+                    <!-- Messages List BEGIN -->
+                    <% @messages = Message.where(order_id:6,step_order:1) %>
+                    <div id="messages_list_1">
+                      <%= render @messages %>
                     </div>
-                    <div id="tab-3" class="tab-pane">
-                      <div class="pull-right">
-                        <a href="javascript:;">编辑</a>
-                      </div>
 
-                      <h3>创意大纲</h3>
-                      <p>
-                        <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
-                        https://shimo.im/docs/njcbckIHiI4dvq2K
-                        </a>
-                      </p>
-                      <div class="hr-line-dashed"></div>
-                      <div class="feed-activity-list">
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a1.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right text-navy">刚刚</small>
-                            <strong>释老毛</strong>
-                            <p>哈哈哈哈 现在流行这种说法</p>
-                          </div>
-                        </div>
-
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a2.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right">10分钟前</small>
-                            <strong>雪球社区</strong>
-                            <p>有几处语句麻烦改下</p>
-                          </div>
-                        </div>
-
-                        <div class="input-group">
-                          <input type="text" class="form-control">
-                          <span class="input-group-btn">
-                          <button type="button" class="btn btn-primary">发布</button>
-                          </span>
-                        </div>
-
-                      </div>
+                    <div class="input-group">
+                      <input type="text" data-behavior="room_speaker_1" class="form-control" id="step_order_1">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary">发布</button>
+                      </span>
                     </div>
-                    <div id="tab-4" class="tab-pane">
-                      <div class="pull-right">
-                        <a href="javascript:;">编辑</a>
-                      </div>
+                    <!-- Messages List END -->
+                  </div>
+                </div>
 
-                      <h3>具体脚本</h3>
-                      <p>
-                        <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
-                        https://shimo.im/docs/njcbckIHiI4dvq2K
-                        </a>
-                      </p>
-                      <div class="hr-line-dashed"></div>
-                      <div class="feed-activity-list">
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a1.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right text-navy">刚刚</small>
-                            <strong>释老毛</strong>
-                            <p>哈哈哈哈 现在流行这种说法</p>
-                          </div>
-                        </div>
+                <div id="tab-3" class="tab-pane">
+                  <div class="pull-right">
+                    <a href="javascript:void()" onclick="editPost(2)">编辑</a>
+                  </div>
+                  
+                  <h3>创意大纲</h3>
+                  <p>
+                    <a id="post_a_2" href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
+                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                    </a>
+                  </p>
+                   <p id="post_p_2" class="hidepart">
+                    <input type="hidden" name="post_schedule_2" id="post_schedule_2" value="<%=@schedules[1].id%>"/>
+                    <input type="text" id="post_input_2" class="form-control form-control-sm" placeholder="https://">
+                  </p>
 
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a2.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right">10分钟前</small>
-                            <strong>雪球社区</strong>
-                            <p>有几处语句麻烦改下</p>
-                          </div>
-                        </div>
-
-                        <div class="input-group">
-                          <input type="text" class="form-control">
-                          <span class="input-group-btn">
-                          <button type="button" class="btn btn-primary">发布</button>
-                          </span>
-                        </div>
-
-                      </div>
+                  <div id="post_div_2" class="form-group hidepart">
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(2)" id="post_btn_2" type="button">提交
+                    </button>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="feed-activity-list">
+                    <!-- STEP 2 -->
+                    <!-- Messages List BEGIN -->
+                    <% @messages = Message.where(order_id:6,step_order:2) %>
+                    <div id="messages_list_2">
+                      <%= render @messages %>
                     </div>
-                    <div id="tab-5" class="tab-pane">
-                      <div class="pull-right">
-                        <a href="javascript:;">编辑</a>
-                      </div>
 
-                      <h3>绘图视频</h3>
-                      <p>
-                        <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
-                        https://shimo.im/docs/njcbckIHiI4dvq2K
-                        </a>
-                      </p>
-                      <div class="hr-line-dashed"></div>
-                      <div class="feed-activity-list">
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a1.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right text-navy">刚刚</small>
-                            <strong>释老毛</strong>
-                            <p>哈哈哈哈 现在流行这种说法</p>
-                          </div>
-                        </div>
-
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a2.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right">10分钟前</small>
-                            <strong>雪球社区</strong>
-                            <p>有几处语句麻烦改下</p>
-                          </div>
-                        </div>
-
-                        <div class="input-group">
-                          <input type="text" class="form-control">
-                          <span class="input-group-btn">
-                          <button type="button" class="btn btn-primary">发布</button>
-                          </span>
-                        </div>
-
-                      </div>
+                    <div class="input-group">
+                      <input type="text" data-behavior="room_speaker_2" class="form-control" id="step_order_2">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary">发布</button>
+                      </span>
                     </div>
-                    <div id="tab-6" class="tab-pane">
-                      <div class="pull-right">
-                        <a href="javascript:;">编辑</a>
-                      </div>
+                    <!-- Messages List END -->
+                  </div>
+                </div>
 
-                      <h3>排版成稿</h3>
-                      <p>
-                        <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
-                        https://shimo.im/docs/njcbckIHiI4dvq2K
-                        </a>
-                      </p>
-                      <div class="hr-line-dashed"></div>
-                      <div class="feed-activity-list">
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a1.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right text-navy">刚刚</small>
-                            <strong>释老毛</strong>
-                            <p>哈哈哈哈 现在流行这种说法</p>
-                          </div>
-                        </div>
+                <div id="tab-4" class="tab-pane">
+                    <div class="pull-right">
+                    <a href="javascript:void()" onclick="editPost(3)">编辑</a>
+                  </div>
 
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a2.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right">10分钟前</small>
-                            <strong>雪球社区</strong>
-                            <p>有几处语句麻烦改下</p>
-                          </div>
-                        </div>
+                  <h3>具体脚本</h3>
+                  <p>
+                    <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
+                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                    </a>
+                  </p>
+                    <p id="post_p_3" class="hidepart">
+                    <input type="hidden" name="post_schedule_3" id="post_schedule_3" value="<%=@schedules[2].id%>"/>
+                    <input type="text" id="post_input_3" class="form-control form-control-sm" placeholder="https://">
+                  </p>
 
-                        <div class="input-group">
-                          <input type="text" class="form-control">
-                          <span class="input-group-btn">
-                          <button type="button" class="btn btn-primary">发布</button>
-                          </span>
-                        </div>
-
-                      </div>
+                  <div id="post_div_3" class="form-group hidepart">
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(3)" id="post_btn_3" type="button">提交
+                    </button>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="feed-activity-list">
+                    <!-- STEP 3 -->
+                    <!-- Messages List BEGIN -->
+                    <% @messages = Message.where(order_id:6,step_order:3) %>
+                    <div id="messages_list_3">
+                      <%= render @messages %>
                     </div>
+
+                    <div class="input-group">
+                      <input type="hidden" name="schedule_3" value="<%@schedules[0].id%>"
+                      <input type="text" data-behavior="room_speaker_3" class="form-control" id="step_order_3">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary">发布</button>
+                      </span>
+                    </div>
+                    <!-- Messages List END -->
+                  </div>
+                </div>
+
+                <div id="tab-5" class="tab-pane">
+                  <div class="pull-right">
+                    <a href="javascript:void()" onclick="editPost(4)">编辑</a>
+                  </div>
+
+                  <h3>绘图/视频</h3>
+                  <p>
+                    <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
+                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                    </a>
+                  </p>
+                    <p id="post_p_4" class="hidepart">
+                    <input type="hidden" name="post_schedule_4" id="post_schedule_4" value="<%=@schedules[3].id%>"/>
+                    <input type="text" id="post_input_4" class="form-control form-control-sm" placeholder="https://">
+                  </p>
+
+                  <div id="post_div_4" class="form-group hidepart">
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(4)" id="post_btn_4" type="button">提交
+                    </button>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="feed-activity-list">
+                    <!-- STEP 4 -->
+                    <!-- Messages List BEGIN -->
+                    <% @messages = Message.where(order_id:6,step_order:4) %>
+                    <div id="messages_list_4">
+                      <%= render @messages %>
+                    </div>
+
+                    <div class="input-group">
+                      <input type="text" data-behavior="room_speaker_4" class="form-control" id="step_order_4">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary">发布</button>
+                      </span>
+                    </div>
+                    <!-- Messages List END -->
+                  </div>
+                </div>
+
+                <div id="tab-6" class="tab-pane">
+                  <div class="pull-right">
+                    <a href="javascript:void()" onclick="editPost(5)">编辑</a>
+                  </div>
+
+                  <h3>绘图/视频</h3>
+                  <p>
+                    <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
+                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                    </a>
+                    <input type="hidden" name="schedule_5" value="<%@schedules[4].id%>"
+                  </p>
+                    <p id="post_p_5" class="hidepart">
+                    <input type="hidden" name="post_schedule_5" id="post_schedule_5" value="<%=@schedules[4].id%>"/>
+                    <input type="text" id="post_input_2" class="form-control form-control-sm" placeholder="https://">
+                  </p>
+
+                  <div id="post_div_5" class="form-group hidepart">
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(5)" id="post_btn_5" type="button">提交
+                    </button>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="feed-activity-list">
+                    <!-- STEP 5 -->
+                    <!-- Messages List BEGIN -->
+                    <% @messages = Message.where(order_id:6,step_order:5) %>
+                    <div id="messages_list_5">
+                      <%= render @messages %>
+                    </div>
+
+                    <div class="input-group">
+                      <input type="text" data-behavior="room_speaker_5" class="form-control" id="step_order_5">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary">发布</button>
+                      </span>
+                    </div>
+                    <!-- Messages List END -->
+                  </div>
+                </div>
                     <div id="tab-7" class="tab-pane">
                       <div class="form-group">
                         <h3>合作评价</h3>

@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   post '/login' , to:'sessions#create'
   get '/logout' , to: 'sessions#destrory'
   get '/getOrder', to: 'orders#showOrder'
+  post '/updatepost', to: 'orders#updatepost'
   post '/updateSchedule', to: 'orders#updateSchedule'
   delete "orders/destroy/:id" => "orders#destroy"
   delete "reports/destroy/:id" => "reports#destroy"
@@ -42,5 +43,9 @@ Rails.application.routes.draw do
   post '/savepassword' , to:'users#savepassword'
   get '/userinfo', to: 'users#userinfo'
   post '/saveuserinfo' , to:'users#saveuserinfo'
+
+  root to: 'rooms#show'
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
 
 end

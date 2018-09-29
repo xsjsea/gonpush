@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token
   #before_action :set_order, only: [:show, :edit, :update, :destroy]
-  layout :products_layout
-
+  layout :products_layout, :except => [:showOrder]  
+  layout :order_detail_layout, :only => [:showOrder]  
   
   # GET /orders
   # GET /orders.json
@@ -87,16 +87,24 @@ class OrdersController < ApplicationController
   end
 
 def showOrder
+    @post=Post.new
     @user= User.find_by_id(session[:user_id])
     parameter_id=params[:id]
     @schedules= Schedule.select("flows.flow_order,flows.flow_name,schedules.workdays,schedules.ends_on,schedules.id").joins("LEFT JOIN flows on schedules.flow_id = flows.id
-    where schedules.order_id=#{parameter_id}")
-     
+    where schedules.order_id=#{parameter_id}") 
      #@orders =Order.select( "orders.status,campaigns.name,campaigns.budget,campaigns.start,orders.id, users.username,creator_exts.avatar").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id  LEFT JOIN users on orders.creator_id=users.id  LEFT JOIN creator_exts  on creator_exts.userid=users.id where orders.id=#{parameter_id}")
-     @orders=Order.select("campaigns.name,campaigns.description,campaigns.budget,campaigns.start,users.mobile,users.truename,users.address,orders.id").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id LEFT JOIN users on orders.creator_id=users.id where orders.id=#{parameter_id}")
- 
-    
-     
+     @orders=Order.select("campaigns.name,campaigns.description,campaigns.budget,campaigns.start,users.mobile,users.truename,users.address,orders.id").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id LEFT JOIN users on orders.creator_id=users.id where orders.id=#{parameter_id}") 
+  end
+
+def updatepost
+    @post=Post.new
+    @user= User.find_by_id(session[:user_id])
+    #order_id=params[:order_id]
+    post_content=params[:post_content]
+    schedule_id=params[:schedule_id]
+    sch = Post.find_by_schedule_id(schedule_id)
+    sch.update_attribute('post_content', post_content)
+    render plain: post_content
   end
 
   def updateSchedule
@@ -167,4 +175,7 @@ def showOrder
     end
    
  end  
+  def order_detail_layout 
+       return 'order_detail'
+  end  
 end
