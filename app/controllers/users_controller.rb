@@ -97,7 +97,9 @@ class UsersController < ApplicationController
     current_user
     user_id=session[:user_id]
     @userinfo=User.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set,users.nickname").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
-
+    @user_categories=Category.select("categories.id,categories.name").joins("where categories.parent=6")
+      
+    
    end
   def saveuserinfo
     current_user
