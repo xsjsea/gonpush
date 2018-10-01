@@ -1,14 +1,67 @@
 <style>
 .hidepart{display:none;}
 </style>
-<script type="text/javascript">
+<script type="text/javascript"> 
+  var xmlHttpReg = null; 
+  var currentseq=-1;
+  function updatemessage(seq){
+    currentseq=seq;
+   var order_id=document.getElementById("order_id").value;
+ if (window.ActiveXObject) {
+                         xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");            
+                          } 
+                          else if (window.XMLHttpRequest) {               
+                           xmlHttpReg = new XMLHttpRequest(); 
+                                     }           
+
+                               if (xmlHttpReg != null) {                
+                                   xmlHttpReg.open("post", "updatemessages?order_id="+order_id +"&order_step="+seq, true);                
+                                 xmlHttpReg.send();         
+                                 xmlHttpReg.onreadystatechange = doMessageResult; 
+                                                } 
+
+  }
+function doMessageResult() {                
+ if (xmlHttpReg.readyState == 4 && xmlHttpReg.status == 200) {  
+   document.getElementById("msg_"+currentseq).innerHTML="";
+   //document.getElementById("post_div_"+currentseq).classList.add("hidepart");
+   //document.getElementById("post_p_"+currentseq).classList.add("hidepart");
+   //document.getElementById("post_a_"+currentseq).innerHTML=xmlHttpReg.responseText;
+ }
+}
+
+  function submitcomments(){
+   var order_id=document.getElementById("order_id").value;
+   var content_comment=document.getElementById("comments").value;
+ if (window.ActiveXObject) {
+                         xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");            
+                          } 
+                          else if (window.XMLHttpRequest) {               
+                           xmlHttpReg = new XMLHttpRequest(); 
+                                     }           
+
+                               if (xmlHttpReg != null) {                
+                                   xmlHttpReg.open("post", "updatecomments?order_id="+order_id +"&content_comment="+content_comment, true);                
+                                 xmlHttpReg.send();         
+                                 xmlHttpReg.onreadystatechange = doCommentResult; 
+                                                } 
+
+  }
+  function doCommentResult() {                
+ if (xmlHttpReg.readyState == 4 && xmlHttpReg.status == 200) {  
+   alert('更改成功');
+   //document.getElementById("post_div_"+currentseq).classList.add("hidepart");
+   //document.getElementById("post_p_"+currentseq).classList.add("hidepart");
+   //document.getElementById("post_a_"+currentseq).innerHTML=xmlHttpReg.responseText;
+ }
+}
   function editPost(seq){
    document.getElementById("post_div_"+seq).classList.remove("hidepart");
    document.getElementById("post_p_"+seq).classList.remove("hidepart");
 
   }
-   var xmlHttpReg = null; 
-   var currentseq=-1;
+   
+ 
 function updatepost(seq){
      currentseq=seq;
      var schedule_id=document.getElementById("post_schedule_"+seq).value;
@@ -27,7 +80,9 @@ function updatepost(seq){
                                  xmlHttpReg.send();         
                                  xmlHttpReg.onreadystatechange = doResult; 
                                                 }      
-       }         
+       } 
+
+
 function doResult() {                
  if (xmlHttpReg.readyState == 4 && xmlHttpReg.status == 200) {  
    alert('更改成功');
@@ -119,9 +174,10 @@ Date.prototype.format = function(format)
    $("#frmschedule").submit();
   }
 </script>
+<input type="hidden" name="order_id" id="order_id" value="<%=@orders[0].id%>"/>
 <div class="row border-bottom">
         <div class="ibox-title">
-          <p>订单号：<strong></strong></p>
+          <p>订单号：<strong><%=@orders[0].id%></strong></p>
         </div>
       </div>
 
@@ -131,71 +187,93 @@ Date.prototype.format = function(format)
             <ul class="list-group elements-list">
                 <li class="list-group-item active">
                   <a data-toggle="tab" href="#tab-1">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger"></span>
                     <strong>需求详情</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                        
                     </div>
                   </a>
                 </li>
-                <li class="list-group-item">
+                <li onclick="updatemessage(1)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-2">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger" id="msg_1"> <%@unreadmessages.each_with_index do |message,i| %>
+                         <%if message.step_order==1%>
+                              <%=message.total%>
+                         <%end%>
+                         <%end%></span>
                     <strong>要点提炼</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                      <i class="fa fa-clock-o"></i><%=@steporder_1[0].messagetime%>  
                     </div>
                   </a>
                 </li>
-                <li class="list-group-item">
+                <li onclick="updatemessage(2)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-3">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger" id="msg_2"><%@unreadmessages.each_with_index do |message,i| %>
+                         <%if message.step_order==2%>
+                              <%=message.total%>
+                         <%end%>
+                         <%end%></span></span>
                     <strong>创意大纲</strong>
                     <div class="small m-t-xs">
-                      <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                      <span class="label pull-right label-primary"></span></span>
+                      <i class="fa fa-clock-o"></i><%=@steporder_2[0].messagetime%>  
                     </div>
                   </a>
                 </li>
-                <li class="list-group-item">
+                <li onclick="updatemessage(3)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-4">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger" id="msg_3"><%@unreadmessages.each_with_index do |message,i| %>
+                         <%if message.step_order==3%>
+                              <%=message.total%>
+                         <%end%>
+                         <%end%></span>
                     <strong>具体脚本</strong>
                     <div class="small m-t-xs">
-                      <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                      <span class="label pull-right label-primary"></span></span>
+                      <i class="fa fa-clock-o"></i><%=@steporder_3[0].messagetime%>  
                     </div>
                   </a>
                 </li>
-                <li class="list-group-item">
+                <li onclick="updatemessage(4)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-5">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger" id="msg_4"><%@unreadmessages.each_with_index do |message,i| %>
+                         <%if message.step_order==4%>
+                              <%=message.total%>
+                         <%end%>
+                         <%end%></span>
                     <strong>绘图视频</strong>
                     <div class="small m-t-xs">
-                      <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                      <span class="label pull-right label-primary"></span></span>
+                      <i class="fa fa-clock-o"></i><%=@steporder_4[0].messagetime%>  
                     </div>
                   </a>
                 </li>
-                <li class="list-group-item">
+                <li onclick="updatemessage(5)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-6">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger" id="msg_5">
+                      <%@unreadmessages.each_with_index do |message,i| %>
+                         <%if message.step_order==5%>
+                              <%=message.total%>
+                         <%end%>
+                         <%end%>
+                      </span>
                     <strong>排版成稿</strong>
                     <div class="small m-t-xs">
-                      <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                      <span class="label pull-right label-primary"></span></span>
+                      <i class="fa fa-clock-o"></i> <%=@steporder_5[0].messagetime%> 
                     </div>
                   </a>
                 </li>
                 <li class="list-group-item">
                   <a data-toggle="tab" href="#tab-7">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger"></span>
                     <strong>合作评价</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                         
                     </div>
                   </a>
                 </li>
@@ -332,7 +410,7 @@ Date.prototype.format = function(format)
                   <div class="feed-activity-list">
                     <!-- STEP 1 -->
                     <!-- Messages List BEGIN -->
-                    <% @messages = Message.where(order_id:6,step_order:1) %>
+                    <%   @messages = Message.where(order_id:@order_id,step_order:1) %>
                     <div id="messages_list_1">
                       <%= render @messages %>
                     </div>
@@ -371,7 +449,7 @@ Date.prototype.format = function(format)
                   <div class="feed-activity-list">
                     <!-- STEP 2 -->
                     <!-- Messages List BEGIN -->
-                    <% @messages = Message.where(order_id:6,step_order:2) %>
+                    <% @messages = Message.where(order_id:@order_id,step_order:2) %>
                     <div id="messages_list_2">
                       <%= render @messages %>
                     </div>
@@ -410,7 +488,7 @@ Date.prototype.format = function(format)
                   <div class="feed-activity-list">
                     <!-- STEP 3 -->
                     <!-- Messages List BEGIN -->
-                    <% @messages = Message.where(order_id:6,step_order:3) %>
+                    <% @messages = Message.where(order_id:@order_id,step_order:3) %>
                     <div id="messages_list_3">
                       <%= render @messages %>
                     </div>
@@ -450,7 +528,7 @@ Date.prototype.format = function(format)
                   <div class="feed-activity-list">
                     <!-- STEP 4 -->
                     <!-- Messages List BEGIN -->
-                    <% @messages = Message.where(order_id:6,step_order:4) %>
+                    <% @messages = Message.where(order_id:@order_id,step_order:4) %>
                     <div id="messages_list_4">
                       <%= render @messages %>
                     </div>
@@ -490,7 +568,7 @@ Date.prototype.format = function(format)
                   <div class="feed-activity-list">
                     <!-- STEP 5 -->
                     <!-- Messages List BEGIN -->
-                    <% @messages = Message.where(order_id:6,step_order:5) %>
+                    <% @messages = Message.where(order_id:@order_id,step_order:5) %>
                     <div id="messages_list_5">
                       <%= render @messages %>
                     </div>
@@ -507,9 +585,9 @@ Date.prototype.format = function(format)
                     <div id="tab-7" class="tab-pane">
                       <div class="form-group">
                         <h3>合作评价</h3>
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
                       </div>
-                      <button class="btn btn-sm btn-primary">提交</button>
+                      <button class="btn btn-sm btn-primary" onclick="submitcomments()">提交</button>
                     </div>
 
                   </div>

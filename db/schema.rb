@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_28_100106) do
+ActiveRecord::Schema.define(version: 2018_10_01_051237) do
 
   create_table "areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "areaName"
@@ -126,6 +126,9 @@ ActiveRecord::Schema.define(version: 2018_09_28_100106) do
     t.integer "order_id"
     t.integer "step_order"
     t.integer "user_id"
+    t.string "creatorstatus"
+    t.string "marketerstatus"
+    t.string "adminstatus"
   end
 
   create_table "metrics", options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -233,6 +236,11 @@ ActiveRecord::Schema.define(version: 2018_09_28_100106) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "testAdd"
+  end
+
+  create_table "user_tags", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "tag_id"
   end
 
   create_table "users", options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|

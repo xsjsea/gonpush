@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token
   #before_action :set_order, only: [:show, :edit, :update, :destroy]
-  layout :products_layout, :except => [:showOrder]  
-  layout :order_detail_layout, :only => [:showOrder]  
+  layout :products_layout
+
   
   # GET /orders
   # GET /orders.json
@@ -88,25 +88,63 @@ class OrdersController < ApplicationController
 
 def showOrder
     @post=Post.new
-    @user= User.find_by_id(session[:user_id])
-    parameter_id=params[:id]
+    @user= User.find_by_id(session[:user_id]) 
+    @order_id=params[:id]
+    currentorder_id=params[:id]
     @schedules= Schedule.select("flows.flow_order,flows.flow_name,schedules.workdays,schedules.ends_on,schedules.id").joins("LEFT JOIN flows on schedules.flow_id = flows.id
-    where schedules.order_id=#{parameter_id}") 
+    where schedules.order_id=#{currentorder_id}") 
      #@orders =Order.select( "orders.status,campaigns.name,campaigns.budget,campaigns.start,orders.id, users.username,creator_exts.avatar").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id  LEFT JOIN users on orders.creator_id=users.id  LEFT JOIN creator_exts  on creator_exts.userid=users.id where orders.id=#{parameter_id}")
-     @orders=Order.select("campaigns.name,campaigns.description,campaigns.budget,campaigns.start,users.mobile,users.truename,users.address,orders.id").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id LEFT JOIN users on orders.creator_id=users.id where orders.id=#{parameter_id}") 
-  end
+     @orders=Order.select("campaigns.name,campaigns.description,campaigns.budget,campaigns.start,users.mobile,users.truename,users.address,orders.id").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id LEFT JOIN users on orders.creator_id=users.id where orders.id=#{currentorder_id}") 
+     user_id=@user.id
+     if(@user.usertype=='0')
+     @unreadmessages=Message.select("count(*) total,step_order").joins("where order_id=#{currentorder_id} and user_id=#{user_id} and creatorstatus='1' group by order_id,step_order")
+     elsif(@user.usertype=='1')
+     @unreadmessages=Message.select("count(*) total,step_order").joins("where order_id=#{currentorder_id} and user_id=#{user_id} and marketerstatus='1' group by order_id,step_order")
+     else
+     @unreadmessages=Message.select("count(*) total,step_order").joins("where order_id=#{currentorder_id} and (marketerstatus='1' or  creatorstatus='1' ) and marketerstatus='1' group by order_id,step_order")
+     end
 
+ 
+     @steporder_1=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=1")
+     @steporder_2=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=2")
+     @steporder_3=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=3")
+     @steporder_4=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=4")
+     @steporder_5=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=5")
+     render :layout => 'order_detail'
+
+  end
+def updatemessages
+    order_id=params[:order_id]
+    order_step=params[:order_step]
+    @user= User.find_by_id(session[:user_id])
+    sch = Message.find_by_order_id(order_id)
+     if(@user.usertype=='0')
+      sch.update_attribute('creatorstatus', '0')
+     elsif(@user.usertype=='1')
+       sch.update_attribute('marketerstatus', '0')
+     end
+      render plain: ''
+  end
 def updatepost
     @post=Post.new
     @user= User.find_by_id(session[:user_id])
-    #order_id=params[:order_id]
+    #order_id=params[:schedule_type]
     post_content=params[:post_content]
     schedule_id=params[:schedule_id]
     sch = Post.find_by_schedule_id(schedule_id)
     sch.update_attribute('post_content', post_content)
     render plain: post_content
   end
-
+  def updatecomments
+  curTime =Date.today
+  content_comment=params[:content_comment]
+  order_id =params[:order_id]
+  user_id=session[:user_id]
+  sql = ActiveRecord::Base.connection()     
+      sql.insert "INSERT INTO comments SET comment_content='#{content_comment}', order_id='#{order_id}',user_id='#{user_id}',
+      created_at='#{curTime}',updated_at='#{curTime}'" 
+      render plain:content_comment
+  end
   def updateSchedule
     @user=User.find_by_id(session[:user_id])
     parameter_id_1=params[:scheduleId_0]

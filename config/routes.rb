@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   get '/logout' , to: 'sessions#destrory'
   get '/getOrder', to: 'orders#showOrder'
   post '/updatepost', to: 'orders#updatepost'
+  post '/updatecomments', to: 'orders#updatecomments'
+   post '/updatemessages', to: 'orders#updatemessages'
   post '/updateSchedule', to: 'orders#updateSchedule'
   delete "orders/destroy/:id" => "orders#destroy"
   delete "reports/destroy/:id" => "reports#destroy"
