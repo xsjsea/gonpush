@@ -1,0 +1,14 @@
+<% cache message do %>
+<div class="feed-element">
+  <a href="javascript:;" class="pull-left">
+    <img alt="image" class="img-circle" src="/assets/a1.jpg">
+  </a>
+  <div class="media-body ">
+    <small class="pull-right text-navy"><%= message.created_at %>
+    </small>
+    <strong><%= message.user_id %></strong>
+    <p><%= message.content %></p>
+    <input type="hidden" id="step_order" value="<%= message.step_order %>"/>
+  </div>
+</div>
+<% end %>
