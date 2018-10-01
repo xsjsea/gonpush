@@ -5,9 +5,9 @@ function saveuserinfo(){
 
 window.onload=initpage();
 function initpage(){
-  var currentselect=<%=@userinfo.category_id%>
+  var currentselect=<%=@userinfo[0].category_id%>
   if(currentselect==""){}else{
-  $("#user_category").val(currentselect);
+   $("#user_category").val(currentselect);
 }
 }
  </script>
