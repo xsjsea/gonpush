@@ -6,6 +6,8 @@
   <title>GonPush.com</title>
   <link href="/assets/backcss/bootstrap.min.css" rel="stylesheet">
   <link href="/assets/css/font-awesome.css" rel="stylesheet">
+  <link href="/assets/backcss/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+  <link href="/assets/backcss/plugins/cropper/cropper.min.css" rel="stylesheet">
   <link href="/assets/backcss/animate.css" rel="stylesheet">
   <link href="/assets/backcss/style.css" rel="stylesheet">
 </head>
@@ -117,6 +119,54 @@
 
   <!-- Custom and plugin javascript -->
   <script src="/assets/backjs/inspinia.js"></script>
+<!--   <script src="/assets/backjs/plugins/pace/pace.min.js"></script> -->
+    <!-- Tags Input -->
+  <script src="/assets/backjs/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+  <!-- Image cropper -->
+  <script src="/assets/backjs/plugins/cropper/cropper.min.js"></script>
+   <script>
+    $(document).ready(function(){
+      $('.tagsinput').tagsinput({
+        tagClass: 'label label-primary'
+      });
+
+      var $image = $(".image-crop > img")
+      $($image).cropper({
+          aspectRatio: 1,
+          preview: ".img-preview",
+          done: function(data) {
+            // Output the result data for cropping image.
+          }
+      });
+
+      var $inputImage = $("#inputImage");
+      if (window.FileReader) {
+          $inputImage.change(function() {
+            var fileReader = new FileReader(),
+              files = this.files,
+              file;
+
+            if (!files.length) {
+              return;
+            }
+
+            file = files[0];
+
+            if (/^image\/\w+$/.test(file.type)) {
+              fileReader.readAsDataURL(file);
+              fileReader.onload = function () {
+                $inputImage.val("");
+                $image.cropper("reset", true).cropper("replace", this.result);
+              };
+            } else {
+              showMessage("Please choose an image file.");
+            }
+          });
+      } else {
+        $inputImage.addClass("hide");
+      }
+    })
+  </script>
  
 </body>
 </html>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_01_051237) do
+ActiveRecord::Schema.define(version: 2018_10_01_093200) do
 
   create_table "areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "areaName"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2018_10_01_051237) do
     t.integer "parent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "category_type"
   end
 
   create_table "comments", options: "ENGINE=MyISAM DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -259,6 +260,7 @@ ActiveRecord::Schema.define(version: 2018_10_01_051237) do
     t.string "mobile"
     t.string "description"
     t.string "sex"
+    t.string "nickname"
   end
 
 end
