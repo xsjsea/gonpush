@@ -12,7 +12,9 @@ class ChatChannel < ApplicationCable::Channel
     # ActionCable.server.broadcast('messages',
     #   message: render_message(data['message']))
     ActionCable.server.broadcast 'room_channel', message: data['message']
-    Message.create! content: data['message'], order_id: data['order_id'], step_order: data['step_order'], user_id: data['user_id']
+    Message.create! content: data['message'], order_id: data['order_id'], step_order: data['step_order'], user_id: data['user_id'],
+    creatorstatus: data['creatorstatus'],marketerstatus: data['marketerstatus'],
+    adminstatus: data['adminstatus']
   end
 
   private

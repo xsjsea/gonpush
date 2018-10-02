@@ -18,7 +18,10 @@ App.chat = App.cable.subscriptions.create "ChatChannel",
 
   speak: (message) ->
     step_order = event.target.id.replace(/\D/g,'')
-    @perform 'speak', message: message, order_id: $('#order_id').val(), step_order: step_order, user_id: $('#user_id').val()
+ 
+    @perform 'speak', message: message, order_id: $('#order_id').val(), step_order: step_order, user_id: $('#user_id').val(),creatorstatus:$('#creatorstatus').val(),
+    marketerstatus:$('#marketerstatus').val(),adminstatus:$('#adminstatus').val()
+
 
 $(document).on 'keypress', '[data-behavior~=room_speaker_1],[data-behavior~=room_speaker_2],[data-behavior~=room_speaker_3],[data-behavior~=room_speaker_4],[data-behavior~=room_speaker_5]', (event) ->
   if event.keyCode is 13
