@@ -215,5 +215,7 @@ def updatepost
  end  
   def order_detail_layout 
        return 'order_detail'
-  end  
+  end
+
+
 end
