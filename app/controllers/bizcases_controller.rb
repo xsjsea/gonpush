@@ -30,10 +30,13 @@ layout :products_layout
   # POST /bizcases.json
   def create
     @bizcase = Bizcase.new(bizcase_params)
-
+      user_id=session[:user_id]
     respond_to do |format|
       if @bizcase.save
-        format.html { redirect_to @bizcase, notice: 'Bizcase was successfully created.' }
+         @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
+    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{@current_user.id}")
+
+        format.html { render :index,, notice: 'Bizcase was successfully created.' }
         format.json { render :show, status: :created, location: @bizcase }
       else
         format.html { render :new }
@@ -45,9 +48,13 @@ layout :products_layout
   # PATCH/PUT /bizcases/1
   # PATCH/PUT /bizcases/1.json
   def update
+      user_id=session[:user_id]
     respond_to do |format|
       if @bizcase.update(bizcase_params)
-        format.html { redirect_to @bizcase, notice: 'Bizcase was successfully updated.' }
+         @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
+    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{@current_user.id}")
+
+        format.html { render :index,, notice: 'Bizcase was successfully updated.' }
         format.json { render :show, status: :ok, location: @bizcase }
       else
         format.html { render :edit }
@@ -59,9 +66,13 @@ layout :products_layout
   # DELETE /bizcases/1
   # DELETE /bizcases/1.json
   def destroy
+    user_id=session[:user_id]
     @bizcase.destroy
     respond_to do |format|
-      format.html { redirect_to bizcases_url, notice: 'Bizcase was successfully destroyed.' }
+       @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
+    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{@current_user.id}")
+
+      format.html { render :index, notice: 'Bizcase was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

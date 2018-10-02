@@ -34,10 +34,15 @@ Rails.application.routes.draw do
   post '/updatecomments', to: 'orders#updatecomments'
    post '/updatemessages', to: 'orders#updatemessages'
   post '/updateSchedule', to: 'orders#updateSchedule'
-  delete "orders/destroy/:id" => "orders#destroy"
-  delete "reports/destroy/:id" => "reports#destroy"
-  delete "cases/destroy/:id" => "cases#destroy"
-  delete "services/destroy/:id" => "services#destroy"
+  get "orders/destroy/:id" => "orders#destroy"
+  get "reports/destroy/:id" => "reports#destroy"
+  get "social_accounts/destroy/:id" => "social_accounts#destroy"
+  get "services/destroy/:id",to: "services#destroy"
+
+  get "bizcases/destroy/:id" => "bizcases#destroy"
+  get "creator_metrics/destroy/:id",to: "creator_metrics#destroy"
+
+  
   post  '/getservice',to:'sessions#getservices'
   get '/inviterequired', to: 'users#inviterequired'
   post '/saveinviterequired' , to:'users#saveinviterequired'

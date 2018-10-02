@@ -23,13 +23,15 @@
               </tr>
               </thead>
               <tbody>
-              <% @bizcases.each do |bizcase,i| %>
+              <% @bizcases.each_with_index do |bizcase,i| %>
               <tr>
-                <td><%=i%></td>
+                <td><%=(i+1)%></td>
                 <td><a href="javascript:void(0);"><%= bizcase.bizcase_title %></a></td>
                 <td>
-                  <a href="/bizcases/new/<%= bizcase.id %>;">编辑</a>
+   
+                   <a href="/bizcases/1/edit?id=<%=bizcase.id%>">编辑</a>
                   <a href="/bizcases/destroy/<%=bizcase.id%>">删除</a>
+                  reports
                 </td>
               </tr>
               <% end %>

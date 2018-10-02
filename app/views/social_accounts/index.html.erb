@@ -7,7 +7,7 @@
         <div class="ibox-content">
           <div class="row">
             <div class="col-sm-3">
-              <a class="btn btn-sm btn-primary m-t-n-xs" href="creator_add_social_account.html" role="button">
+              <a class="btn btn-sm btn-primary m-t-n-xs" href="/social_accounts/new" role="button">
                 <strong>新增</strong>
               </a>
             </div>
@@ -29,9 +29,9 @@
               </thead>
               <tbody>
 
-      <% @social_accounts.each do |social_account,i| %>
+      <% @social_accounts.each_with_index do |social_account,i| %>
               <tr>
-                <td><%=i%></td>
+                <td><%=(i+1)%></td>
                 <td><%=social_account.channel_name%></td>
                 <td><a href="javascript:void(0)"><%=social_account.nickname%></a></td>
                 <td><%=social_account.fans%></td>
@@ -39,8 +39,8 @@
                 <td><%=social_account.praises%></td>
                 <td><%=social_account.comments%></td>
                 <td>
-                  <a href="javascript:;">编辑</a>
-                  <a href="javascript:;">删除</a>
+                  <a href="/social_accounts/1/edit?id=<%=social_account.id%>">编辑</a>
+                  <a href="/social_accounts/destroy/<%=social_account.id%>">删除</a>
                 </td>
               </tr>
               <%end%>  

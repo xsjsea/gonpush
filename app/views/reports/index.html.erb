@@ -25,13 +25,13 @@
               </tr>
               </thead>
               <tbody>
-              <% @reports.each do |report,i| %>
+              <% @reports.each_with_index do |report,i| %>
               <tr>
-                <td><%=i%></td>
+                <td><%=(i+1)%></td>
                 <td><a href="javascript:void(0);"><%= report.report_title %></a></td>
                 <td><%= report.username %></td>
                 <td>
-                  <a href="/reports/new/<%= report.id %>;">编辑</a>
+                  <a href="/reports/1/edit?id=<%=report.id%>">编辑</a>
                   <a href="/reports/destroy/<%=report.id%>">删除</a>
                 </td>
               </tr>

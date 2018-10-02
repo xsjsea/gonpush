@@ -1,10 +1,11 @@
- <div class="wrapper wrapper-content animated fadeInRight">
+<div id="page-wrapper" class="gray-bg">
+      <div class="wrapper wrapper-content animated fadeInRight">
         <div class="ibox-title">
           <h5>新增报价</h5>
         </div>
-
+      <input type="hidden" value="<%=@user.id%>" name="userid"/>
         <div class="ibox-content">
-        <%= render 'form', service: @service,class:'form-horizontal'%>     
+          <%= render 'form', service: @service,class:'form-horizontal'%>
         </div>
       </div>
       <div class="footer">

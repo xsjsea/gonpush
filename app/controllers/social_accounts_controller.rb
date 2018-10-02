@@ -28,10 +28,13 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
   # POST /social_accounts.json
   def create
     @social_account = SocialAccount.new(social_account_params)
-
+    user_id=session[:user_id]
     respond_to do |format|
       if @social_account.save
-        format.html { redirect_to @social_account, notice: 'Social account was successfully created.' }
+         @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments,social_accounts.channel_name,
+social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id").joins("where social_accounts.creator_id=#{user_id}")
+ 
+        format.html { render :index, notice: 'Social account was successfully created.' }
         format.json { render :show, status: :created, location: @social_account }
       else
         format.html { render :new }
@@ -43,9 +46,13 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
   # PATCH/PUT /social_accounts/1
   # PATCH/PUT /social_accounts/1.json
   def update
+      user_id=session[:user_id]
     respond_to do |format|
       if @social_account.update(social_account_params)
-        format.html { redirect_to @social_account, notice: 'Social account was successfully updated.' }
+         @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments,social_accounts.channel_name,
+social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id").joins("where social_accounts.creator_id=#{user_id}")
+ 
+        format.html { render :index, notice: 'Social account was successfully updated.' }
         format.json { render :show, status: :ok, location: @social_account }
       else
         format.html { render :edit }
@@ -57,9 +64,13 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
   # DELETE /social_accounts/1
   # DELETE /social_accounts/1.json
   def destroy
+    user_id=session[:user_id]
     @social_account.destroy
     respond_to do |format|
-      format.html { redirect_to social_accounts_url, notice: 'Social account was successfully destroyed.' }
+        @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments,social_accounts.channel_name,
+social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id").joins("where social_accounts.creator_id=#{user_id}")
+ 
+      format.html { render :index, notice: 'Social account was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
