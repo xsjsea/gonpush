@@ -1,14 +1,27 @@
  <script type="text/javascript">
 function saveuserinfo(){
-  
+  document.getElementById("frmAccount").submit();
 }
 
 window.onload=initpage();
 function initpage(){
   var currentselect=<%=@userinfo[0].category_id%>
   if(currentselect==""){}else{
-   $("#user_category").val(currentselect);
+  // $("#user_category").val(currentselect);
+   //document.getElementById("").value=currentselect;
+   // set_select_checked('user_category', currentselect);
 }
+}
+
+function set_select_checked(selectId, checkValue){ 
+    var select = document.getElementById("user_category");  
+
+    for (var i = 0; i < select.options.length; i++){  
+        if (select.options[i].value == checkValue){  
+            select.options[i].selected = true;  
+            break;  
+        }  
+    }  
 }
  </script>
   <div id="page-wrapper" class="gray-bg">
@@ -16,9 +29,18 @@ function initpage(){
         <div class="ibox-title">
           <h5>账号设置</h5>
         </div>
+   
+ 
+
+   <form action="saveuserinfo" method="post" enctype="multipart/form-data">
+    <input type="file" name="fileUpload" />
+    <input type="submit" value="上传文件" />
+    </form>
 
         <div class="ibox-content">
-            <form method="get" class="form-horizontal">
+            <form method="post" action="saveuserinfo" method="post" enctype="multipart/form-data" class="form-horizontal" id="frmAccount">
+ 
+
                 <div class="form-group">
                   <label class="col-sm-2 control-label">头像 <br/></label>
                   <div class="col-sm-4">
@@ -29,7 +51,7 @@ function initpage(){
 
                     <div class="btn-group">
                       <label title="Upload image file" for="inputImage" class="btn btn-primary">
-                        <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
+                <input type="file" accept="image/*" name="inputImage" id="inputImage" >
                         上传头像
                       </label>
                     </div>
@@ -37,10 +59,12 @@ function initpage(){
                   </div>
                 </div>
 
+
+
                 <div class="hr-line-dashed"></div>
                 <div class="form-group"><label class="col-sm-2 control-label">昵称 </label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="nickname" value="<%=@userinfo[0].nickname%>">
+                    <input type="text" class="form-control" name="nickname" id="nickname" value="<%=@userinfo[0].nickname%>">
                   </div>
                 </div>
                 <div class="hr-line-dashed"></div>
@@ -70,11 +94,11 @@ function initpage(){
 
                 <div class="hr-line-dashed"></div>
                 <div class="form-group"><label class="col-sm-2 control-label">一句话介绍 </label>
-                  <div class="col-sm-10"><input type="text" class="form-control" value="<%=@userinfo[0].description%>" placeholder="如：某某创始人"></div>
+                  <div class="col-sm-10"><input type="text" id="user_description" name="user_description" class="form-control" value="<%=@userinfo[0].description%>" placeholder="如：某某创始人"></div>
                 </div>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group"><label class="col-sm-2 control-label">个人简介 </label>
-                  <div class="col-sm-10"><textarea type="text" class="form-control"value="<%=@userinfo[0].user_comment%>"></textarea></div>
+                  <div class="col-sm-10"><textarea type="text" name="user_comment" id="user_comment" class="form-control"value="<%=@userinfo[0].user_comment%>"></textarea></div>
                 </div>
                 <div class="hr-line-dashed"></div>
             

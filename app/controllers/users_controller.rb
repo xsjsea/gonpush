@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   layout :products_layout
   skip_before_action :verify_authenticity_token,:only =>:savepassword
   skip_before_action :verify_authenticity_token,:only =>:saveinviterequired
+  skip_before_action :verify_authenticity_token,:only =>:saveuserinfo
   # GET /users
   # GET /users.json
   def index
@@ -102,8 +103,30 @@ class UsersController < ApplicationController
     
    end
   def saveuserinfo
-    current_user
+    #file
+     user_avatar=params[:inputImage]
+    #user_avatar=params[:fileUpload]
+     file_data=user_avatar.read
+     @filename=user_avatar.original_filename
+     root = Rails.root.to_s
+     File.open(root+"/public/uploads/"+@filename,"wb"){|f|f.write(file_data)}
+     user_id=session[:user_id]
+     nickname=params[:nickname]
+     usercategory=params[:user_category]
+     sex=params[:sex]
+     user_description=params[:user_description]
+     user_comment=params[:user_comment]
+    
 
+    sch = User.find_by_id(user_id)
+    sch.update_attribute('nickname',nickname)
+    sch.update_attribute('sex', sex)
+    sch.update_attribute('description',user_description)
+    sch.update_attribute('user_comment', user_comment)
+
+    sch = CreatorExt.find_by_userid(user_id)
+    sch.update_attribute('avatar', @filename)
+    sch.update_attribute('category_id', usercategory)
 
    end
   private
@@ -115,7 +138,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:status, :usertype, :username, :truename, :password, :province_id, :city_id, :distirct_id, :address, :user_comment,:mobile)
+      params.require(:user).permit(:status, :usertype, :username, :truename, :password, :province_id, :city_id, :distirct_id, :address, :user_comment,:mobile,:sex,:nickname)
     end
     def products_layout 
     @user=User.find_by_id(session[:user_id]) 
