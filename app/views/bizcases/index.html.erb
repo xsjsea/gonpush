@@ -28,10 +28,9 @@
                 <td><%=(i+1)%></td>
                 <td><a href="javascript:void(0);"><%= bizcase.bizcase_title %></a></td>
                 <td>
-   
-                   <a href="/bizcases/1/edit?id=<%=bizcase.id%>">编辑</a>
+                   <%= link_to '编辑', edit_bizcase_path(bizcase)%>
                   <a href="/bizcases/destroy/<%=bizcase.id%>">删除</a>
-                  reports
+                  
                 </td>
               </tr>
               <% end %>
@@ -47,4 +46,3 @@
         </div>
       </div>
     </div>
-  </div>

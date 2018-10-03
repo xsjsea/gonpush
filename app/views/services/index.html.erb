@@ -33,7 +33,8 @@
                 <td><%=service.service_price%></td>
                 <td><%=service.service_description%></td>
                 <td>
-                  <a href=" /services/1/edit?id=<%=service.id%>">编辑</a>
+                  <%= link_to '编辑', edit_service_path(service) %>
+                 
                   <a href="/services/destroy/<%=service.id%>">删除</a>
                 </td>
               </tr>

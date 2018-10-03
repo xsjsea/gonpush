@@ -5,7 +5,59 @@
         </div>
 
         <div class="ibox-content">
- <%= render 'form', creator_metric: @creator_metric %>
+       <form method="post" action="/social_accounts" method="post"   class="form-horizontal" id="frmAccount">
+   <div class="form-group"><label class="col-sm-2 control-label">渠道 </label>
+                  <div class="col-sm-10">
+                     <%@metrics.each_with_index do |metric,i| %>
+                    <label class="radio-inline"><input type="radio" value="<%=metric.id%>" name="channel_id"><%=metric.name%></label>
+                    <%end%>
+                  </div>
+                  
+                 
+                </div>
+                <div class="hr-line-dashed"></div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">昵称 </label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="nickname" />
+                  </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+
+                <div class="form-group"><label class="col-sm-2 control-label">粉丝数 </label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control" name="fans" />
+                  </div>
+                  </div> 
+      
+                <div class="hr-line-dashed"></div>
+                <div class="form-group"><label class="col-sm-2 control-label">阅读数 </label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" name="readers" />
+                  </div>
+                 </div>
+       
+                <div class="hr-line-dashed"></div>
+                <div class="form-group"><label class="col-sm-2 control-label">点赞数 </label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" name="praises" />
+                   </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group"><label class="col-sm-2 control-label">评论数 </label>
+                  <div class="col-sm-10">  
+                      <input type="text" class="form-control" name="comments" />
+                   </div>
+                </div>
+                  <input type="hidden" class="form-control" name="creator_id" value="<%=session['user_id']%>" />
+                  
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                    <input type="submit" value="保存" class="btn btn-primary">  
+                    </div>
+                </div>
+  </form>
         </div>
       </div>
       <div class="footer">

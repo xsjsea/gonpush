@@ -26,11 +26,12 @@
               <tbody>
                 <% @creator_metrics.each_with_index do |creator_metric,i| %>
               <tr>
-                <td>1</td>
-                <td>女性</td>
-                <td>90%</td>
+                <td><%=(i+1)%></td>
+                <td><%=creator_metric.metric_name%></td>
+                <td><%=creator_metric.metric_value%></td>
                 <td>
-                    <a href="/creator_metrics/1/edit?id=<%=creator_metric.id%>">编辑</a>
+                    <%= link_to '编辑', edit_creator_metric_path(creator_metric) %>
+                     
                   <a href="/creator_metrics/destroy/<%=creator_metric.id%>">删除</a>
                 </td>
               </tr>

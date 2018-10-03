@@ -49,7 +49,8 @@ Rails.application.routes.draw do
   get '/updatepassword', to: 'users#updatepassword'
   post '/savepassword' , to:'users#savepassword'
   get '/userinfo', to: 'users#userinfo'
-  post '/saveuserinfo' , to:'users#saveuserinfo'
+ 
+  post '/upatesocialaccounts' , to:'social_accounts#upatesocialaccounts'
 
   root to: 'rooms#show'
   # Serve websocket cable requests in-process

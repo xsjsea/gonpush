@@ -10,7 +10,11 @@ class CreatorMetricsController < ApplicationController
    # @creator_metrics = CreatorMetric.all
    current_user
     user_id=session[:user_id]
-    @creator_metrics=CreatorMetric.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
+    @creator_metrics=CreatorMetric.select("creator_metrics.id,creator_metrics.metric_name,creator_metrics.metric_value")
+    .joins("where creator_id=#{user_id}")
+    #@creator_metrics=CreatorMetric.select("creator_metrics.id, metrics.name,creator_metrics.metric_value")
+    #.joins("left join metrics on creator_metrics.metric_id = metrics.id where creator_metrics.creator_id=#{user_id}")
+     
   end
 
   # GET /creator_metrics/1
@@ -25,6 +29,7 @@ class CreatorMetricsController < ApplicationController
 
   # GET /creator_metrics/1/edit
   def edit
+    @metrics=Metrics.all
   end
 
   # POST /creator_metrics
@@ -34,8 +39,9 @@ class CreatorMetricsController < ApplicationController
     user_id=session[:user_id]
     respond_to do |format|
       if @creator_metric.save
-         @creator_metrics=CreatorMetric.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
-
+       #  @creator_metrics=CreatorMetric.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
+          @creator_metrics=CreatorMetric.select("creator_metrics.id,creator_metrics.metric_name,creator_metrics.metric_value")
+    .joins("where creator_id=#{user_id}")
         format.html { render :index, notice: 'Creator metric was successfully created.' }
         format.json { render :show, status: :created, location: @creator_metric }
       else
@@ -51,8 +57,9 @@ class CreatorMetricsController < ApplicationController
       user_id=session[:user_id]
     respond_to do |format|
       if @creator_metric.update(creator_metric_params)
-         @creator_metrics=CreatorMetric.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
-
+        # @creator_metrics=CreatorMetric.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
+      @creator_metrics=CreatorMetric.select("creator_metrics.id,creator_metrics.metric_name,creator_metrics.metric_value")
+    .joins("where creator_id=#{user_id}")
         format.html {render :index, notice: 'Creator metric was successfully updated.' }
         format.json { render :show, status: :ok, location: @creator_metric }
       else
@@ -68,8 +75,9 @@ class CreatorMetricsController < ApplicationController
     user_id=session[:user_id]
     @creator_metric.destroy
     respond_to do |format|
-       @creator_metrics=CreatorMetric.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
-
+       #@creator_metrics=CreatorMetric.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
+ @creator_metrics=CreatorMetric.select("creator_metrics.id,creator_metrics.metric_name,creator_metrics.metric_value")
+    .joins("where creator_id=#{user_id}")
       format.html { render :index, notice: 'Creator metric was successfully destroyed.' }
       format.json { head :no_content }
     end

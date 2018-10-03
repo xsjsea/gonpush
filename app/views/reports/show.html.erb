@@ -25,7 +25,7 @@
               </tr>
               </thead>
               <tbody>
-              <% @reports.each do |report,i| %>
+              <% @reports.each_with_index do |report,i| %>
               <tr>
                 <td><%=i%></td>
                 <td><a href="javascript:void(0);"><%= report.report_title %></a></td>

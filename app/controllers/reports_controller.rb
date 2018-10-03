@@ -23,16 +23,13 @@ class ReportsController < ApplicationController
 
   # GET /reports/new
   def new
-     current_user
+    current_user
     @report = Report.new
   end
 
   # GET /reports/1/edit
   def edit
-     current_user
-    @reports =Report.select("reports.report_title,reports.id,users.username")
-    .joins("left join users on reports.report_author=users.id where reports.report_author=#{@current_user.id}")
- 
+   
   end
 
   # POST /reports
@@ -44,9 +41,9 @@ class ReportsController < ApplicationController
       if @report.save
         #render reports_url
         @reports =Report.select("reports.report_title,reports.id,users.username,reports.report_source,reports.report_source")
-    .joins("left join users on reports.report_author=users.id where reports.report_author=#{@current_user.id}")
+    .joins("left join users on reports.report_author=users.id where reports.report_author=#{user_id}")
 
-        format.html { redirect_to @report, notice: 'Report was successfully created.' }
+        format.html { render :index, notice: 'Report was successfully created.' }
         format.json { render :index, status: :created, location: @report }
       else
         format.html { render :new }
@@ -62,9 +59,9 @@ class ReportsController < ApplicationController
     respond_to do |format|
       if @report.update(report_params)
          @reports =Report.select("reports.report_title,reports.id,users.username,reports.report_source,reports.report_source")
-    .joins("left join users on reports.report_author=users.id where reports.report_author=#{@current_user.id}")
+    .joins("left join users on reports.report_author=users.id where reports.report_author=#{user_id}")
 
-        format.html { redirect_to @report, notice: 'Report was successfully updated.' }
+        format.html {render :index, notice: 'Report was successfully updated.' }
         format.json { render :show, status: :ok, location: @report }
       else
         format.html { render :edit }
@@ -80,9 +77,9 @@ class ReportsController < ApplicationController
     user_id=session[:user_id]
     respond_to do |format|
        @reports =Report.select("reports.report_title,reports.id,users.username,reports.report_source,reports.report_source")
-    .joins("left join users on reports.report_author=users.id where reports.report_author=#{@current_user.id}")
+    .joins("left join users on reports.report_author=users.id where reports.report_author=#{user_id}")
 
-      format.html { redirect_to reports_url, notice: 'Report was successfully destroyed.' }
+      format.html { render :index, notice: 'Report was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -90,7 +87,7 @@ class ReportsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_report
-      logged_in_user
+      #logged_in_user
       @report = Report.find(params[:id])
     end
 

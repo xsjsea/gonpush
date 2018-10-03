@@ -29,9 +29,10 @@
               <tr>
                 <td><%=(i+1)%></td>
                 <td><a href="javascript:void(0);"><%= report.report_title %></a></td>
-                <td><%= report.username %></td>
+                <td><%= report.report_source%></td>
                 <td>
-                  <a href="/reports/1/edit?id=<%=report.id%>">编辑</a>
+                  <%= link_to '编辑', edit_report_path(report) %>
+                  
                   <a href="/reports/destroy/<%=report.id%>">删除</a>
                 </td>
               </tr>

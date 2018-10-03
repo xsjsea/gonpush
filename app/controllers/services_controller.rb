@@ -25,8 +25,8 @@ class ServicesController < ApplicationController
 
   # GET /services/1/edit
   def edit
-    id=params[:id]
-    @service =Service.find_by_id(id)
+   # id=params[:id]
+   # @service =Service.find_by_id(id)
   end
 
   # POST /services

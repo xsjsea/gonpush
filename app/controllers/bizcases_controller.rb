@@ -5,10 +5,11 @@ layout :products_layout
   # GET /bizcases.json
   def index
     #@bizcases = Bizcase.all
-      current_user
+    current_user
     #@reports = Report.all
+    user_id=session[:user_id]
     @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
-    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{@current_user.id}")
+    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
 
   end
 
@@ -34,9 +35,8 @@ layout :products_layout
     respond_to do |format|
       if @bizcase.save
          @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
-    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{@current_user.id}")
-
-        format.html { render :index,, notice: 'Bizcase was successfully created.' }
+    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
+        format.html { render :index, notice: 'Bizcase was successfully created.' }
         format.json { render :show, status: :created, location: @bizcase }
       else
         format.html { render :new }
@@ -48,13 +48,13 @@ layout :products_layout
   # PATCH/PUT /bizcases/1
   # PATCH/PUT /bizcases/1.json
   def update
-      user_id=session[:user_id]
+    user_id=session[:user_id]
     respond_to do |format|
       if @bizcase.update(bizcase_params)
          @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
-    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{@current_user.id}")
+    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
 
-        format.html { render :index,, notice: 'Bizcase was successfully updated.' }
+        format.html { render :index, notice: 'Bizcase was successfully updated.' }
         format.json { render :show, status: :ok, location: @bizcase }
       else
         format.html { render :edit }
@@ -70,7 +70,7 @@ layout :products_layout
     @bizcase.destroy
     respond_to do |format|
        @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
-    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{@current_user.id}")
+    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
 
       format.html { render :index, notice: 'Bizcase was successfully destroyed.' }
       format.json { head :no_content }
