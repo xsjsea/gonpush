@@ -122,7 +122,7 @@ class UsersController < ApplicationController
      contactmobile=params[:contactmobile]
      companyaddress=params[:companyaddress]
     sch = MarketerExt.find_by_id(marketerinfoid)
-    sch.update_attribute('taxcode',taxcode)
+    sch.update_attribute('taxcode','123')
     sch.update_attribute('bankname', bankname)
     sch.update_attribute('bankaccount',bankaccount)
     sch.update_attribute('companyname', companyname)
