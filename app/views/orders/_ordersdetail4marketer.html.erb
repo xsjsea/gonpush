@@ -1,6 +1,15 @@
- <div class="row border-bottom">
+<style>
+.hidepart{display:none;}
+</style>
+ 
+<input type="hidden" name="order_id" id="order_id" value="<%=@orders[0].id%>"/>
+<input type="hidden" name="user_id" id="user_id" value="<%=@user.id%>"/>
+<input type="hidden" name="creatorstatus" id="creatorstatus" value="0"/>
+<input type="hidden" name="marketerstatus" id="marketerstatus" value="1"/>
+<input type="hidden" name="adminstatus" id="adminstatus" value="1"/>
+<div class="row border-bottom">
         <div class="ibox-title">
-          <p>订单号：<strong>003214</strong></p>
+          <p>订单号：<strong><%=@orders[0].id%></strong></p>
         </div>
       </div>
 
@@ -10,71 +19,93 @@
             <ul class="list-group elements-list">
                 <li class="list-group-item active">
                   <a data-toggle="tab" href="#tab-1">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger"></span>
                     <strong>需求详情</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                        
                     </div>
                   </a>
                 </li>
-                <li class="list-group-item">
+                <li onclick="updatemessage(1)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-2">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger" id="msg_1"> <%@unreadmessages.each_with_index do |message,i| %>
+                         <%if message.step_order==1%>
+                              <%=message.total%>
+                         <%end%>
+                         <%end%></span>
                     <strong>要点提炼</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                      <i class="fa fa-clock-o"></i><%=@steporder_1[0].messagetime%>  
                     </div>
                   </a>
                 </li>
-                <li class="list-group-item">
+                <li onclick="updatemessage(2)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-3">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger" id="msg_2"><%@unreadmessages.each_with_index do |message,i| %>
+                         <%if message.step_order==2%>
+                              <%=message.total%>
+                         <%end%>
+                         <%end%></span></span>
                     <strong>创意大纲</strong>
                     <div class="small m-t-xs">
-                      <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                      <span class="label pull-right label-primary"></span></span>
+                      <i class="fa fa-clock-o"></i><%=@steporder_2[0].messagetime%>  
                     </div>
                   </a>
                 </li>
-                <li class="list-group-item">
+                <li onclick="updatemessage(3)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-4">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger" id="msg_3"><%@unreadmessages.each_with_index do |message,i| %>
+                         <%if message.step_order==3%>
+                              <%=message.total%>
+                         <%end%>
+                         <%end%></span>
                     <strong>具体脚本</strong>
                     <div class="small m-t-xs">
-                      <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                      <span class="label pull-right label-primary"></span></span>
+                      <i class="fa fa-clock-o"></i><%=@steporder_3[0].messagetime%>  
                     </div>
                   </a>
                 </li>
-                <li class="list-group-item">
+                <li onclick="updatemessage(4)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-5">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger" id="msg_4"><%@unreadmessages.each_with_index do |message,i| %>
+                         <%if message.step_order==4%>
+                              <%=message.total%>
+                         <%end%>
+                         <%end%></span>
                     <strong>绘图视频</strong>
                     <div class="small m-t-xs">
-                      <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                      <span class="label pull-right label-primary"></span></span>
+                      <i class="fa fa-clock-o"></i><%=@steporder_4[0].messagetime%>  
                     </div>
                   </a>
                 </li>
-                <li class="list-group-item">
+                <li onclick="updatemessage(5)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-6">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger" id="msg_5">
+                      <%@unreadmessages.each_with_index do |message,i| %>
+                         <%if message.step_order==5%>
+                              <%=message.total%>
+                         <%end%>
+                         <%end%>
+                      </span>
                     <strong>排版成稿</strong>
                     <div class="small m-t-xs">
-                      <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                      <span class="label pull-right label-primary"></span></span>
+                      <i class="fa fa-clock-o"></i> <%=@steporder_5[0].messagetime%> 
                     </div>
                   </a>
                 </li>
                 <li class="list-group-item">
                   <a data-toggle="tab" href="#tab-7">
-                    <span class="pull-right badge badge-danger">10</span>
+                    <span class="pull-right badge badge-danger"></span>
                     <strong>合作评价</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i> 2018-09-12 12:00
+                         
                     </div>
                   </a>
                 </li>
@@ -95,25 +126,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                         <tr>
                           <td><div><strong class="small">项目名称 / 关键信息</strong></div>
-                          <small>百雀羚母亲节活动 / 月光宝盒系列</small></td>
+                          <small><%=@orders[0].name%> / <%=@orders[0].description%> </small></td>
                         </tr>
                         <tr>
                           <td>
                             <div><strong class="small">投放日期 / 预算</strong></div>
-                            <small>2018-11-17 / 80万 </small>
+                            <small><%=@orders[0].start%>  / <%=@orders[0].budget%> 万 </small>
                             <div><strong class="small">联系方式</strong></div>
-                            <small>北京好梦成真文化创意有限公司<br>张先生 / 138 8888 8888</small>
+                            <small><%=@orders[0].address%> <br> <%=@orders[0].truename%>/<%=@orders[0].mobile%></small>
                           </td>
                         </tr>
                         </tbody>
                       </table>
-
-                      <div class="hr-line-dashed"></div>
-                      <p class="small">
-                        <strong>项目排期 </strong>
-                      </p>
+   
                       <table class="table small">
                         <thead>
                         <tr>
@@ -123,141 +150,214 @@
                           <th>交付日期</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
+<% @schedules.each_with_index do |schedule,i| %>      
+<%if i==0%>
+                          <tr>
                           <td>1</td>
                           <td>要点提炼</td>
-                          <td>1</td>
-                          <td>2018-10-5</td>
+                          <td><%=schedule.workdays%></td>
+                          <td><%=schedule.workdays%></td>
                         </tr>
-                        <tr>
-                          <td>2</td>
+ <%elsif i==1%>
+
+   <tr>
+                          <td>1</td>
                           <td>创意大纲</td>
-                          <td>1</td>
-                          <td>2018-10-6</td>
+                          <td><%=schedule.workdays%></td>
+                          <td><%=schedule.workdays%></td>
                         </tr>
-                        <tr>
-                          <td>3</td>
+ <%elsif i==2%>
+  <tr>
+                          <td>1</td>
                           <td>具体脚本</td>
-                          <td>1</td>
-                          <td>2018-10-7</td>
+                          <td><%=schedule.workdays%></td>
+                          <td><%=schedule.workdays%></td>
                         </tr>
 
-                        <tr>
-                          <td>4</td>
+ <%elsif i==3%>
+  <tr>
+                          <td>1</td>
                           <td>绘图/视频</td>
-                          <td>1</td>
-                          <td>2018-10-8</td>
+                          <td><%=schedule.workdays%></td>
+                          <td><%=schedule.workdays%></td>
                         </tr>
-                        <tr>
-                          <td>5</td>
+<%elsif i==4%>
+  <tr>
+                          <td>1</td>
                           <td>排版成稿</td>
-                          <td>1</td>
-                          <td>2018-10-9</td>
+                          <td><%=schedule.workdays%></td>
+                          <td><%=schedule.workdays%></td>
                         </tr>
+                        <%end%>  
+                        <%end%>       
                         </tbody>
-                      </table>
+                      </table>               
                     </div>
-
-                    <div id="tab-2" class="tab-pane">
-                      <div class="pull-right">
-                        <a href="javascript:;"><!-- 编辑 --></a>
-                      </div>
-
+             
+ <div id="tab-2" class="tab-pane">
+                     
                       <h3>要点提炼</h3>
-                      <p>
-                        <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
-                        https://shimo.im/docs/njcbckIHiI4dvq2K
-                        </a>
-                      </p>
-                      <div class="hr-line-dashed"></div>
-                      <div class="feed-activity-list">
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a1.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right text-navy">刚刚</small>
-                            <strong>释老毛</strong>
-                            <p>哈哈哈哈 现在流行这种说法</p>
-                          </div>
-                        </div>
+                  <p>
+                    <a id="post_a_2" href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
+                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                    </a>
+                  </p>
+                  <div class="hr-line-dashed"></div>
 
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a2.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right">10分钟前</small>
-                            <strong>雪球社区</strong>
-                            <p>有几处语句麻烦改下</p>
-                          </div>
-                        </div>
 
-                        <div class="input-group">
-                          <input type="text" class="form-control">
-                          <span class="input-group-btn">
-                          <button type="button" class="btn btn-primary">发布</button>
-                          </span>
-                        </div>
-
-                      </div>
+                  <div class="feed-activity-list">
+                    <!-- STEP 1 -->
+                    <!-- Messages List BEGIN -->
+                    <%   @messages = Message.where(order_id:@order_id,step_order:1) %>
+                    <div id="messages_list_1">
+                      <%= render @messages %>
                     </div>
 
-                    <div id="tab-3" class="tab-pane">
-                      <div class="pull-right">
-                        <a href="javascript:;"><!-- 编辑 --></a>
-                      </div>
+                    <div class="input-group">
+                      <input type="text" data-behavior="room_speaker_1" class="form-control" id="step_order_1">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary">发布</button>
+                      </span>
+                    </div>
+                    <!-- Messages List END -->
+                  </div>
+                </div>
 
-                      <h3>创意大纲</h3>
-                      <p>
-                        <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
-                        https://shimo.im/docs/njcbckIHiI4dvq2K
-                        </a>
-                      </p>
-                      <div class="hr-line-dashed"></div>
-                      <div class="feed-activity-list">
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a1.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right text-navy">刚刚</small>
-                            <strong>释老毛</strong>
-                            <p>哈哈哈哈 现在流行这种说法</p>
-                          </div>
-                        </div>
+                <div id="tab-3" class="tab-pane">
+                 
+                  
+                  <h3>创意大纲</h3>
+                  <p>
+                    <a id="post_a_2" href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
+                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                    </a>
+                  </p>
+                   
 
-                        <div class="feed-element">
-                          <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a2.jpg">
-                          </a>
-                          <div class="media-body ">
-                            <small class="pull-right">10分钟前</small>
-                            <strong>雪球社区</strong>
-                            <p>有几处语句麻烦改下</p>
-                          </div>
-                        </div>
-
-                        <div class="input-group">
-                          <input type="text" class="form-control">
-                          <span class="input-group-btn">
-                          <button type="button" class="btn btn-primary">发布</button>
-                          </span>
-                        </div>
-
-                      </div>
+                  
+                  <div class="hr-line-dashed"></div>
+                  <div class="feed-activity-list">
+                    <!-- STEP 2 -->
+                    <!-- Messages List BEGIN -->
+                    <% @messages = Message.where(order_id:@order_id,step_order:2) %>
+                    <div id="messages_list_2">
+                      <%= render @messages %>
                     </div>
 
+                    <div class="input-group">
+                      <input type="text" data-behavior="room_speaker_2" class="form-control" id="step_order_2">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary">发布</button>
+                      </span>
+                    </div>
+                    <!-- Messages List END -->
+                  </div>
+                </div>
+
+                <div id="tab-4" class="tab-pane">
+                   
+                  <h3>具体脚本</h3>
+                  <p>
+                    <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
+                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                    </a>
+                  </p>
+                     
+
+                  <div id="post_div_3" class="form-group hidepart">
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(3)" id="post_btn_3" type="button">提交
+                    </button>
+                  </div>
+                  <div class="hr-line-dashed"></div>
+                  <div class="feed-activity-list">
+                    <!-- STEP 3 -->
+                    <!-- Messages List BEGIN -->
+                    <% @messages = Message.where(order_id:@order_id,step_order:3) %>
+                    <div id="messages_list_3">
+                      <%= render @messages %>
+                    </div>
+
+                    <div class="input-group">
+                      <input type="hidden" name="schedule_3" value="<%@schedules[0].id%>"/>
+                    
+                      <input type="text" data-behavior="room_speaker_3" class="form-control" id="step_order_3">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary">发布</button>
+                      </span>
+                    </div>
+                    <!-- Messages List END -->
+                  </div>
+                </div>
+
+                <div id="tab-5" class="tab-pane">
+                   
+
+                  <h3>绘图/视频</h3>
+                  <p>
+                    <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
+                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                    </a>
+                  </p>
+                     
+
+                 
+                  <div class="hr-line-dashed"></div>
+                  <div class="feed-activity-list">
+                    <!-- STEP 4 -->
+                    <!-- Messages List BEGIN -->
+                    <% @messages = Message.where(order_id:@order_id,step_order:4) %>
+                    <div id="messages_list_4">
+                      <%= render @messages %>
+                    </div>
+
+                    <div class="input-group">
+                      <input type="text" data-behavior="room_speaker_4" class="form-control" id="step_order_4">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary">发布</button>
+                      </span>
+                    </div>
+                    <!-- Messages List END -->
+                  </div>
+                </div>
+
+                <div id="tab-6" class="tab-pane">
+                 
+
+                  <h3>排版成稿</h3>
+                  <p>
+                    <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
+                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                    </a>
+                    <input type="hidden" name="schedule_5" value="<%@schedules[4].id%>"
+                  </p>
+                  <div class="hr-line-dashed"></div>
+                  <div class="feed-activity-list">
+                    <!-- STEP 5 -->
+                    <!-- Messages List BEGIN -->
+                    <% @messages = Message.where(order_id:@order_id,step_order:5) %>
+                    <div id="messages_list_5">
+                      <%= render @messages %>
+                    </div>
+
+                    <div class="input-group">
+                      <input type="text" data-behavior="room_speaker_5" class="form-control" id="step_order_5">
+                      <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary">发布</button>
+                      </span>
+                    </div>
+                    <!-- Messages List END -->
+                  </div>
+                </div>
                     <div id="tab-7" class="tab-pane">
                       <div class="form-group">
                         <h3>合作评价</h3>
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
                       </div>
-                      <button class="btn btn-sm btn-primary">提交</button>
+                      <button class="btn btn-sm btn-primary" onclick="submitcomments()">提交</button>
                     </div>
 
                   </div>
               </div>
           </div>
         </div>
+      </div>

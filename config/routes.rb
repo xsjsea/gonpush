@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
  
+  resources :marketer_exts
   resources :bizcases
   resources :socail_accounts
   resources :social_channels

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_01_093200) do
+ActiveRecord::Schema.define(version: 2018_10_03_054859) do
 
   create_table "areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "areaName"
@@ -116,6 +116,20 @@ ActiveRecord::Schema.define(version: 2018_10_01_093200) do
     t.string "flow_type"
     t.string "flow_name"
     t.integer "flow_order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "marketer_exts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "userid"
+    t.integer "category_id"
+    t.string "companyname"
+    t.string "companyaddress"
+    t.string "taxcode"
+    t.string "bankname"
+    t.string "bankaccount"
+    t.string "contactname"
+    t.string "contactmobile"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
