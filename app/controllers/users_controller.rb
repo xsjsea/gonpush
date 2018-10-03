@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  layout :products_layout
+  layout :products_layout,except:[:new]
   skip_before_action :verify_authenticity_token,:only =>:savepassword
   skip_before_action :verify_authenticity_token,:only =>:saveinviterequired
   skip_before_action :verify_authenticity_token,:only =>:saveuserinfo

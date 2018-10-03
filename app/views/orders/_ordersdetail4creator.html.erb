@@ -85,10 +85,13 @@ function updatepost(seq){
 
 function doResult() {                
  if (xmlHttpReg.readyState == 4 && xmlHttpReg.status == 200) {  
-   alert('更改成功');
+   //alert('更改成功');
+   document.getElementById("post_a_"+currentseq).classList.remove("hidepart");
+   document.getElementById("btn_edit_"+currentseq).classList.remove("hidepart");
    document.getElementById("post_div_"+currentseq).classList.add("hidepart");
    document.getElementById("post_p_"+currentseq).classList.add("hidepart");
-   document.getElementById("post_a_"+currentseq).innerHTML=xmlHttpReg.responseText;
+   document.getElementById("post_a_"+currentseq).setAttribute('href',xmlHttpReg.responseText);
+   document.getElementById("post_a_"+currentseq).innerText=xmlHttpReg.responseText;
  }
 }
 
@@ -116,7 +119,9 @@ Date.prototype.format = function(format)
     d = new Date(d.getTime());
     var day = d.getDay();
     d.setDate(d.getDate() + n + (day === 6 ? 2 : +!day) + (Math.floor((n - 1 + (day % 6 || 1)) / 5) * 2));
+    alert(d);
      $("#td_"+i).text(d.format('yyyy-MM-dd'));
+     $("#submitday_"+i).val(d.format('yyyy-MM-dd'));
     return d;
   }
 
@@ -129,13 +134,13 @@ Date.prototype.format = function(format)
     }
 }
   function caculateDay(i){
-     return;
+  
      var d = new Date();
-     alert(addBusinessDays(d,5,1));
+      var curDays=$("#input_"+i).val();
+     //alert(addBusinessDays(d,parseInt(curDays),1));
 
-    var curDays=$("#input_"+i).val();
     if(isInteger(curDays)){
-        addBusinessDays(curDays,i)
+        addBusinessDays(d,parseInt(curDays),i)
 
     }else{
       alert("输入大于0的整数");
@@ -327,6 +332,7 @@ Date.prototype.format = function(format)
                         
                         <% @schedules.each_with_index do |schedule,i| %>
                         <input type="hidden" value="<%=schedule.id%>" name="scheduleId_<%=i%>" id="scheduleId_<%=i%>"/>
+                        <input type="hidden" value="<%=schedule.workdays%>" name="submitday_<%=i%>" id="submitday_<%=i%>"/>
                        <%if i==0%>
                         <tr>
                           <td>1</td>
@@ -391,23 +397,51 @@ Date.prototype.format = function(format)
                       </form>
                       <button class="btn btn-primary btn-sm" type="button" onclick="updateSchedule()">提交排期</button>                 
                     </div>
-
+                   <input type="hidden" value="<%=@schedules[0].post_id%>"/>
                     <div id="tab-2" class="tab-pane">
-                       <div class="pull-right">
+                   <%if @schedules[0].post_id !=nil%>
+                  <div id="btn_edit_1" class="pull-right">
                     <a href="javascript:void()" onclick="editPost(1)">编辑</a>
                   </div>
+                  <%else%>
+                  <div  id="btn_edit_1" class="pull-right hidepart">
+                    <a href="javascript:void()" onclick="editPost(1)">编辑</a>
+                  </div>
+                  <%end%>
                       <h3>要点提炼</h3>
-                  <p class="small">提交在线文档链接，推荐使用石墨文档</p>
-                  <p id="post_p_1" class="hidepart">
-                    <input type="hidden" name="post_schedule_1" id="post_schedule_1" value="<%=@schedules[0].id%>"/>
-                    <input type="text" id="post_input_1" class="form-control form-control-sm" placeholder="https://">
+                    <p class="small">提交在线文档链接，推荐使用石墨文档</p>
+                     <%if @schedules[0].post_id !=nil%>
+                  <p id="post_content_1">
+                    <a id="post_a_1" href="<%=@schedules[0].post_content%>" target="blank">
+                      <%=@schedules[0].post_content%>
+                    </a>
                   </p>
 
-                  
+                   <p id="post_p_1" class="hidepart">
+                    <input type="hidden" name="post_schedule_1" id="post_schedule_1" value="<%=@schedules[0].id%>"/>
+                    <input type="text" id="post_input_1" class="form-control form-control-sm" placeholder="https://" value="<%=@schedules[0].post_content%>">
+                  </p>
                   <div id="post_div_1" class="form-group hidepart">
-                    <button class="btn btn-sm btn-primary" onclick="updatepost(1)" id="post_btn_1" type="button">提交
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(1)" id="post_btn_2" type="button">提交
                     </button>
                   </div>
+                    <%else%>
+                     <p id="post_content_1 hidepart">
+                    <a id="post_a_2" href="<%=@schedules[0].post_content%>" target="blank">
+                      <%=@schedules[0].post_content%>
+                    </a>
+                   </p>  
+                    <p id="post_p_1" >
+                    <input type="hidden" name="post_schedule_1" id="post_schedule_1" value="<%=@schedules[0].id%>"/>
+                    <input type="text" id="post_input_2" class="form-control form-control-sm" placeholder="https://">
+                  </p>
+
+                  <div id="post_div_1" class="form-group ">
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(1)" id="post_btn_2" type="button">提交
+                    </button>
+                  </div>
+
+                   <%end%>
 
                   <div class="hr-line-dashed"></div>
 
@@ -431,25 +465,48 @@ Date.prototype.format = function(format)
                 </div>
 
                 <div id="tab-3" class="tab-pane">
-                  <div class="pull-right">
+                  <%if @schedules[1].post_id !=nil%>
+                  <div id="btn_edit_2" class="pull-right">
                     <a href="javascript:void()" onclick="editPost(2)">编辑</a>
                   </div>
-                  
+                  <%else%>
+                  <div  id="btn_edit_2" class="pull-right hidepart">
+                    <a href="javascript:void()" onclick="editPost(2)">编辑</a>
+                  </div>
+                  <%end%>
                   <h3>创意大纲</h3>
-                  <p>
-                    <a id="post_a_2" href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
-                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                   <%if @schedules[1].post_id !=nil%>
+                  <p id="post_content_2">
+                    <a id="post_a_2" href="<%=@schedules[1].post_content%>" target="blank">
+                      <%=@schedules[1].post_content%>
                     </a>
                   </p>
+
                    <p id="post_p_2" class="hidepart">
                     <input type="hidden" name="post_schedule_2" id="post_schedule_2" value="<%=@schedules[1].id%>"/>
-                    <input type="text" id="post_input_2" class="form-control form-control-sm" placeholder="https://">
+                    <input type="text" id="post_input_2" class="form-control form-control-sm" placeholder="https://" value="<%=@schedules[1].post_content%>">
                   </p>
-
                   <div id="post_div_2" class="form-group hidepart">
                     <button class="btn btn-sm btn-primary" onclick="updatepost(2)" id="post_btn_2" type="button">提交
                     </button>
                   </div>
+                    <%else%>
+                     <p id="post_content_2 hidepart">
+                    <a id="post_a_2" href="<%=@schedules[1].post_content%>" target="blank">
+                      <%=@schedules[1].post_content%>
+                    </a>
+                   </p>  
+                    <p id="post_p_2" >
+                    <input type="hidden" name="post_schedule_2" id="post_schedule_2" value="<%=@schedules[1].id%>"/>
+                    <input type="text" id="post_input_2" class="form-control form-control-sm" placeholder="https://">
+                  </p>
+
+                  <div id="post_div_2" class="form-group ">
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(2)" id="post_btn_2" type="button">提交
+                    </button>
+                  </div>
+
+                   <%end%>
                   <div class="hr-line-dashed"></div>
                   <div class="feed-activity-list">
                     <!-- STEP 2 -->
@@ -470,26 +527,49 @@ Date.prototype.format = function(format)
                 </div>
 
                 <div id="tab-4" class="tab-pane">
-                    <div class="pull-right">
+                      <%if @schedules[2].post_id !=nil%>
+                  <div id="btn_edit_3" class="pull-right">
                     <a href="javascript:void()" onclick="editPost(3)">编辑</a>
                   </div>
+                  <%else%>
+                  <div  id="btn_edit_3" class="pull-right hidepart">
+                    <a href="javascript:void()" onclick="editPost(3)">编辑</a>
+                  </div>
+                  <%end%>
 
                   <h3>具体脚本</h3>
-                  <p>
-                    <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
-                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                   <%if @schedules[2].post_id !=nil%>
+                  <p id="post_content_3">
+                    <a id="post_a_3" href="<%=@schedules[2].post_content%>" target="blank">
+                      <%=@schedules[2].post_content%>
                     </a>
                   </p>
-                    <p id="post_p_3" class="hidepart">
-                    <input type="hidden" name="post_schedule_3" id="post_schedule_3" 
-                    value="<%=@schedules[2].id%>"/>
-                    <input type="text" id="post_input_3" class="form-control form-control-sm" placeholder="https://">
-                  </p>
 
+                   <p id="post_p_3" class="hidepart">
+                    <input type="hidden" name="post_schedule_3" id="post_schedule_3" value="<%=@schedules[2].id%>"/>
+                    <input type="text" id="post_input_3" class="form-control form-control-sm" placeholder="https://" value="<%=@schedules[2].post_content%>">
+                  </p>
                   <div id="post_div_3" class="form-group hidepart">
                     <button class="btn btn-sm btn-primary" onclick="updatepost(3)" id="post_btn_3" type="button">提交
                     </button>
                   </div>
+                    <%else%>
+                     <p id="post_content_3" class="hidepart">
+                    <a id="post_a_3" href="<%=@schedules[2].post_content%>" target="blank">
+                      <%=@schedules[2].post_content%>
+                    </a>
+                   </p>  
+                    <p id="post_p_3" >
+                    <input type="hidden" name="post_schedule_3" id="post_schedule_3" value="<%=@schedules[2].id%>"/>
+                    <input type="text" id="post_input_3" class="form-control form-control-sm" placeholder="https://">
+                  </p>
+
+                  <div id="post_div_3" class="form-group ">
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(3)" id="post_btn_3" type="button">提交
+                    </button>
+                  </div>
+
+                   <%end%>
                   <div class="hr-line-dashed"></div>
                   <div class="feed-activity-list">
                     <!-- STEP 3 -->
@@ -512,25 +592,49 @@ Date.prototype.format = function(format)
                 </div>
 
                 <div id="tab-5" class="tab-pane">
-                  <div class="pull-right">
+                   <%if @schedules[3].post_id !=nil%>
+                  <div id="btn_edit_4" class="pull-right">
                     <a href="javascript:void()" onclick="editPost(4)">编辑</a>
                   </div>
+                  <%else%>
+                  <div  id="btn_edit_4" class="pull-right hidepart">
+                    <a href="javascript:void()" onclick="editPost(4)">编辑</a>
+                  </div>
+                  <%end%>
 
                   <h3>绘图/视频</h3>
-                  <p>
-                    <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
-                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                  <%if @schedules[3].post_id !=nil%>
+                  <p id="post_content_4">
+                    <a id="post_a_4" href="<%=@schedules[3].post_content%>" target="blank">
+                      <%=@schedules[3].post_content%>
                     </a>
                   </p>
-                    <p id="post_p_4" class="hidepart">
-                    <input type="hidden" name="post_schedule_4" id="post_schedule_4" value="<%=@schedules[3].id%>"/>
-                    <input type="text" id="post_input_4" class="form-control form-control-sm" placeholder="https://">
-                  </p>
 
+                   <p id="post_p_4" class="hidepart">
+                    <input type="hidden" name="post_schedule_4" id="post_schedule_4" value="<%=@schedules[3].id%>"/>
+                    <input type="text" id="post_input_4" class="form-control form-control-sm" placeholder="https://" value="<%=@schedules[3].post_content%>">
+                  </p>
                   <div id="post_div_4" class="form-group hidepart">
                     <button class="btn btn-sm btn-primary" onclick="updatepost(4)" id="post_btn_4" type="button">提交
                     </button>
                   </div>
+                    <%else%>
+                     <p id="post_content_4" class="hidepart">
+                     <a id="post_a_4" href="<%=@schedules[3].post_content%>" target="blank">
+                      <%=@schedules[3].post_content%>
+                    </a>
+                   </p>  
+                    <p id="post_p_4" >
+                    <input type="hidden" name="post_schedule_4" id="post_schedule_4" value="<%=@schedules[3].id%>"/>
+                    <input type="text" id="post_input_4" class="form-control form-control-sm" placeholder="https://">
+                  </p>
+
+                  <div id="post_div_4" class="form-group ">
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(4)" id="post_btn_4" type="button">提交
+                    </button>
+                  </div>
+
+                   <%end%>
                   <div class="hr-line-dashed"></div>
                   <div class="feed-activity-list">
                     <!-- STEP 4 -->
@@ -551,26 +655,49 @@ Date.prototype.format = function(format)
                 </div>
 
                 <div id="tab-6" class="tab-pane">
-                  <div class="pull-right">
+                   <%if @schedules[4].post_id !=nil%>
+                  <div id="btn_edit_5" class="pull-right">
                     <a href="javascript:void()" onclick="editPost(5)">编辑</a>
                   </div>
+                  <%else%>
+                  <div  id="btn_edit_5" class="pull-right hidepart">
+                    <a href="javascript:void()" onclick="editPost(5)">编辑</a>
+                  </div>
+                  <%end%>
 
                   <h3>排版成稿</h3>
-                  <p>
-                    <a href="https://shimo.im/docs/njcbckIHiI4dvq2K" target="blank">
-                    https://shimo.im/docs/njcbckIHiI4dvq2K
+                  <%if @schedules[4].post_id !=nil%>
+                  <p id="post_content_5">
+                    <a id="post_a_5" href="<%=@schedules[4].post_content%>" target="blank">
+                      <%=@schedules[4].post_content%>
                     </a>
-                    <input type="hidden" name="schedule_5" value="<%@schedules[4].id%>"
-                  </p>
-                    <p id="post_p_5" class="hidepart">
-                    <input type="hidden" name="post_schedule_5" id="post_schedule_5" value="<%=@schedules[4].id%>"/>
-                    <input type="text" id="post_input_2" class="form-control form-control-sm" placeholder="https://">
                   </p>
 
+                   <p id="post_p_5" class="hidepart">
+                    <input type="hidden" name="post_schedule_5" id="post_schedule_5" value="<%=@schedules[4].id%>"/>
+                    <input type="text" id="post_input_5" class="form-control form-control-sm" placeholder="https://" value="<%=@schedules[4].post_content%>">
+                  </p>
                   <div id="post_div_5" class="form-group hidepart">
+                    <button class="btn btn-sm btn-primary" onclick="updatepost(5)" id="post_btn_5 type="button">提交
+                    </button>
+                  </div>
+                    <%else%>
+                     <p p id="post_content_5" class="hidepart">
+                    <a id="post_a_5" href="<%=@schedules[4].post_content%>" target="blank">
+                      <%=@schedules[4].post_content%>
+                    </a>
+                   </p>  
+                    <p id="post_p_5" >
+                    <input type="hidden" name="post_schedule_2" id="post_schedule_5" value="<%=@schedules[4].id%>"/>
+                    <input type="text" id="post_input_5" class="form-control form-control-sm" placeholder="https://">
+                  </p>
+
+                  <div id="post_div_5" class="form-group ">
                     <button class="btn btn-sm btn-primary" onclick="updatepost(5)" id="post_btn_5" type="button">提交
                     </button>
                   </div>
+
+                   <%end%>
                   <div class="hr-line-dashed"></div>
                   <div class="feed-activity-list">
                     <!-- STEP 5 -->

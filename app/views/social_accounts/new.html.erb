@@ -8,8 +8,8 @@
        <form method="post" action="/social_accounts" method="post"   class="form-horizontal" id="frmAccount">
    <div class="form-group"><label class="col-sm-2 control-label">渠道 </label>
                   <div class="col-sm-10">
-                     <%@metrics.each_with_index do |metric,i| %>
-                    <label class="radio-inline"><input type="radio" value="<%=metric.id%>" name="channel_id"><%=metric.name%></label>
+                     <%@social_channels.each_with_index do |social_channel,i| %>
+                    <label class="radio-inline"><input type="radio" value="<%=social_channel.id%>" name="channel_id"><%=social_channel.name%></label>
                     <%end%>
                   </div>
                   

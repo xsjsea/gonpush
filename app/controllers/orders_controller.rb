@@ -63,6 +63,7 @@ end
   # POST /orders
   # POST /orders.json
   def create
+    user_id=session[:user_id]
   @order = Order.new(allowed_params)
   curTime =Date.today
     if @order.save
@@ -97,7 +98,7 @@ end
       status='0',
       flow_id=5, 
       order_id='#{@order.id}',
-      created_at='#{curTime}',updated_at='#{curTime}'"  
+      created_at='#{curTime}',updated_at='#{curTime}'"
 
       # return New Order ID
       #
@@ -112,7 +113,7 @@ def showOrder
     @user= User.find_by_id(session[:user_id]) 
     @order_id=params[:id]
     currentorder_id=params[:id]
-    @schedules= Schedule.select("flows.flow_order,flows.flow_name,schedules.workdays,schedules.ends_on,schedules.id").joins("LEFT JOIN flows on schedules.flow_id = flows.id
+    @schedules= Schedule.select("flows.flow_order,flows.flow_name,schedules.workdays,schedules.ends_on,schedules.id,posts.post_content,posts.id post_id").joins("LEFT JOIN flows on schedules.flow_id = flows.id left join posts on schedules.id =posts.schedule_id
     where schedules.order_id=#{currentorder_id}") 
      #@orders =Order.select( "orders.status,campaigns.name,campaigns.budget,campaigns.start,orders.id, users.username,creator_exts.avatar").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id  LEFT JOIN users on orders.creator_id=users.id  LEFT JOIN creator_exts  on creator_exts.userid=users.id where orders.id=#{parameter_id}")
      @orders=Order.select("campaigns.name,campaigns.description,campaigns.budget,campaigns.start,users.mobile,users.truename,users.address,orders.id").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id LEFT JOIN users on orders.creator_id=users.id where orders.id=#{currentorder_id}") 
@@ -147,13 +148,20 @@ def updatemessages
       render plain: ''
   end
 def updatepost
+    curTime =Date.today
     @post=Post.new
     @user= User.find_by_id(session[:user_id])
     #order_id=params[:schedule_type]
     post_content=params[:post_content]
     schedule_id=params[:schedule_id]
     sch = Post.find_by_schedule_id(schedule_id)
+    if(sch==nil)
+         sql = ActiveRecord::Base.connection()     
+      sql.insert "INSERT INTO posts SET post_content='#{post_content}',schedule_id='#{schedule_id}', 
+      created_at='#{curTime}',updated_at='#{curTime}'" 
+    else
     sch.update_attribute('post_content', post_content)
+    end
     render plain: post_content
   end
   def updatecomments
@@ -179,20 +187,33 @@ def updatepost
     parameter_value_3=params[:input_3]
     parameter_value_4=params[:input_4]
     parameter_value_5=params[:input_5]
+
+
+    submitday_1=params[:submitday_1]
+    submitday_2=params[:submitday_2]
+    submitday_3=params[:submitday_3]
+    submitday_4=params[:submitday_4]
+    submitday_5=params[:submitday_5]
     sch = Schedule.find_by_id(parameter_id_1)
     sch.update_attribute('workdays', parameter_value_1)
+    sch.update_attribute('ends_on', submitday_1)  
+     sch.update_attribute('ends_on', submitday_1) 
 
     sch = Schedule.find_by_id(parameter_id_2)
     sch.update_attribute('workdays', parameter_value_2)
+    sch.update_attribute('ends_on', submitday_2) 
 
     sch = Schedule.find_by_id(parameter_id_3)
     sch.update_attribute('workdays', parameter_value_3)
+    sch.update_attribute('ends_on', submitday_3)  
 
     sch = Schedule.find_by_id(parameter_id_4)
     sch.update_attribute('workdays', parameter_value_4)
-
+    sch.update_attribute('ends_on', submitday_4)  
+    
     sch = Schedule.find_by_id(parameter_id_5)
-    sch.update_attribute('workdays', parameter_value_5) 
+    sch.update_attribute('workdays', parameter_value_5)
+    sch.update_attribute('ends_on', submitday_5)  
   end
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json

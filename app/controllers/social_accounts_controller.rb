@@ -18,12 +18,13 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
   # GET /social_accounts/new
   def new
     @social_account = SocialAccount.new
-    @metrics= Metric.all
+    
+    @social_channels =SocialChannel.all
   end
 
   # GET /social_accounts/1/edit
   def edit
-     @metrics= Metric.all
+     @social_channels =SocialChannel.all
   end
 
   # POST /social_accounts
