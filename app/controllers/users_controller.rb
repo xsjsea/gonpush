@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token,:only =>:savepassword
   skip_before_action :verify_authenticity_token,:only =>:saveinviterequired
   skip_before_action :verify_authenticity_token,:only =>:saveuserinfo
+  skip_before_action :verify_authenticity_token,:only =>:savemarketerinfo
   # GET /users
   # GET /users.json
   def index
@@ -103,14 +104,32 @@ class UsersController < ApplicationController
       
     
    end
-     def marketerinfo
+    def marketerinfo
     current_user
     user_id=session[:user_id]
-    @userinfo=User.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set,users.nickname").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
-    @user_categories=Category.select("categories.id,categories.name").joins("where categories.parent=6")
-      
-    
+    @marketerinfo=MarketerExt.select("marketer_exts.id,marketer_exts.taxcode,marketer_exts.bankname,marketer_exts.bankaccount,marketer_exts.companyname,marketer_exts.companyaddress,marketer_exts.contactname,marketer_exts.contactmobile").joins("left join users on users.id= marketer_exts.userid where marketer_exts.userid=#{user_id}")
+
    end
+
+  def savemarketerinfo
+     taxcode=params[:taxcode]
+     user_id=session[:user_id]
+     bankname=params[:bankname]
+     marketerinfoid=params[:marketerinfoid]
+     bankaccount=params[:bankaccount]
+     companyname=params[:companyname]
+     contactname=params[:contactname]
+     contactmobile=params[:contactmobile]
+     companyaddress=params[:companyaddress]
+    sch = MarketerExt.find_by_id(marketerinfoid)
+    sch.update_attribute('taxcode',taxcode)
+    sch.update_attribute('bankname', bankname)
+    sch.update_attribute('bankaccount',bankaccount)
+    sch.update_attribute('companyname', companyname)
+    sch.update_attribute('contactmobile', contactmobile)
+    sch.update_attribute('companyaddress', companyaddress)
+   end
+
   def saveuserinfo
     #file
      user_avatar=params[:inputImage]
