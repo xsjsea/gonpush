@@ -23,7 +23,7 @@
   }
 function doMessageResult() {                
  if (xmlHttpReg.readyState == 4 && xmlHttpReg.status == 200) {  
-   document.getElementById("msg_"+currentseq).innerHTML="";
+        document.getElementById("msg_"+currentseq).innerText ="";
    //document.getElementById("post_div_"+currentseq).classList.add("hidepart");
    //document.getElementById("post_p_"+currentseq).classList.add("hidepart");
    //document.getElementById("post_a_"+currentseq).innerHTML=xmlHttpReg.responseText;

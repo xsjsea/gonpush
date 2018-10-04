@@ -32,7 +32,7 @@
       <% @social_accounts.each_with_index do |social_account,i| %>
               <tr>
                 <td><%=(i+1)%></td>
-                <td><%=social_account.name%></td>
+                <td><%=social_account.channel_name%></td>
                 <td><a href="javascript:void(0)"><%=social_account.nickname%></a></td>
                 <td><%=social_account.fans%></td>
                 <td><%=social_account.readers%></td>

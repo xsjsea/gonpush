@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+ 
+    validates(:truename, :presence => true)
 def getcreator
 	@users = User.all
 end

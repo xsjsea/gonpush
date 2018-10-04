@@ -6,8 +6,8 @@ class SocialAccountsController < ApplicationController
   def index
      #@social_accounts = SocialAccount.all
      user_id=session[:user_id]
-     @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments,social_channels.name,
-social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id").joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
+     @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments, 
+social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id,social_channels.name channel_name").joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
   end
 
   # GET /social_accounts/1
@@ -18,7 +18,6 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
   # GET /social_accounts/new
   def new
     @social_account = SocialAccount.new
-    
     @social_channels =SocialChannel.all
   end
 
@@ -30,9 +29,8 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
   # POST /social_accounts
   # POST /social_accounts.json
   def create
-    curTime =Date.today
     user_id= params[:creator_id]
-
+    curTime =Date.today
     channel_id=params[:channel_id]
     nickname=params[:nickname]
     fans=params[:fans]
@@ -46,23 +44,18 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
       comments='#{comments}', 
       praises='#{praises}',
       creator_id='#{user_id}',
-      created_at='#{curTime}',updated_at='#{curTime}'"  
-
-       respond_to do |format|
-      #if @social_account.save
-         @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments,social_accounts.channel_name,
-social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id").joins("where social_accounts.creator_id=#{user_id}")
- 
+      created_at='#{curTime}',updated_at='#{curTime}'" 
+      respond_to do |format|
+       @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments, 
+social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id,social_channels.name channel_name").joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
         format.html { render :index, notice: 'Social account was successfully created.' }
-        format.json { render :show, status: :created, location: @social_account }
-      #else
-      #  format.html { render :new }
-      #  format.json { render json: @social_account.errors, status: :unprocessable_entity }
+        #format.json { render :show, status: :created, location: @social_account }
+      
       end
-
-
-
+     
   end
+
+
   def upatesocialaccounts
     id= params[:account_id]
     user_id= params[:creator_id]
@@ -81,9 +74,9 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
     sch.update_attribute('comments', comments)
     sch.update_attribute('praises', praises)
     respond_to do |format| 
-         @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments,social_channels.name,
-social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id").joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
-        format.html { render :index, notice: 'Social account was successfully updated.' }
+         @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments, 
+social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id,social_channels.name channel_name").joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
+          format.html { render :index, notice: 'Social account was successfully updated.' }
         format.json { render :show, status: :ok, location: @social_account }
       end
 
@@ -112,8 +105,8 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
     user_id=session[:user_id]
     @social_account.destroy
     respond_to do |format|
-         @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments,social_channels.name,
-social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id").joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
+        @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments, 
+social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id,social_channels.name channel_name").joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
  
       format.html { render :index, notice: 'Social account was successfully destroyed.' }
       format.json { head :no_content }
@@ -130,7 +123,7 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
     def social_account_params
       params.require(:social_account).permit(:creator_id, :channel_id, :channel_name, :channel_value,:nickname,:fans,:readers,:praises,:comments)
     end
-     def products_layout 
+    def products_layout 
     
        return 'creator'
     

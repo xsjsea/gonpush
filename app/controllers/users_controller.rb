@@ -37,13 +37,24 @@ class UsersController < ApplicationController
       if @user.save
         #format.html { redirect_to @user, notice: 'User was successfully created.' }
         #format.json { render :show, status: :created, location: @user }
+        curTime =Date.today
+    
+   
+      sql = ActiveRecord::Base.connection()  
+      user_id=@user.id      
+      
         session[:user_id] =  @user.id
         if(@user.usertype=="0")
+         sql.insert "INSERT INTO creator_exts SET userid='#{user_id}',  
+      created_at='#{curTime}',updated_at='#{curTime}'"    
         format.html { redirect_to orders_path,notice: 'User was successfully updated.' }
         else
+           sql.insert "INSERT INTO marketer_exts SET userid='#{user_id}',  
+      created_at='#{curTime}',updated_at='#{curTime}'"  
         format.html { redirect_to campaigns_path,notice: 'User was successfully updated.' }
       end
       else
+          @user = User.new
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -166,7 +177,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:status, :usertype, :username, :truename, :password, :province_id, :city_id, :distirct_id, :address, :user_comment,:mobile,:sex,:nickname)
+      params.require(:user).permit(:status, :usertype, :username, :truename, :password, :province_id, :city_id, :distirct_id, :address, :user_comment,:mobile,:sex,:nickname,:usertype)
     end
     def products_layout 
     @user=User.find_by_id(session[:user_id]) 
