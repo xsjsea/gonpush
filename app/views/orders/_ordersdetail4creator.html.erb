@@ -119,7 +119,7 @@ Date.prototype.format = function(format)
     d = new Date(d.getTime());
     var day = d.getDay();
     d.setDate(d.getDate() + n + (day === 6 ? 2 : +!day) + (Math.floor((n - 1 + (day % 6 || 1)) / 5) * 2));
-    alert(d);
+     
      $("#td_"+i).text(d.format('yyyy-MM-dd'));
      $("#submitday_"+i).val(d.format('yyyy-MM-dd'));
     return d;
@@ -136,7 +136,7 @@ Date.prototype.format = function(format)
   function caculateDay(i){
   
      var d = new Date();
-      var curDays=$("#input_"+i).val();
+     var curDays=$("#input_"+i).val();
      //alert(addBusinessDays(d,parseInt(curDays),1));
 
     if(isInteger(curDays)){
@@ -176,6 +176,7 @@ Date.prototype.format = function(format)
     alert("请输入排版成稿的工作日数");
     return;
   }
+   alert("排期提交成功");
    $("#frmschedule").submit();
   }
 </script>
@@ -330,14 +331,14 @@ Date.prototype.format = function(format)
                         </thead>
                         <tbody>
                         
-                        <% @schedules.each_with_index do |schedule,i| %>
-                        <input type="hidden" value="<%=schedule.id%>" name="scheduleId_<%=i%>" id="scheduleId_<%=i%>"/>
-                        <input type="hidden" value="<%=schedule.workdays%>" name="submitday_<%=i%>" id="submitday_<%=i%>"/>
+                        <% @schedules.each_with_index do |schedule,i| %>  
                        <%if i==0%>
+                       <input type="hidden" value="<%=schedule.id%>" name="scheduleId_<%=(i+1)%>" id="scheduleId_<%=(i+1)%>"/>
+                        <input type="hidden" value="<%=schedule.ends_on%>" name="submitday_<%=(i+1)%>" id="submitday_<%=(i+1)%>"/>
                         <tr>
                           <td>1</td>
                           <td>要点提炼</td>
-
+                        
                           <td><input onblur="caculateDay(1)" id="input_1" name="input_1" attrscheduleId="<%=schedule.id%>" type="text" size="2" value="<%=schedule.workdays%>"></td>
                           <td id="td_1"><%if schedule.ends_on==nil%>
                            <%else%>
@@ -347,6 +348,8 @@ Date.prototype.format = function(format)
                         </tr>
                         <%elsif i==1
                           %>
+                          <input type="hidden" value="<%=schedule.id%>" name="scheduleId_<%=(i+1)%>" id="scheduleId_<%=(i+1)%>"/>
+                        <input type="hidden" value="<%=schedule.ends_on%>" name="submitday_<%=(i+1)%>" id="submitday_<%=(i+1)%>"/>
                            <tr>
                           <td>2</td>
                           <td >创意大纲</td>
@@ -358,6 +361,8 @@ Date.prototype.format = function(format)
                         </tr>
                           <%elsif i==2
                           %>
+                          <input type="hidden" value="<%=schedule.id%>" name="scheduleId_<%=(i+1)%>" id="scheduleId_<%=(i+1)%>"/>
+                          <input type="hidden" value="<%=schedule.ends_on%>" name="submitday_<%=(i+1)%>" id="submitday_<%=(i+1)%>"/>
                           <tr>
                           <td>3</td>
                           <td >具体脚本</td>
@@ -369,6 +374,8 @@ Date.prototype.format = function(format)
                         </tr>
                            <%elsif i==3
                           %>
+                          <input type="hidden" value="<%=schedule.id%>" name="scheduleId_<%=(i+1)%>" id="scheduleId_<%=(i+1)%>"/>
+                          <input type="hidden" value="<%=schedule.ends_on%>" name="submitday_<%=(i+1)%>" id="submitday_<%=(i+1)%>"/>
                            <tr>
                           <td>4</td>
                           <td>绘图/视频</td>
@@ -380,6 +387,8 @@ Date.prototype.format = function(format)
                         </tr>
                            <%elsif i==4
                           %>
+                          <input type="hidden" value="<%=schedule.id%>" name="scheduleId_<%=(i+1)%>" id="scheduleId_<%=(i+1)%>"/>
+                        <input type="hidden" value="<%=schedule.ends_on%>" name="submitday_<%=(i+1)%>" id="submitday_<%=(i+1)%>"/>
                            <tr>
                           <td>5</td>
                           <td>排版成稿</td>

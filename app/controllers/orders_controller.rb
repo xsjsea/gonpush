@@ -46,7 +46,7 @@ end
      @user=User.find_by_id(session[:user_id])
      orderId =  params[:orderId]
      @schedule= Schedule.select("flows.flow_order,flows.flow_name,schedules.workdays,schedules.ends_on").joins("LEFT JOIN flows on schedules.flow_id = flows.id
- where schedules.order_id=#{orderId}")
+ where schedules.order_id=#{orderId} order by schedules.flow_order")
      @orderInfo=Order.select("campaigns.name,campaigns.description,campaigns.budget,campaigns.start,users.mobile,users.truename,users.address,orders.id").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id LEFT JOIN users on orders.creator_id=users.id where orders.id={orderId}")
  
   end
@@ -114,7 +114,7 @@ def showOrder
     @order_id=params[:id]
     currentorder_id=params[:id]
     @schedules= Schedule.select("flows.flow_order,flows.flow_name,schedules.workdays,schedules.ends_on,schedules.id,posts.post_content,posts.id post_id").joins("LEFT JOIN flows on schedules.flow_id = flows.id left join posts on schedules.id =posts.schedule_id
-    where schedules.order_id=#{currentorder_id}") 
+    where schedules.order_id=#{currentorder_id} order by schedules.flow_order") 
      #@orders =Order.select( "orders.status,campaigns.name,campaigns.budget,campaigns.start,orders.id, users.username,creator_exts.avatar").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id  LEFT JOIN users on orders.creator_id=users.id  LEFT JOIN creator_exts  on creator_exts.userid=users.id where orders.id=#{parameter_id}")
      @orders=Order.select("campaigns.name,campaigns.description,campaigns.budget,campaigns.start,users.mobile,users.truename,users.address,orders.id").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id LEFT JOIN users on orders.creator_id=users.id where orders.id=#{currentorder_id}") 
      user_id=@user.id
@@ -176,11 +176,11 @@ def updatepost
   end
   def updateSchedule
     @user=User.find_by_id(session[:user_id])
-    parameter_id_1=params[:scheduleId_0]
-    parameter_id_2=params[:scheduleId_1]
-    parameter_id_3=params[:scheduleId_2]
-    parameter_id_4=params[:scheduleId_3]
-    parameter_id_5=params[:scheduleId_4]
+    parameter_id_1=params[:scheduleId_1]
+    parameter_id_2=params[:scheduleId_2]
+    parameter_id_3=params[:scheduleId_3]
+    parameter_id_4=params[:scheduleId_4]
+    parameter_id_5=params[:scheduleId_5]
 
     parameter_value_1=params[:input_1]
     parameter_value_2=params[:input_2]
@@ -197,7 +197,7 @@ def updatepost
     sch = Schedule.find_by_id(parameter_id_1)
     sch.update_attribute('workdays', parameter_value_1)
     sch.update_attribute('ends_on', submitday_1)  
-     sch.update_attribute('ends_on', submitday_1) 
+     
 
     sch = Schedule.find_by_id(parameter_id_2)
     sch.update_attribute('workdays', parameter_value_2)
