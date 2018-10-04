@@ -10,7 +10,7 @@ layout :products_layout
     user_id=session[:user_id]
     @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
     .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
-
+    @bizcases = @bizcases.paginate(:page => params[:page], :per_page => 2)
   end
 
   # GET /bizcases/1

@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
     #@reports = Report.all
     @reports =Report.select("reports.report_title,reports.id,users.username,reports.report_source,reports.report_source")
     .joins("left join users on reports.report_author=users.id where reports.report_author=#{@current_user.id}")
-
+   @reports = @reports.paginate(:page => params[:page], :per_page => 2)
   end
 
   # GET /reports/1
@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
     #@reports = Report.all
     @reports =Report.select("reports.report_title,reports.id,users.username")
     .joins("left join users on reports.report_author=users.id where reports.report_author=#{@current_user.id}")
- 
+   
   end
 
   # GET /reports/new

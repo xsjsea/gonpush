@@ -18,7 +18,9 @@ class CommentsController < ApplicationController
  on comments.campaign_id=campaigns.id left JOIN orders 
  on comments.order_id=orders.id where comments.order_id is not NULL and orders.creator_id=#{@current_user.id}")
   end
+   @comments = @comments.paginate(:page => params[:page], :per_page => 2)
   end
+
 
   # GET /comments/1
   # GET /comments/1.json

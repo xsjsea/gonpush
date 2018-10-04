@@ -38,6 +38,7 @@ class OrdersController < ApplicationController
  
       end
   end
+   @orders = @orders.paginate(:page => params[:page], :per_page => 5)
 end
 
   # GET /orders/1

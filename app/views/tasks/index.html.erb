@@ -16,6 +16,7 @@
   </thead>
 
   <tbody>
+
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.name %></td>
@@ -32,6 +33,13 @@
   </tbody>
 </table>
 
+<%=will_paginate @tasks,:class=>"pagination",:previous_label=>"上一页",:next_label=>"下一页"%> 
+<div class="apple_pagination">
+  <div class="page_info">
+    <%= page_entries_info @tasks %>
+  </div>
+  <%= will_paginate @tasks, :container => false %>
+</div> 
 <br>
 
 <%= link_to 'New Task', new_task_path %>

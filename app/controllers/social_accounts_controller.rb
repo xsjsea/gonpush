@@ -8,6 +8,7 @@ class SocialAccountsController < ApplicationController
      user_id=session[:user_id]
      @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments, 
 social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id,social_channels.name channel_name").joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
+     @social_accounts = @social_accounts.paginate(:page => params[:page], :per_page => 2)
   end
 
   # GET /social_accounts/1

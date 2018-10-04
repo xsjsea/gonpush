@@ -12,6 +12,7 @@ class CreatorMetricsController < ApplicationController
     user_id=session[:user_id]
     @creator_metrics=CreatorMetric.select("creator_metrics.id,creator_metrics.metric_name,creator_metrics.metric_value")
     .joins("where creator_id=#{user_id}")
+   @creator_metrics = @creator_metrics.paginate(:page => params[:page], :per_page => 2)
     #@creator_metrics=CreatorMetric.select("creator_metrics.id, metrics.name,creator_metrics.metric_value")
     #.joins("left join metrics on creator_metrics.metric_id = metrics.id where creator_metrics.creator_id=#{user_id}")
      
