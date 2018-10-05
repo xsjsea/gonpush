@@ -84,11 +84,12 @@ function doMessageResult() {
                 </li>
                 <li onclick="updatemessage(1)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-2">
-                    <span class="pull-right badge badge-danger" id="msg_1"> <%@unreadmessages.each_with_index do |message,i| %>
-                         <%if message.step_order==1%>
-                              <%=message.total%>
-                         <%end%>
-                         <%end%></span>
+                    <span class="pull-right badge badge-danger" id="msg_1">
+                      <%@unreadmessages.each_with_index do |message,i| %>
+                      <%if message.step_order==1%>
+                      <%=message.total%>
+                      <%end%>
+                       <%end%></span>
                     <strong>要点提炼</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span>
@@ -98,11 +99,12 @@ function doMessageResult() {
                 </li>
                 <li onclick="updatemessage(2)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-3">
-                    <span class="pull-right badge badge-danger" id="msg_2"><%@unreadmessages.each_with_index do |message,i| %>
-                         <%if message.step_order==2%>
-                              <%=message.total%>
-                         <%end%>
-                         <%end%></span></span>
+                    <span class="pull-right badge badge-danger" id="msg_2">
+                      <%@unreadmessages.each_with_index do |message,i| %>
+                      <%if message.step_order==2%>
+                      <%=message.total%>
+                      <%end%>
+                       <%end%></span>
                     <strong>创意大纲</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
@@ -113,10 +115,10 @@ function doMessageResult() {
                 <li onclick="updatemessage(3)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-4">
                     <span class="pull-right badge badge-danger" id="msg_3"><%@unreadmessages.each_with_index do |message,i| %>
-                         <%if message.step_order==3%>
-                              <%=message.total%>
-                         <%end%>
-                         <%end%></span>
+                      <%if message.step_order==3%>
+                      <%=message.total%>
+                      <%end%>
+                       <%end%></span>
                     <strong>具体脚本</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
@@ -127,10 +129,10 @@ function doMessageResult() {
                 <li onclick="updatemessage(4)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-5">
                     <span class="pull-right badge badge-danger" id="msg_4"><%@unreadmessages.each_with_index do |message,i| %>
-                         <%if message.step_order==4%>
-                              <%=message.total%>
-                         <%end%>
-                         <%end%></span>
+                      <%if message.step_order==4%>
+                      <%=message.total%>
+                      <%end%>
+                       <%end%></span>
                     <strong>绘图视频</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
@@ -142,11 +144,10 @@ function doMessageResult() {
                   <a data-toggle="tab" href="#tab-6">
                     <span class="pull-right badge badge-danger" id="msg_5">
                       <%@unreadmessages.each_with_index do |message,i| %>
-                         <%if message.step_order==5%>
-                              <%=message.total%>
-                         <%end%>
-                         <%end%>
-                      </span>
+                      <%if message.step_order==5%>
+                      <%=message.total%>
+                      <%end%>
+                       <%end%></span>
                     <strong>排版成稿</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
