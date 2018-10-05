@@ -1,5 +1,23 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+def my_messages 
+ 
+@messages=User.select("users.id,users.username,users.description,creator_exts.avatar,view_metric.fans, view_metric.reader,view_metric.price")
+ .joins("left join view_metric on users.id = view_metric.creator_id left join creator_exts on users.id = creator_exts.userid where users.usertype='0'") 
+
+# @messages = Information.where(:user_id => @user_expand.user_id).order("created_at desc").paginate(page: params[:page], per_page: 7)   
+ #@mess = Information.where(:user_id => @user_expand.user_id)    
+ respond_to do |format| 
+ # <- 这里      
+ format.html #这是默认请求的处理，渲染html(my_messages.html.erb)     
+ format.js 
+ # 
+ # # <- 这里是ajax请求处理，渲染js模板(my_messages.js.erb)   
+ end 
+end
+
+
+
 
   # GET /tasks
   # GET /tasks.json

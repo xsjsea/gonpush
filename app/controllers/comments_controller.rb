@@ -9,16 +9,18 @@ class CommentsController < ApplicationController
   #  @comments = Comment.all
   current_user
   if @current_user.usertype=="1"
-  @comments=Comment.select("campaigns.name, comments.comment_content,users.username,comments.created_at
- ").joins("left join users on comments.user_id=users.id left join campaigns 
- on comments.campaign_id=campaigns.id where campaigns.user_id=#{@current_user.id}")
+@comments=Comment.select("campaigns.name, comments.comment_content,users.username,comments.created_at
+ ").joins("left join users on comments.user_id=users.id left JOIN orders
+ on comments.order_id=orders.id left join campaigns
+ on orders.campaign_id=campaigns.id where comments.order_id is not NULL and orders.marketer_id=#{@current_user.id} and comments.user_id not in ( #{@current_user.id})")
+  
   else
   @comments=Comment.select("campaigns.name, comments.comment_content,users.username,comments.created_at
- ").joins("left join users on comments.user_id=users.id left join campaigns 
- on comments.campaign_id=campaigns.id left JOIN orders 
- on comments.order_id=orders.id where comments.order_id is not NULL and orders.creator_id=#{@current_user.id}")
+ ").joins("left join users on comments.user_id=users.id left JOIN orders
+ on comments.order_id=orders.id left join campaigns
+ on orders.campaign_id=campaigns.id where comments.order_id is not NULL and orders.creator_id=#{@current_user.id} and comments.user_id not in (#{@current_user.id})")
   end
-   @comments = @comments.paginate(:page => params[:page], :per_page => 2)
+   @comments = @comments.paginate(:page => params[:page], :per_page => 10)
   end
 
 

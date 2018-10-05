@@ -1,6 +1,61 @@
 <style>
 .hidepart{display:none;}
 </style>
+<script type="text/javascript"> 
+  var xmlHttpReg = null; 
+  var currentseq=-1;
+  function updatemessage(seq){
+    currentseq=seq;
+   var order_id=document.getElementById("order_id").value;
+ if (window.ActiveXObject) {
+                         xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");            
+                          } 
+                          else if (window.XMLHttpRequest) {               
+                           xmlHttpReg = new XMLHttpRequest(); 
+                                     }           
+
+                               if (xmlHttpReg != null) {                
+                                   xmlHttpReg.open("post", "updatemessages?order_id="+order_id +"&order_step="+seq, true);                
+                                 xmlHttpReg.send();         
+                                 xmlHttpReg.onreadystatechange = doMessageResult; 
+                                                } 
+
+  }
+function doMessageResult() {                
+ if (xmlHttpReg.readyState == 4 && xmlHttpReg.status == 200) {  
+        document.getElementById("msg_"+currentseq).innerText ="";
+   //document.getElementById("post_div_"+currentseq).classList.add("hidepart");
+   //document.getElementById("post_p_"+currentseq).classList.add("hidepart");
+   //document.getElementById("post_a_"+currentseq).innerHTML=xmlHttpReg.responseText;
+ }
+}
+
+  function submitcomments(){
+   var order_id=document.getElementById("order_id").value;
+   var content_comment=document.getElementById("comments").value;
+ if (window.ActiveXObject) {
+                         xmlHttpReg = new ActiveXObject("Microsoft.XMLHTTP");            
+                          } 
+                          else if (window.XMLHttpRequest) {               
+                           xmlHttpReg = new XMLHttpRequest(); 
+                                     }           
+
+                               if (xmlHttpReg != null) {                
+                                   xmlHttpReg.open("post", "updatecomments?order_id="+order_id +"&content_comment="+content_comment, true);                
+                                 xmlHttpReg.send();         
+                                 xmlHttpReg.onreadystatechange = doCommentResult; 
+                                                } 
+
+  }
+  function doCommentResult() {                
+ if (xmlHttpReg.readyState == 4 && xmlHttpReg.status == 200) {  
+   alert('评价成功');
+   //document.getElementById("post_div_"+currentseq).classList.add("hidepart");
+   //document.getElementById("post_p_"+currentseq).classList.add("hidepart");
+   //document.getElementById("post_a_"+currentseq).innerHTML=xmlHttpReg.responseText;
+ }
+}
+</script>
  
 <input type="hidden" name="order_id" id="order_id" value="<%=@orders[0].id%>"/>
 <input type="hidden" name="user_id" id="user_id" value="<%=@user.id%>"/>

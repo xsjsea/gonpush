@@ -58,5 +58,5 @@ Rails.application.routes.draw do
   root to: 'rooms#show'
   # Serve websocket cable requests in-process
   mount ActionCable.server => '/cable'
-
+  get '/my_messages', to:'tasks#my_messages'
 end
