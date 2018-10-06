@@ -6,8 +6,9 @@ class SocialAccountsController < ApplicationController
   def getsocial_accounts
      user_id=session[:user_id]
      @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments, 
-social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id,social_channels.name channel_name").joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
-     @social_accounts = @social_accounts.paginate(:page => params[:page], :per_page => 2) 
+social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id,social_channels.name channel_name")
+     .joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
+     @social_accounts = @social_accounts.paginate(:page => params[:page], :per_page => 10) 
   end
   def index
      getsocial_accounts
@@ -83,9 +84,8 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
     sch.update_attribute('comments', comments)
     sch.update_attribute('praises', praises)
     respond_to do |format| 
-         @social_accounts = SocialAccount.select("social_accounts.fans,social_accounts.readers,social_accounts.praises,social_accounts.comments, 
-social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_accounts.creator_id,social_channels.name channel_name").joins(" left join social_channels on social_accounts.channel_id=social_channels.id where social_accounts.creator_id=#{user_id}")
-          format.html { render :index, notice: 'Social account was successfully updated.' }
+        getsocial_accounts
+        format.html { render :index, notice: 'Social account was successfully updated.' }
         format.json { render :show, status: :ok, location: @social_account }
       end
 

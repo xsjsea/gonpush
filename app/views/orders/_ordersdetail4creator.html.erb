@@ -279,7 +279,7 @@ Date.prototype.format = function(format)
                 </li>
                 <li onclick="updatemessage(5)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-6">
-                      <%if @mestotal_5==0%>
+                   <%if @mestotal_5==0%>
                    <span class="pull-right badge badge-danger" id="msg_5"></span>
                     <%else%>
                     <span class="pull-right badge badge-danger" id="msg_5"><%= @mestotal_5%></span>
@@ -451,13 +451,13 @@ Date.prototype.format = function(format)
                   </div>
                     <%else%>
                      <p id="post_content_1 hidepart">
-                    <a id="post_a_2" href="<%=@schedules[0].post_content%>" target="blank">
+                    <a id="post_a_1" href="<%=@schedules[0].post_content%>" target="blank">
                       <%=@schedules[0].post_content%>
                     </a>
                    </p>  
                     <p id="post_p_1" >
                     <input type="hidden" name="post_schedule_1" id="post_schedule_1" value="<%=@schedules[0].id%>"/>
-                    <input type="text" id="post_input_2" class="form-control form-control-sm" placeholder="https://">
+                    <input type="text" id="post_input_1" class="form-control form-control-sm" placeholder="https://">
                   </p>
 
                   <div id="post_div_1" class="form-group ">
