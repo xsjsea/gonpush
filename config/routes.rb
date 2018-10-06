@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   get '/getOrder', to: 'orders#showOrder'
   post '/updatepost', to: 'orders#updatepost'
   post '/updatecomments', to: 'orders#updatecomments'
-   post '/updatemessages', to: 'orders#updatemessages'
+  post '/updatemessages', to: 'orders#updatemessages'
   post '/updateSchedule', to: 'orders#updateSchedule'
   get "orders/destroy/:id" => "orders#destroy"
   get "reports/destroy/:id" => "reports#destroy"

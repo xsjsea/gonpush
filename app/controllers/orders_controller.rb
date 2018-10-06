@@ -120,13 +120,31 @@ def showOrder
      @orders=Order.select("campaigns.name,campaigns.description,campaigns.budget,campaigns.start,users.mobile,users.truename,users.address,orders.id").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id LEFT JOIN users on orders.creator_id=users.id where orders.id=#{currentorder_id}") 
      user_id=@user.id
      if(@user.usertype=='0')
-     @unreadmessages=Message.select("count(*) total,step_order").joins("where order_id=#{currentorder_id} and user_id=#{user_id} and creatorstatus='1' group by order_id,step_order")
+     @unreadmessages=Message.select("count(*) total,step_order").joins("where order_id=#{currentorder_id}  and creatorstatus='1' group by order_id,step_order")
      elsif(@user.usertype=='1')
-     @unreadmessages=Message.select("count(*) total,step_order").joins("where order_id=#{currentorder_id} and user_id=#{user_id} and marketerstatus='1' group by order_id,step_order")
+     @unreadmessages=Message.select("count(*) total,step_order").joins("where order_id=#{currentorder_id}  and marketerstatus='1' group by order_id,step_order")
      else
      @unreadmessages=Message.select("count(*) total,step_order").joins("where order_id=#{currentorder_id} and (marketerstatus='1' or  creatorstatus='1' ) and marketerstatus='1' group by order_id,step_order")
      end
-
+     @mestotal_1=0;
+     @mestotal_2=0;
+     @mestotal_3=0;
+     @mestotal_4=0;
+     @mestotal_5=0;
+ 
+     for message in @unreadmessages do
+       if message.step_order==1
+             @mestotal_1=message.total
+       elsif message.step_order==2
+             @mestotal_2=message.total
+       elsif message.step_order==3
+             @mestotal_3=message.total
+       elsif message.step_order==4
+             @mestotal_4=message.total
+       elsif message.step_order==5
+             @mestotal_5=message.total
+       end
+      end
  
      @steporder_1=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=1")
      @steporder_2=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=2")
@@ -140,11 +158,14 @@ def updatemessages
     order_id=params[:order_id]
     order_step=params[:order_step]
     @user= User.find_by_id(session[:user_id])
-    sch = Message.find_by_order_id(order_id)
+    #sch = Message.find_by_order_id(order_id)
+    #sch =Message.select("messages.*" ).joins("where messages.order_id=#{order_id} and messages.step_order=#{order_step}")
      if(@user.usertype=='0')
-      sch.update_attribute('creatorstatus', '0')
+      #sch.update_all('creatorstatus':'0')
+      Message.where(order_id:order_id,step_order:order_step).update_all('creatorstatus':'0')
      elsif(@user.usertype=='1')
-       sch.update_attribute('marketerstatus', '0')
+        Message.where(order_id:order_id,step_order:order_step).update_all('marketerstatus':'0')
+       #sch.update_all('marketerstatus':'0')
      end
       render plain: ''
   end

@@ -59,8 +59,8 @@ function doMessageResult() {
  
 <input type="hidden" name="order_id" id="order_id" value="<%=@orders[0].id%>"/>
 <input type="hidden" name="user_id" id="user_id" value="<%=@user.id%>"/>
-<input type="hidden" name="creatorstatus" id="creatorstatus" value="0"/>
-<input type="hidden" name="marketerstatus" id="marketerstatus" value="1"/>
+<input type="hidden" name="creatorstatus" id="creatorstatus" value="1"/>
+<input type="hidden" name="marketerstatus" id="marketerstatus" value="0"/>
 <input type="hidden" name="adminstatus" id="adminstatus" value="1"/>
 <div class="row border-bottom">
         <div class="ibox-title">
@@ -84,12 +84,12 @@ function doMessageResult() {
                 </li>
                 <li onclick="updatemessage(1)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-2">
-                    <span class="pull-right badge badge-danger" id="msg_1">
-                      <%@unreadmessages.each_with_index do |message,i| %>
-                      <%if message.step_order==1%>
-                      <%=message.total%>
-                      <%end%>
-                       <%end%></span>
+                     <%if @mestotal_1==0%>
+                   <span class="pull-right badge badge-danger" id="msg_1"></span>
+                    <%else%>
+                    <span class="pull-right badge badge-danger" id="msg_1"><%=@mestotal_1%>
+                    </span> 
+                    <%end%>
                     <strong>要点提炼</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span>
@@ -99,26 +99,28 @@ function doMessageResult() {
                 </li>
                 <li onclick="updatemessage(2)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-3">
-                    <span class="pull-right badge badge-danger" id="msg_2">
-                      <%@unreadmessages.each_with_index do |message,i| %>
-                      <%if message.step_order==2%>
-                      <%=message.total%>
-                      <%end%>
-                       <%end%></span>
+                     <%if @mestotal_2==0%>
+                   <span class="pull-right badge badge-danger" id="msg_2"></span>
+                    <%else%>
+                    <span class="pull-right badge badge-danger" id="msg_2"><%=@mestotal_2%></span>
+                      
+                    <%end%>
+                   
                     <strong>创意大纲</strong>
                     <div class="small m-t-xs">
-                      <span class="label pull-right label-primary"></span></span>
+                      <span class="label pull-right label-primary"></span> 
                       <i class="fa fa-clock-o"></i><%=@steporder_2[0].messagetime%>  
                     </div>
                   </a>
                 </li>
                 <li onclick="updatemessage(3)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-4">
-                    <span class="pull-right badge badge-danger" id="msg_3"><%@unreadmessages.each_with_index do |message,i| %>
-                      <%if message.step_order==3%>
-                      <%=message.total%>
-                      <%end%>
-                       <%end%></span>
+                    <%if @mestotal_3==0%>
+                   <span class="pull-right badge badge-danger" id="msg_3"></span>
+                    <%else%>
+                    <span class="pull-right badge badge-danger" id="msg_3"><%=@mestotal_3%></span>
+                      
+                    <%end%>
                     <strong>具体脚本</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
@@ -128,11 +130,12 @@ function doMessageResult() {
                 </li>
                 <li onclick="updatemessage(4)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-5">
-                    <span class="pull-right badge badge-danger" id="msg_4"><%@unreadmessages.each_with_index do |message,i| %>
-                      <%if message.step_order==4%>
-                      <%=message.total%>
-                      <%end%>
-                       <%end%></span>
+                     <%if @mestotal_4==0%>
+                   <span class="pull-right badge badge-danger" id="msg_4"></span>
+                    <%else%>
+                    <span class="pull-right badge badge-danger" id="msg_4"><%= @mestotal_4%></span>
+                      
+                    <%end%>
                     <strong>绘图视频</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
@@ -142,12 +145,12 @@ function doMessageResult() {
                 </li>
                 <li onclick="updatemessage(5)" class="list-group-item">
                   <a data-toggle="tab" href="#tab-6">
-                    <span class="pull-right badge badge-danger" id="msg_5">
-                      <%@unreadmessages.each_with_index do |message,i| %>
-                      <%if message.step_order==5%>
-                      <%=message.total%>
-                      <%end%>
-                       <%end%></span>
+                     <%if @mestotal_5==0%>
+                   <span class="pull-right badge badge-danger" id="msg_5"></span>
+                    <%else%>
+                    <span class="pull-right badge badge-danger" id="msg_5"><%= @mestotal_5%></span>
+                      
+                    <%end%>
                     <strong>排版成稿</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
