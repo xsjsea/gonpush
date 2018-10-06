@@ -195,7 +195,7 @@ Date.prototype.format = function(format)
    $("#frmschedule").submit();
   }
 </script>
-<input type="hidden" name="order_id" id="order_id" value="<%=@orders[0].id%>"/>
+
 <input type="hidden" name="user_id" id="user_id" value="<%=@user.id%>"/>
 <input type="hidden" name="creatorstatus" id="creatorstatus" value="0"/>
 <input type="hidden" name="marketerstatus" id="marketerstatus" value="1"/>
@@ -337,6 +337,7 @@ Date.prototype.format = function(format)
                         </tbody>
                       </table>
                      <form id="frmschedule" method='post' action="/updateSchedule">
+                      <input type="hidden" name="order_id" id="order_id" value="<%=@orders[0].id%>"/>
                      <input type="hidden" value="457a1e93c3a23ec2c67f1dc468bde6a4a5539610" name="authenticity_token"/>  
                       <table class="table small">
                         <thead>

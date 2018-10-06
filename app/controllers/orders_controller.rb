@@ -194,9 +194,13 @@ def updatepost
   sql = ActiveRecord::Base.connection()     
       sql.insert "INSERT INTO comments SET comment_content='#{content_comment}', order_id='#{order_id}',user_id='#{user_id}',
       created_at='#{curTime}',updated_at='#{curTime}'" 
+
+      sch=Order.find_by_id(order_id)
+      sch.update_attribute('status','2')    
       render plain:content_comment
   end
   def updateSchedule
+
     @user=User.find_by_id(session[:user_id])
     parameter_id_1=params[:scheduleId_1]
     parameter_id_2=params[:scheduleId_2]
@@ -236,6 +240,9 @@ def updatepost
     sch = Schedule.find_by_id(parameter_id_5)
     sch.update_attribute('workdays', parameter_value_5)
     sch.update_attribute('ends_on', submitday_5)  
+     order_id=params[:order_id]
+     sch=Order.find_by_id(order_id)
+     sch.update_attribute('status','1')   
   end
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
