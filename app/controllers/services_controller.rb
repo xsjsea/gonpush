@@ -3,14 +3,19 @@ class ServicesController < ApplicationController
   layout :products_layout
   # GET /services
   # GET /services.json
+  def getServices
+   user_id=session[:user_id]
+   @services =Service.select("services.id,services.service_name,services.service_description,service_price").joins("where services.creator_id=#{user_id}")
+   @services = @services.paginate(:page => params[:page], :per_page => 10)
+  end
   def index
     #@services = Service.all
     current_user
-
+    getServices
    # @services =Service.find_all_by_creator_id(session[:user_id])
-   user_id=session[:user_id]
-   @services =Service.select("services.id,services.service_name,services.service_description,service_price").joins("where services.creator_id=#{user_id}")
-   @services = @services.paginate(:page => params[:page], :per_page => 2)
+   #user_id=session[:user_id]
+   #@services =Service.select("services.id,services.service_name,services.service_description,service_price").joins("where services.creator_id=#{user_id}")
+   #@services = @services.paginate(:page => params[:page], :per_page => 2)
   end
 
   # GET /services/1
@@ -37,8 +42,8 @@ class ServicesController < ApplicationController
     user_id=session[:user_id]
     respond_to do |format|
       if @service.save
-        @services =Service.select("services.id,services.service_name,services.service_description,service_price").joins("where services.creator_id=#{user_id}")
-  
+        #@services =Service.select("services.id,services.service_name,services.service_description,service_price").joins("where services.creator_id=#{user_id}")
+        getServices
         format.html { render :index, notice: 'Service was successfully created.' }
         format.json { render :show, status: :created, location: @service }
       else
@@ -54,7 +59,8 @@ class ServicesController < ApplicationController
     user_id=session[:user_id]
     respond_to do |format|
       if @service.update(service_params)
-        @services =Service.select("services.id,services.service_name,services.service_description,service_price").joins("where services.creator_id=#{user_id}")
+        getServices
+        #@services =Service.select("services.id,services.service_name,services.service_description,service_price").joins("where services.creator_id=#{user_id}")
         format.html { render :index, notice: 'Service was successfully updated.' }
         format.json { render :show, status: :ok, location: @service }
       else
@@ -70,7 +76,8 @@ class ServicesController < ApplicationController
     user_id=session[:user_id]
     @service.destroy
     respond_to do |format|
-       @services =Service.select("services.id,services.service_name,services.service_description,service_price").joins("where services.creator_id=#{user_id}")
+      getServices
+      # @services =Service.select("services.id,services.service_name,services.service_description,service_price").joins("where services.creator_id=#{user_id}")
       format.html { render :index, notice: 'Service was successfully destroyed.' }
       format.json { head :no_content }
     end

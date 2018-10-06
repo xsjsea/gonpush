@@ -1,16 +1,19 @@
 class BizcasesController < ApplicationController
   before_action :set_bizcase, only: [:show, :edit, :update, :destroy]
 layout :products_layout
+def getbizcases
+   user_id=session[:user_id]
+    @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
+    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
+    @bizcases = @bizcases.paginate(:page => params[:page], :per_page => 2)
+end
   # GET /bizcases
   # GET /bizcases.json
   def index
     #@bizcases = Bizcase.all
     current_user
     #@reports = Report.all
-    user_id=session[:user_id]
-    @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
-    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
-    @bizcases = @bizcases.paginate(:page => params[:page], :per_page => 2)
+    getbizcases
   end
 
   # GET /bizcases/1
@@ -34,8 +37,7 @@ layout :products_layout
       user_id=session[:user_id]
     respond_to do |format|
       if @bizcase.save
-         @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
-    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
+        getbizcases
         format.html { render :index, notice: 'Bizcase was successfully created.' }
         format.json { render :show, status: :created, location: @bizcase }
       else
@@ -51,9 +53,7 @@ layout :products_layout
     user_id=session[:user_id]
     respond_to do |format|
       if @bizcase.update(bizcase_params)
-         @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
-    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
-
+        getbizcases
         format.html { render :index, notice: 'Bizcase was successfully updated.' }
         format.json { render :show, status: :ok, location: @bizcase }
       else
@@ -69,9 +69,7 @@ layout :products_layout
     user_id=session[:user_id]
     @bizcase.destroy
     respond_to do |format|
-       @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
-    .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
-
+      getbizcases
       format.html { render :index, notice: 'Bizcase was successfully destroyed.' }
       format.json { head :no_content }
     end

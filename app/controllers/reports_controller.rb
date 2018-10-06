@@ -1,14 +1,19 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: [:show, :edit, :update, :destroy]
   layout :products_layout
+  def getreports
+    user_id=session[:user_id]
+   @reports =Report.select("reports.report_title,reports.id,users.username,reports.report_source,reports.report_source")
+    .joins("left join users on reports.report_author=users.id where reports.report_author=#{user_id}")
+   @reports = @reports.paginate(:page => params[:page], :per_page => 10)
+  end
   # GET /reports
   # GET /reports.json
   def index
     current_user
+    getreports
     #@reports = Report.all
-    @reports =Report.select("reports.report_title,reports.id,users.username,reports.report_source,reports.report_source")
-    .joins("left join users on reports.report_author=users.id where reports.report_author=#{@current_user.id}")
-   @reports = @reports.paginate(:page => params[:page], :per_page => 2)
+   
   end
 
   # GET /reports/1
@@ -16,9 +21,7 @@ class ReportsController < ApplicationController
   def show
      current_user
     #@reports = Report.all
-    @reports =Report.select("reports.report_title,reports.id,users.username")
-    .joins("left join users on reports.report_author=users.id where reports.report_author=#{@current_user.id}")
-   
+    getreports
   end
 
   # GET /reports/new
@@ -40,9 +43,7 @@ class ReportsController < ApplicationController
     respond_to do |format|
       if @report.save
         #render reports_url
-        @reports =Report.select("reports.report_title,reports.id,users.username,reports.report_source,reports.report_source")
-    .joins("left join users on reports.report_author=users.id where reports.report_author=#{user_id}")
-
+        getreports
         format.html { render :index, notice: 'Report was successfully created.' }
         format.json { render :index, status: :created, location: @report }
       else
@@ -58,9 +59,7 @@ class ReportsController < ApplicationController
     user_id=session[:user_id]
     respond_to do |format|
       if @report.update(report_params)
-         @reports =Report.select("reports.report_title,reports.id,users.username,reports.report_source,reports.report_source")
-    .joins("left join users on reports.report_author=users.id where reports.report_author=#{user_id}")
-
+         getreports
         format.html {render :index, notice: 'Report was successfully updated.' }
         format.json { render :show, status: :ok, location: @report }
       else
@@ -76,9 +75,7 @@ class ReportsController < ApplicationController
     @report.destroy
     user_id=session[:user_id]
     respond_to do |format|
-       @reports =Report.select("reports.report_title,reports.id,users.username,reports.report_source,reports.report_source")
-    .joins("left join users on reports.report_author=users.id where reports.report_author=#{user_id}")
-
+       getreports
       format.html { render :index, notice: 'Report was successfully destroyed.' }
       format.json { head :no_content }
     end
