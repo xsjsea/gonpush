@@ -58,6 +58,8 @@ function doMessageResult() {
   function editPost(seq){
    document.getElementById("post_div_"+seq).classList.remove("hidepart");
    document.getElementById("post_p_"+seq).classList.remove("hidepart");
+   document.getElementById("post_content_"+seq).classList.add("hidepart");
+ 
 
   }
    
@@ -92,6 +94,7 @@ function doResult() {
    document.getElementById("post_p_"+currentseq).classList.add("hidepart");
    document.getElementById("post_a_"+currentseq).setAttribute('href',xmlHttpReg.responseText);
    document.getElementById("post_a_"+currentseq).innerText=xmlHttpReg.responseText;
+  document.getElementById("post_content_"+currentseq).classList.remove("hidepart");
  }
 }
 
