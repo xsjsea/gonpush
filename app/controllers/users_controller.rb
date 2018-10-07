@@ -111,7 +111,7 @@ class UsersController < ApplicationController
     def userinfo
     current_user
     user_id=session[:user_id]
-    @userinfo=User.select("creator_exts.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set,users.nickname").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
+    @userinfo=User.select("users.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set,users.nickname").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
     @user_categories=Category.select("categories.id,categories.name").joins("where categories.parent=6")
       
     
@@ -120,7 +120,6 @@ class UsersController < ApplicationController
     current_user
     user_id=session[:user_id]
     @marketerinfo=MarketerExt.select("marketer_exts.id,marketer_exts.taxcode,marketer_exts.bankname,marketer_exts.bankaccount,marketer_exts.companyname,marketer_exts.companyaddress,marketer_exts.contactname,marketer_exts.contactmobile").joins("left join users on users.id= marketer_exts.userid where marketer_exts.userid=#{user_id}")
-
    end
 
   def savemarketerinfo
@@ -170,6 +169,14 @@ class UsersController < ApplicationController
     sch.update_attribute('avatar', @filename)
     sch.update_attribute('category_id', usercategory)
 
+    user_id=session[:user_id]
+    @userinfo=User.select("users.avatar,creator_exts.category_id,users.sex,users.username,users.description,users.user_comment,creator_exts.tags_set,users.nickname").joins("left join creator_exts on users.id= creator_exts.userid where users.id=#{user_id}")
+    @user_categories=Category.select("categories.id,categories.name").joins("where categories.parent=6")
+      
+ respond_to do |format|
+      format.html { render :userinfo, status: :ok, location: @user}
+    end
+   
    end
   private
     def checklogin
