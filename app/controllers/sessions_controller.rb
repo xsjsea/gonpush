@@ -13,14 +13,9 @@ class SessionsController < ApplicationController
   	render 'new'
     else
          log_in user
-       
-         #session[:user_id] =  user.id
          current_user
-          if(user.usertype=="0")
-           redirect_to  orders_path
-          else
-           redirect_to  campaigns_path
-          end
+         redirect_to  orders_path
+ 
        
     end
   end

@@ -38,17 +38,18 @@ class UsersController < ApplicationController
     usertype=params[:usertype]
       curTime =Date.today
       sql = ActiveRecord::Base.connection()  
-        sql.insert "INSERT INTO users SET username='#{username}',truename='#{truename}', password='#{password}', 
-      created_at='#{curTime}',updated_at='#{curTime}'" 
+        sql.insert "INSERT INTO users SET username='#{username}',truename='#{truename}', password='#{password}',usertype='#{usertype}',
+      created_at='#{curTime}',updated_at='#{curTime}',avatar='default_small.jpg'"  
     respond_to do |format|
       #if @user.save
         #format.html { redirect_to @user, notice: 'User was successfully created.' }
         #format.json { render :show, status: :created, location: @user }
        @users=User.select( "max(users.id) id");
-       user_id=@users[0].id 
-       @user=User.find_by_id(user_id)     
-        session[:user_id] =  user_id
+      
+       @user=User.find_by_id(@users[0].id)     
+        session[:user_id] =  @users[0].id
         session[:avatar] =@user.avatar
+        user_id=@users[0].id
       if(@user.usertype=="0")
          sql.insert "INSERT INTO creator_exts SET userid='#{user_id}',  
       created_at='#{curTime}',updated_at='#{curTime}'"    
