@@ -31,13 +31,13 @@ function set_select_checked(selectId, checkValue){
                   <label class="col-sm-2 control-label">头像 <br/></label>
                   <div class="col-sm-4">
                     <div class="image-crop">
-                      <img src="/assets/<%=@userinfo[0].avatar%>">
+                      <img src="/uploads/<%=@current_user.avatar%>">
                     </div>
-                    <h6>大小不超过2M，格式为PNG</h6>
+                    <h6>大小不超过2M，格式为PNG，尺寸48*48</h6>
 
                     <div class="btn-group">
                       <label title="Upload image file" for="inputImage" class="btn btn-primary">
-                <input type="file" accept="image/*" name="inputImage" id="inputImage" >
+                <input type="file" accept="image/*" name="inputImage" id="inputImage" class="hide">
                         上传头像
                       </label>
                     </div>

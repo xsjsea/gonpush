@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :checklogin,except:[:new,:create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   layout :products_layout,except:[:new]
   skip_before_action :verify_authenticity_token,:only =>:savepassword
@@ -171,6 +172,9 @@ class UsersController < ApplicationController
 
    end
   private
+    def checklogin
+    logged_in_user
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       logged_in_userz
