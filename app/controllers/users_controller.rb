@@ -20,7 +20,6 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-   
   end
 
   # GET /users/1/edit
@@ -32,33 +31,33 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-
+    #@user = User.new(user_params)
+    username=params[:username]
+    truename=params[:truename]
+    password=params[:password]
+    usertype=params[:usertype]
+      curTime =Date.today
+      sql = ActiveRecord::Base.connection()  
+        sql.insert "INSERT INTO users SET username='#{username}',truename='#{truename}', password='#{password}', 
+      created_at='#{curTime}',updated_at='#{curTime}'" 
     respond_to do |format|
-      if @user.save
+      #if @user.save
         #format.html { redirect_to @user, notice: 'User was successfully created.' }
         #format.json { render :show, status: :created, location: @user }
-        curTime =Date.today
-    
-   
-      sql = ActiveRecord::Base.connection()  
-      user_id=@user.id      
-      
-        session[:user_id] =  @user.id
-        if(@user.usertype=="0")
+       @users=User.select( "max(users.id) id");
+       user_id=@users[0].id 
+       @user=User.find_by_id(user_id)     
+        session[:user_id] =  user_id
+      if(@user.usertype=="0")
          sql.insert "INSERT INTO creator_exts SET userid='#{user_id}',  
       created_at='#{curTime}',updated_at='#{curTime}'"    
         format.html { redirect_to orders_path,notice: 'User was successfully updated.' }
-        else
+      else
            sql.insert "INSERT INTO marketer_exts SET userid='#{user_id}',  
       created_at='#{curTime}',updated_at='#{curTime}'"  
         format.html { redirect_to campaigns_path,notice: 'User was successfully updated.' }
       end
-      else
-          @user = User.new
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+     
     end
   end
 
@@ -190,7 +189,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:status, :usertype, :username, :truename, :password, :province_id, :city_id, :distirct_id, :address, :user_comment,:mobile,:sex,:nickname,:usertype)
+      params.require(:user).permit(:status, :usertype, :username, :truename, :password)
     end
     def products_layout 
     @user=User.find_by_id(session[:user_id]) 
