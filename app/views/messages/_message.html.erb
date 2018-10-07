@@ -1,7 +1,11 @@
 <% cache message do %>
 <div class="feed-element">
   <a href="javascript:void();" class="pull-left">
+    <%if @user==nil%>
+    <img alt="image" class="img-circle" src="/uploads/<%=user.avatar%>">
+   <%else%>
     <img alt="image" class="img-circle" src="/uploads/<%=@user.avatar%>">
+   <%end%>
   </a>
   <div class="media-body ">
     <small class="pull-right text-navy"><%= message.created_at %>

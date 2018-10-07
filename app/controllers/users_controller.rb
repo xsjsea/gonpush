@@ -48,6 +48,7 @@ class UsersController < ApplicationController
        user_id=@users[0].id 
        @user=User.find_by_id(user_id)     
         session[:user_id] =  user_id
+        session[:avatar] =@user.avatar
       if(@user.usertype=="0")
          sql.insert "INSERT INTO creator_exts SET userid='#{user_id}',  
       created_at='#{curTime}',updated_at='#{curTime}'"    
