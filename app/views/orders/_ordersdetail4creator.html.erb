@@ -231,7 +231,7 @@ Date.prototype.format = function(format)
                     <strong>要点提炼</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i><%=@steporder_1[0].messagetime%>  
+                      <i class="fa fa-clock-o"></i><%=@steporder_1[0].messagetime.strftime("%Y-%m-%d %H:%M")%>  
                     </div>
                   </a>
                 </li>
@@ -246,7 +246,7 @@ Date.prototype.format = function(format)
                     <strong>创意大纲</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
-                      <i class="fa fa-clock-o"></i><%=@steporder_2[0].messagetime%>  
+                      <i class="fa fa-clock-o"></i><%=@steporder_2[0].messagetime.strftime("%Y-%m-%d %H:%M")%>  
                     </div>
                   </a>
                 </li>
@@ -261,7 +261,7 @@ Date.prototype.format = function(format)
                     <strong>具体脚本</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
-                      <i class="fa fa-clock-o"></i><%=@steporder_3[0].messagetime%>  
+                      <i class="fa fa-clock-o"></i><%=@steporder_3[0].messagetime.strftime("%Y-%m-%d %H:%M")%>  
                     </div>
                   </a>
                 </li>
@@ -276,7 +276,7 @@ Date.prototype.format = function(format)
                     <strong>绘图视频</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
-                      <i class="fa fa-clock-o"></i><%=@steporder_4[0].messagetime%>  
+                      <i class="fa fa-clock-o"></i><%=@steporder_4[0].messagetime.strftime("%Y-%m-%d %H:%M")%>  
                     </div>
                   </a>
                 </li>
@@ -291,7 +291,7 @@ Date.prototype.format = function(format)
                     <strong>排版成稿</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
-                      <i class="fa fa-clock-o"></i> <%=@steporder_5[0].messagetime%> 
+                      <i class="fa fa-clock-o"></i> <%=@steporder_5[0].messagetime.strftime("%Y-%m-%d %H:%M")%> 
                     </div>
                   </a>
                 </li>

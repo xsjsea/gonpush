@@ -47,17 +47,18 @@ class UsersController < ApplicationController
        @users=User.select( "max(users.id) id");
       
        @user=User.find_by_id(@users[0].id)     
-        session[:user_id] =  @users[0].id
-        session[:avatar] =@user.avatar
+        #session[:user_id] =  @users[0].id
+        #session[:avatar] =@user.avatar
+        log_in(@user)
         user_id=@users[0].id
       if(@user.usertype=="0")
          sql.insert "INSERT INTO creator_exts SET userid='#{user_id}',  
       created_at='#{curTime}',updated_at='#{curTime}'"    
-        format.html { redirect_to orders_path,notice: 'User was successfully updated.' }
+        format.html { redirect_to login_path,notice: 'User was successfully updated.' }
       else
-           sql.insert "INSERT INTO marketer_exts SET userid='#{user_id}',  
+        sql.insert "INSERT INTO marketer_exts SET userid='#{user_id}',  
       created_at='#{curTime}',updated_at='#{curTime}'"  
-        format.html { redirect_to campaigns_path,notice: 'User was successfully updated.' }
+        format.html { redirect_to login_path,notice: 'User was successfully updated.' }
       end
      
     end

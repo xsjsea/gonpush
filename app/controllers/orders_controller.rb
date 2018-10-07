@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :logged_in_user
+  before_action :checklogin
   #before_action :set_order, only: [:show, :edit, :update, :destroy]
   layout :products_layout
 
@@ -8,9 +8,9 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @user=User.find_by_id(session[:user_id])
-     orderstatus=params[:status]
-     userId=@user.id
+      @user=User.find_by_id(session[:user_id])
+      orderstatus=params[:status]
+      userId=@user.id
     if orderstatus == nil
      if @user.usertype=="0"
         #@orders = Order.find_by_creator_id(@user.id)
@@ -147,11 +147,11 @@ def showOrder
        end
       end
  
-     @steporder_1=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=1")
-     @steporder_2=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=2")
-     @steporder_3=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=3")
-     @steporder_4=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=4")
-     @steporder_5=Message.select("IFNULL(max(created_at),'') messagetime").joins("where order_id=#{currentorder_id} and step_order=5")
+     @steporder_1=Message.select("max(messages.created_at) messagetime").joins("where order_id=#{currentorder_id} and step_order=1")
+     @steporder_2=Message.select("max(messages.created_at) messagetime").joins("where order_id=#{currentorder_id} and step_order=2")
+     @steporder_3=Message.select("max(messages.created_at) messagetime").joins("where order_id=#{currentorder_id} and step_order=3")
+     @steporder_4=Message.select("max(messages.created_at) messagetime").joins("where order_id=#{currentorder_id} and step_order=4")
+     @steporder_5=Message.select("max(messages.created_at) messagetime").joins("where order_id=#{currentorder_id} and step_order=5")
      render :layout => 'order_detail'
 
   end
@@ -269,7 +269,10 @@ def updatepost
 
   private
     # Use callbacks to share common setup or constraints between actions.
-  
+   def checklogin
+    current_user
+    logged_in_user
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def allowed_params
