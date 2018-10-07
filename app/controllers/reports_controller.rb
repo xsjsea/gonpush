@@ -1,4 +1,5 @@
 class ReportsController < ApplicationController
+  before_action :checklogin
   before_action :set_report, only: [:show, :edit, :update, :destroy]
   layout :products_layout
   def getreports
@@ -82,6 +83,9 @@ class ReportsController < ApplicationController
   end
 
   private
+    def checklogin
+    logged_in_user
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_report
       #logged_in_user

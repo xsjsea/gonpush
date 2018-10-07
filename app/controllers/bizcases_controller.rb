@@ -1,11 +1,12 @@
 class BizcasesController < ApplicationController
+  before_action :checklogin
   before_action :set_bizcase, only: [:show, :edit, :update, :destroy]
 layout :products_layout
 def getbizcases
    user_id=session[:user_id]
     @bizcases =Bizcase.select("bizcases.id,bizcases.bizcase_title,bizcases.bizcase_link,users.username")
     .joins("left join users on bizcases.bizcase_author=users.id where bizcases.bizcase_author=#{user_id}")
-    @bizcases = @bizcases.paginate(:page => params[:page], :per_page => 2)
+    @bizcases = @bizcases.paginate(:page => params[:page], :per_page =>10)
 end
   # GET /bizcases
   # GET /bizcases.json
@@ -76,6 +77,9 @@ end
   end
 
   private
+    def checklogin
+    logged_in_user
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_bizcase
       @bizcase = Bizcase.find(params[:id])

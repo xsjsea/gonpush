@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   get '/userinfo', to: 'users#userinfo'
   get '/marketerinfo', to: 'users#marketerinfo'
   post '/savemarketerinfo' , to:'users#savemarketerinfo'
+  post '/saveuserinfo' , to:'users#saveuserinfo'
  
   post '/upatesocialaccounts' , to:'social_accounts#upatesocialaccounts'
 

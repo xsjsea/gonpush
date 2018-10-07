@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+   before_action :checklogin
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
   layout :products_layout
 
@@ -79,6 +80,9 @@ class CommentsController < ApplicationController
   end
 
   private
+    def checklogin
+    logged_in_user
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       logged_in_user

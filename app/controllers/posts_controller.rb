@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :checklogin
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 layout :products_layout
 
@@ -64,6 +65,9 @@ layout :products_layout
   end
 
   private
+    def checklogin
+    logged_in_user
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])

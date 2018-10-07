@@ -1,4 +1,5 @@
 class CreatorMetricsController < ApplicationController
+  before_action :checklogin
   before_action :set_creator_metric, only: [:show, :edit, :update, :destroy]
   layout :products_layout
 
@@ -6,7 +7,7 @@ class CreatorMetricsController < ApplicationController
     user_id=session[:user_id]
     @creator_metrics=CreatorMetric.select("creator_metrics.id,creator_metrics.metric_name,creator_metrics.metric_value")
     .joins("where creator_id=#{user_id}")
-   @creator_metrics = @creator_metrics.paginate(:page => params[:page], :per_page => 2)
+   @creator_metrics = @creator_metrics.paginate(:page => params[:page], :per_page => 10)
 
   end
  
@@ -84,6 +85,9 @@ class CreatorMetricsController < ApplicationController
   end
 
   private
+    def checklogin
+    logged_in_user
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_creator_metric
       @creator_metric = CreatorMetric.find(params[:id])

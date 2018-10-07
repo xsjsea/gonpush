@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :logged_in_user
   #before_action :set_order, only: [:show, :edit, :update, :destroy]
   layout :products_layout
 

@@ -143,6 +143,8 @@ class UsersController < ApplicationController
 
   def saveuserinfo
     #file
+     dir = Rails.root.join('public', 'uploads')
+     Dir.mkdir(dir) unless Dir.exist?(dir)
      user_avatar=params[:inputImage]
     #user_avatar=params[:fileUpload]
      file_data=user_avatar.read
@@ -162,7 +164,7 @@ class UsersController < ApplicationController
     sch.update_attribute('sex', sex)
     sch.update_attribute('description',user_description)
     sch.update_attribute('user_comment', user_comment)
-
+    sch.update_attribute('avatar', @filename)
     sch = CreatorExt.find_by_userid(user_id)
     sch.update_attribute('avatar', @filename)
     sch.update_attribute('category_id', usercategory)

@@ -1,4 +1,5 @@
 class ServicesController < ApplicationController
+  before_action :checklogin
   before_action :set_service, only: [:show, :edit, :update, :destroy]
   layout :products_layout
   # GET /services
@@ -10,7 +11,6 @@ class ServicesController < ApplicationController
   end
   def index
     #@services = Service.all
-    current_user
     getServices
    # @services =Service.find_all_by_creator_id(session[:user_id])
    #user_id=session[:user_id]
@@ -84,9 +84,13 @@ class ServicesController < ApplicationController
   end
 
   private
+    def checklogin
+    logged_in_user
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_service
-      @service = Service.find(params[:id])
+     
+     @service = Service.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

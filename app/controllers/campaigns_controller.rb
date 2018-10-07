@@ -19,10 +19,10 @@ class CampaignsController < ApplicationController
   user_id=session[:user_id]
   searchword=params[:searchword]
   if searchword==nil
-  @creators=User.select("users.id,users.username,users.description,creator_exts.avatar,view_metric.fans, view_metric.reader,view_metric.price")
+  @creators=User.select("users.id,users.username,users.description,users.avatar,view_metric.fans, view_metric.reader,view_metric.price")
  .joins("left join view_metric on users.id = view_metric.creator_id left join creator_exts on users.id = creator_exts.userid where users.usertype='0'") 
  else
-  @creators=User.select("users.id,users.username,users.description,creator_exts.avatar,view_metric.fans, view_metric.reader,view_metric.price")
+  @creators=User.select("users.id,users.username,users.description,users.avatar,view_metric.fans, view_metric.reader,view_metric.price")
  .joins("left join view_metric on users.id = view_metric.creator_id left join creator_exts on users.id = creator_exts.userid where users.usertype='0' and users.username like '%#{searchword}%'")
  end
  # @creators=User.new.getcreator 
@@ -93,7 +93,7 @@ end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_campaign
-      #logged_in_user 
+      logged_in_user 
       @campaign = Campaign.find(params[:id])
     end
 

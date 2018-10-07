@@ -3,15 +3,7 @@ function saveuserinfo(){
   document.getElementById("frmAccount").submit();
 }
 
-window.onload=initpage();
-function initpage(){
-  var currentselect=<%=@userinfo[0].category_id%>
-  if(currentselect==""){}else{
-  // $("#user_category").val(currentselect);
-   //document.getElementById("").value=currentselect;
-   // set_select_checked('user_category', currentselect);
-}
-}
+
 
 function set_select_checked(selectId, checkValue){ 
     var select = document.getElementById("user_category");  

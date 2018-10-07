@@ -1,4 +1,6 @@
 class SocialAccountsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  before_action :checklogin
   before_action :set_social_account, only: [:show, :edit, :update, :destroy]
   layout :products_layout
   # GET /social_accounts
@@ -123,6 +125,9 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
   end
 
   private
+    def checklogin
+    logged_in_user
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_social_account
       @social_account = SocialAccount.find(params[:id])
