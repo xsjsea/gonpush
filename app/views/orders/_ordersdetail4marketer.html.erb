@@ -93,7 +93,7 @@ function doMessageResult() {
                     <strong>要点提炼</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span>
-                      <i class="fa fa-clock-o"></i><%if@steporder_1[0].messagetime !=nil%><%=@steporder_1[0].messagetime.strftime("%Y-%m-%d %H:%M")%><%=@steporder_1[0].messagetime.strftime("%Y-%m-%d %H:%M")%><%end%>  
+                      <i class="fa fa-clock-o"></i><%if@steporder_1[0].messagetime !=nil%><%=@steporder_1[0].messagetime.strftime("%Y-%m-%d %H:%M")%><%end%>  
                     </div>
                   </a>
                 </li>
@@ -139,7 +139,7 @@ function doMessageResult() {
                     <strong>绘图视频</strong>
                     <div class="small m-t-xs">
                       <span class="label pull-right label-primary"></span></span>
-                      <i class="fa fa-clock-o"></i><%if @steporder_4[0].messagetime!=nil%><%=@steporder4[0].messagetime.strftime("%Y-%m-%d %H:%M")%><%end%>
+                      <i class="fa fa-clock-o"></i><%if @steporder_4[0].messagetime!=nil%><%=@steporder_4[0].messagetime.strftime("%Y-%m-%d %H:%M")%><%end%>
                     </div>
                   </a>
                 </li>
@@ -215,7 +215,10 @@ function doMessageResult() {
                           <td>1</td>
                           <td>要点提炼</td>
                           <td><%=schedule.workdays%></td>
-                          <td><%=schedule.workdays%></td>
+                          <td><%if schedule.ends_on==nil%>
+                           <%else%>
+                             <%=schedule.ends_on.strftime('%Y-%m-%d')%>
+                           <%end%></td>
                         </tr>
  <%elsif i==1%>
 
@@ -223,14 +226,20 @@ function doMessageResult() {
                           <td>1</td>
                           <td>创意大纲</td>
                           <td><%=schedule.workdays%></td>
-                          <td><%=schedule.workdays%></td>
+                          <td><%if schedule.ends_on==nil%>
+                           <%else%>
+                             <%=schedule.ends_on.strftime('%Y-%m-%d')%>
+                           <%end%></td>
                         </tr>
  <%elsif i==2%>
   <tr>
                           <td>1</td>
                           <td>具体脚本</td>
                           <td><%=schedule.workdays%></td>
-                          <td><%=schedule.workdays%></td>
+                          <td><%if schedule.ends_on==nil%>
+                           <%else%>
+                             <%=schedule.ends_on.strftime('%Y-%m-%d')%>
+                           <%end%></td>
                         </tr>
 
  <%elsif i==3%>
@@ -238,14 +247,20 @@ function doMessageResult() {
                           <td>1</td>
                           <td>绘图/视频</td>
                           <td><%=schedule.workdays%></td>
-                          <td><%=schedule.workdays%></td>
+                          <td><%if schedule.ends_on==nil%>
+                           <%else%>
+                             <%=schedule.ends_on.strftime('%Y-%m-%d')%>
+                           <%end%></td>
                         </tr>
 <%elsif i==4%>
   <tr>
                           <td>1</td>
                           <td>排版成稿</td>
                           <td><%=schedule.workdays%></td>
-                          <td><%=schedule.workdays%></td>
+                          <td><%if schedule.ends_on==nil%>
+                           <%else%>
+                             <%=schedule.ends_on.strftime('%Y-%m-%d')%>
+                           <%end%></td>
                         </tr>
                         <%end%>  
                         <%end%>       

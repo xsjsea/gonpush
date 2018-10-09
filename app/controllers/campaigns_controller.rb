@@ -57,7 +57,7 @@ end
 
     respond_to do |format|
       if @campaign.save
-        format.html { redirect_to @campaign, notice: 'Campaign was successfully created.' }
+        format.html { redirect_to @campaign, notice: '' }
         format.json { render :show, status: :created, location: @campaign }
       else
         format.html { render :new }
@@ -71,7 +71,7 @@ end
   def update
     respond_to do |format|
       if @campaign.update(campaign_params)
-        format.html { redirect_to @campaign, notice: 'Campaign was successfully updated.' }
+        format.html { redirect_to @campaign, notice: '' }
         format.json { render :show, status: :ok, location: @campaign }
       else
         format.html { render :edit }
@@ -85,7 +85,7 @@ end
   def destroy
     @campaign.destroy
     respond_to do |format|
-      format.html { redirect_to campaigns_url, notice: 'Campaign was successfully destroyed.' }
+      format.html { redirect_to campaigns_url, notice: '' }
       format.json { head :no_content }
     end
   end
