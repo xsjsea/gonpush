@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :checklogin,except:[:new,:create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   layout :products_layout,except:[:new]
+  skip_before_action :verify_authenticity_token,:only =>:create
   skip_before_action :verify_authenticity_token,:only =>:savepassword
   skip_before_action :verify_authenticity_token,:only =>:saveinviterequired
   skip_before_action :verify_authenticity_token,:only =>:saveuserinfo
@@ -36,6 +37,13 @@ class UsersController < ApplicationController
     truename=params[:truename]
     password=params[:password]
     usertype=params[:usertype]
+    @users=User.select("users.id").joins("where users.truename=#{truename}")
+    if @users[0].id !=nil
+       respond_to do |format|
+          format.html { redirect_to register_path,notice: '手机号已被注册.' }
+       end
+
+    else
       curTime =Date.today
       sql = ActiveRecord::Base.connection()  
         sql.insert "INSERT INTO users SET username='#{username}',truename='#{truename}', password='#{password}',usertype='#{usertype}',
@@ -60,7 +68,7 @@ class UsersController < ApplicationController
       created_at='#{curTime}',updated_at='#{curTime}'"  
         format.html { redirect_to login_path,notice: 'User was successfully updated.' }
       end
-     
+     end
     end
   end
 

@@ -152,9 +152,9 @@
                          <tr id="r_<%=i%>" attrStatus="0" onclick="checkCreator(<%=i%>,<%=creator.id%>)">
                             <td class="client-avatar"><img alt="image" src="/uploads/<%=creator.avatar%>"> </td>
                             <td><a data-toggle="tab" href="#contact-1" class="client-link" id="usrName_<%=i%>"><%=creator.username%></a></td>
-                            <td id="fans_<%=i%>"> <%=creator.fans%>万</td>
-                            <td id="reader_<%=i%>"> <%=creator.readers%>万</td>
-                            <td id="price_<%=i%>"> 10万</td>
+                            <td id="fans_<%=i%>"> <%=creator.totalfans%>万</td>
+                            <td id="reader_<%=i%>"> <%=creator.totalreaders%>万</td>
+                            <td id="price_<%=i%>"><%=creator.min_service_price%>万</td>
                             <td class="client-status"><span id="inviteStatus_<%=i%>" class="label label-primary">未邀请</span></td>
                          </tr>
                         <% end %>
@@ -198,15 +198,15 @@
                         <strong>核心指标</strong>
                         <ul class="list-group clear-list">
                           <li class="list-group-item fist-item">
-                            <span class="pull-right" id="fans"><%=@creators[0].fans%>万 </span>
+                            <span class="pull-right" id="fans"><%=@creators[0].totalfans%>万 </span>
                             粉丝数
                           </li>
                           <li class="list-group-item">
-                            <span class="pull-right" id="reader"><%=@creators[0].readers%>万 </span>
+                            <span class="pull-right" id="reader"><%=@creators[0].totalreaders%>万 </span>
                             阅读量
                           </li>
                           <li class="list-group-item">
-                            <span class="pull-right" id="price">10万 </span>
+                            <span class="pull-right" id="price"><%=@creators[0].min_service_price%>万 </span>
                             点赞数
                           </li>
                         </ul>
