@@ -19,12 +19,12 @@ class CampaignsController < ApplicationController
   user_id=session[:user_id]
   searchword=params[:searchword]
   if searchword==nil
-  @creators=User.select("users.id,users.username,users.description,users.avatar,view_metric.fans, view_metric.reader,view_metric.price")
- .joins("left join view_metric on users.id = view_metric.creator_id left join creator_exts on users.id = creator_exts.userid where users.usertype='0'") 
- else
-  @creators=User.select("users.id,users.username,users.description,users.avatar,view_metric.fans, view_metric.reader,view_metric.price")
- .joins("left join view_metric on users.id = view_metric.creator_id left join creator_exts on users.id = creator_exts.userid where users.usertype='0' and users.username like '%#{searchword}%'")
- end
+  @creators=User.select("users.id,users.username,users.description,users.avatar,social_accounts.fans,social_accounts.readers")
+ .joins("left join social_accounts on users.id = social_accounts.creator_id where users.usertype='0'") 
+  else
+ @creators=User.select("users.id,users.username,users.description,users.avatar,social_accounts.fans,social_accounts.readers")
+ .joins("left join social_accounts on users.id = social_accounts.creator_id where users.usertype='0' and users.username like '%#{searchword}%'") 
+  end
  # @creators=User.new.getcreator 
   if @creators.length>0
   creator_id=@creators[0].id

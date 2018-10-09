@@ -139,6 +139,7 @@ class UsersController < ApplicationController
     sch.update_attribute('bankname', bankname)
     sch.update_attribute('bankaccount',bankaccount)
     sch.update_attribute('companyname', companyname)
+    sch.update_attribute('contactname', contactname)
     sch.update_attribute('contactmobile', contactmobile)
     sch.update_attribute('companyaddress', companyaddress)
    end
