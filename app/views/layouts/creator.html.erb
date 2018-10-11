@@ -14,13 +14,13 @@
 <body>
  
   <div id="wrapper">
-     
+     <%current_user%>
     <nav class="navbar-default navbar-static-side" role="navigation">
       <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
           <li class="nav-header">
               <div class="dropdown profile-element">
-                <span><img alt="image" class="img-circle" src="/uploads/<%=session[:avatar]%>"/></span>
+                <span><img alt="image" class="img-circle" src="/uploads/<%=@current_user.avatar%>"/></span>
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                       <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><%=@current_user.username%></strong>
                        </span> <span class="text-muted text-xs block">原创方<b class="caret"></b></span> </span> </a>

@@ -1,10 +1,12 @@
  <script type="text/javascript">
 window.onload=function(){
-var comment= document.getElementById("comment").val();
-if (comment=nil || coment=""){
- document.getElementById("comment").innerHtml=comment;
+var comment= document.getElementById("comment").value;
+if (comment==""){
+ document.getElementById("comment").innerHtml="";
 }
-else{}
+else{
+  document.getElementById("user_comment").value=comment;
+}
 }
 
 
