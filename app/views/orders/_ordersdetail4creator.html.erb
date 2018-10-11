@@ -144,22 +144,19 @@ Date.prototype.format = function(format)
                 alert("输入大于0的整数")
                 return;
            }
-
     var totaldays=0;
-    for (var j = 1; j < 6; j++) {  
+    var d = new Date();
+    for (var j =1; j < 6; j++) {  
         curDays=$("#input_"+j).val();
-         if(curDays==""){
+       if(curDays==""){
           curDays=0;
          }
-         totaldays=totaldays + parseInt(curDays);
-      }  
-
-     var d = new Date();
-     //var curDays=$("#input_"+i).val();
-     //alert(addBusinessDays(d,parseInt(curDays),1));
-     //totaldays
-     addBusinessDays(d,parseInt(totaldays),i)
-   
+        totaldays=totaldays + parseInt(curDays);
+        curDays=$("#input_"+j).val();
+        addBusinessDays(d,parseInt(totaldays),j)
+ 
+      }
+      
   }
   //var d = new Date();
   //alert(addBusinessDays(d,5,1));
@@ -503,6 +500,7 @@ Date.prototype.format = function(format)
                   </div>
                   <%end%>
                   <h3>创意大纲</h3>
+                  <p class="small">提交在线文档链接，推荐使用石墨文档</p>
                    <%if @schedules[1].post_id !=nil%>
                   <p id="post_content_2">
                     <a id="post_a_2" href="<%=@schedules[1].post_content%>" target="blank">
@@ -566,6 +564,7 @@ Date.prototype.format = function(format)
                   <%end%>
 
                   <h3>具体脚本</h3>
+                  <p class="small">提交在线文档链接，推荐使用石墨文档</p>
                    <%if @schedules[2].post_id !=nil%>
                   <p id="post_content_3">
                     <a id="post_a_3" href="<%=@schedules[2].post_content%>" target="blank">
@@ -631,6 +630,7 @@ Date.prototype.format = function(format)
                   <%end%>
 
                   <h3>绘图/视频</h3>
+                  <p class="small">提交在线文档链接，推荐使用石墨文档</p>
                   <%if @schedules[3].post_id !=nil%>
                   <p id="post_content_4">
                     <a id="post_a_4" href="<%=@schedules[3].post_content%>" target="blank">
@@ -694,6 +694,7 @@ Date.prototype.format = function(format)
                   <%end%>
 
                   <h3>排版成稿</h3>
+                  <p class="small">提交在线文档链接，推荐使用石墨文档</p>
                   <%if @schedules[4].post_id !=nil%>
                   <p id="post_content_5">
                     <a id="post_a_5" href="<%=@schedules[4].post_content%>" target="blank">
