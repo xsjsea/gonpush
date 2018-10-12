@@ -154,14 +154,17 @@ class UsersController < ApplicationController
 
   def saveuserinfo
     #file
+     user_avatar=params[:inputImage]
+     if(user_avatar!=nil)
      dir = Rails.root.join('public', 'uploads')
      Dir.mkdir(dir) unless Dir.exist?(dir)
-     user_avatar=params[:inputImage]
+     
     #user_avatar=params[:fileUpload]
      file_data=user_avatar.read
      @filename=user_avatar.original_filename
      root = Rails.root.to_s
      File.open(root+"/public/uploads/"+@filename,"wb"){|f|f.write(file_data)}
+    end
      user_id=session[:user_id]
      nickname=params[:nickname]
      usercategory=params[:user_category]
@@ -175,9 +178,11 @@ class UsersController < ApplicationController
     sch.update_attribute('sex', sex)
     sch.update_attribute('description',user_description)
     sch.update_attribute('user_comment', user_comment)
+    if(user_avatar!=nil)
     sch.update_attribute('avatar', @filename)
+    end
     sch = CreatorExt.find_by_userid(user_id)
-    sch.update_attribute('avatar', @filename)
+    #sch.update_attribute('avatar', @filename)
     sch.update_attribute('category_id', usercategory)
 
     user_id=session[:user_id]
