@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     password=params[:password]
     usertype=params[:usertype]
     @users=User.select("users.id").joins("where users.truename=#{truename}")
-    if@users !=nil
+    if@users[0] !=nil
        respond_to do |format|
           format.html { redirect_to register_path,notice: '手机号已被注册.' }
        end
