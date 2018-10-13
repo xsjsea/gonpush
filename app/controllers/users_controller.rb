@@ -44,7 +44,7 @@ class UsersController < ApplicationController
        end
 
     else
-      curTime =Date.today
+      curTime =Time.now.strftime("%Y-%m-%d %H:%M:%S") #Date.today
       sql = ActiveRecord::Base.connection()  
         sql.insert "INSERT INTO users SET username='#{username}',truename='#{truename}', password='#{password}',usertype='#{usertype}',
       created_at='#{curTime}',updated_at='#{curTime}',avatar='default_small.jpg'"  

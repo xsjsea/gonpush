@@ -19,6 +19,7 @@
               <tr>
                 <th>#</th>
                 <th>案例</th>
+                <th>链接</th>
                 <th>操作</th>
               </tr>
               </thead>
@@ -27,6 +28,7 @@
               <tr>
                 <td><%=(i+1)%></td>
                 <td><a href="javascript:void(0);"><%= bizcase.bizcase_title %></a></td>
+                 <td><a href="<%= bizcase.bizcase_link %>"><%= bizcase.bizcase_link %></a></td>
                 <td>
                    <%= link_to '编辑', edit_bizcase_path(bizcase)%>
                   <a href="/bizcases/destroy/<%=bizcase.id%>">删除</a>

@@ -21,5 +21,7 @@ module Gonpush
     # Don't forget to restart the rails server after changing the config file!
     config.assets.paths << Rails.root.join("app", "assets", "font-awesome")
     config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+    config.active_record.default_timezone = :local
+    config.time_zone = 'Beijing'
   end
 end

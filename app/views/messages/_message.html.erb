@@ -10,7 +10,13 @@
   <div class="media-body ">
     <small class="pull-right text-navy"><%=message.created_at.strftime("%Y-%m-%d %H:%M") %>
     </small>
-    <strong><%= message.user_id %></strong>
+
+    <%if @user==nil%>
+    <strong><%=user.username%></strong>
+   <%else%>
+    <strong><%=@user.username%></strong> 
+   <%end%>
+    
     <p><%= message.content %></p>
     <input type="hidden" id="step_order" value="<%= message.step_order %>"/>
   </div>
