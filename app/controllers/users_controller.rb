@@ -129,7 +129,7 @@ class UsersController < ApplicationController
     def marketerinfo
     current_user
     user_id=session[:user_id]
-    @marketerinfo=MarketerExt.select("marketer_exts.id,marketer_exts.taxcode,marketer_exts.bankname,marketer_exts.bankaccount,marketer_exts.companyname,marketer_exts.companyaddress,marketer_exts.contactname,marketer_exts.contactmobile").joins("left join users on users.id= marketer_exts.userid where marketer_exts.userid=#{user_id}")
+    @marketerinfo=User.select("marketer_exts.id,marketer_exts.taxcode,marketer_exts.bankname,marketer_exts.bankaccount,marketer_exts.companyname,marketer_exts.companyaddress,marketer_exts.contactname,marketer_exts.contactmobile").joins("left join marketer_exts on users.id= marketer_exts.userid where marketer_exts.userid=#{user_id}")
    end
 
   def savemarketerinfo
