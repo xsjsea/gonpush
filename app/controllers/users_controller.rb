@@ -62,11 +62,11 @@ class UsersController < ApplicationController
       if(@user.usertype=="0")
          sql.insert "INSERT INTO creator_exts SET userid='#{user_id}',  
       created_at='#{curTime}',updated_at='#{curTime}'"    
-        format.html { redirect_to login_path,notice: 'User was successfully updated.' }
+        format.html { redirect_to login_path,notice: '注册成功，请登录.' }
       else
         sql.insert "INSERT INTO marketer_exts SET userid='#{user_id}',  
       created_at='#{curTime}',updated_at='#{curTime}'"  
-        format.html { redirect_to login_path,notice: 'User was successfully updated.' }
+        format.html { redirect_to login_path,notice: '注册成功，请登录.' }
       end
      end
     end
