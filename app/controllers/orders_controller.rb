@@ -67,7 +67,7 @@ end
   def create
     user_id=session[:user_id]
   @order = Order.new(allowed_params)
-  curTime =Date.today
+  curTime =Time.now.strftime("%Y-%m-%d %H:%M:%S")
     if @order.save
       #generate schedules
       sql = ActiveRecord::Base.connection()        
@@ -171,7 +171,7 @@ def updatemessages
       render plain: ''
   end
 def updatepost
-    curTime =Date.today
+    curTime =Time.now.strftime("%Y-%m-%d %H:%M:%S") #Date.today
     @post=Post.new
     @user= User.find_by_id(session[:user_id])
     #order_id=params[:schedule_type]
@@ -188,7 +188,7 @@ def updatepost
     render plain: post_content
   end
   def updatecomments
-  curTime =Date.today
+  curTime =Time.now.strftime("%Y-%m-%d %H:%M:%S")# Date.today
   content_comment=params[:content_comment]
   order_id =params[:order_id]
   user_id=session[:user_id]

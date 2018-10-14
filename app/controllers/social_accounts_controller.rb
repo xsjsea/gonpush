@@ -41,7 +41,7 @@ social_accounts.channel_id,social_accounts.nickname,social_accounts.id,social_ac
   # POST /social_accounts.json
   def create
     user_id= params[:creator_id]
-    curTime =Date.today
+    curTime =Time.now.strftime("%Y-%m-%d %H:%M:%S")#Date.today
     channel_id=params[:channel_id]
     nickname=params[:nickname]
     fans=params[:fans]
