@@ -84,7 +84,7 @@ url = window.URL.createObjectURL(obj.files[0]);
                   <label class="col-sm-2 control-label">头像 <br/></label>
                   <div class="col-sm-4">
                     <div class="image-crop">
-                      <img src="/uploads/<%=session[:avatar]%>">
+                      <img src="/uploads/<%=session[:avatar]%>" onerror="this.src='/uploads/default_small.png'"/>
                     </div>
                     <h6>大小不超过2M，格式为PNG，尺寸48*48</h6>
 
