@@ -42,6 +42,42 @@ class OrdersController < ApplicationController
    @orders = @orders.paginate(:page => params[:page], :per_page => 30)
 end
 
+
+def ajaxindex
+      @user=User.find_by_id(session[:user_id])
+      orderstatus=params[:status]
+      userId=@user.id
+    if orderstatus == nil
+     if @user.usertype=="0"
+        #@orders = Order.find_by_creator_id(@user.id)
+       
+         @orders =Order.select( "orders.status,campaigns.name,campaigns.budget,campaigns.start,orders.id, users.username,users.avatar").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id  LEFT JOIN users on orders.creator_id=users.id  LEFT JOIN creator_exts  on creator_exts.userid=users.id where orders.creator_id=#{userId} order by orders.id desc")
+      
+         #@orders =Order.select( "orders.status,campaigns.name,campaigns.budget,campaigns.start,orders.id, users.username,users.avatar").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id  LEFT JOIN users on orders.creator_id=users.id  LEFT JOIN creator_exts  on creator_exts.userid=users.id where orders.creator_id=#{userId}  ")
+       
+        
+    else
+        #@orders = Order.find_by_marketer_id(@user.id)
+         @orders =Order.select("orders.status,campaigns.name,campaigns.budget,campaigns.start,orders.id,users.username,users.avatar").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id  LEFT JOIN users on orders.creator_id=users.id  left join creator_exts  on creator_exts.userid=users.id where orders.marketer_id=#{userId}  order by orders.id desc")
+    end
+  else
+      if @user.usertype=="0"
+        #@orders = Order.find_by_creator_id(@user.id)
+       
+         @orders =Order.select( "orders.status,campaigns.name,campaigns.budget,campaigns.start,orders.id, users.username,users.avatar").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id  LEFT JOIN users on orders.creator_id=users.id  LEFT JOIN creator_exts  on creator_exts.userid=users.id where orders.creator_id=#{userId} and orders.status=#{orderstatus} order by orders.id desc")
+      
+         #@orders =Order.select( "orders.status,campaigns.name,campaigns.budget,campaigns.start,orders.id, users.username,users.avatar").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id  LEFT JOIN users on orders.creator_id=users.id  LEFT JOIN creator_exts  on creator_exts.userid=users.id where orders.creator_id=#{userId} and orders.status=#{orderstatus} order by orders.id desc")
+       
+        
+    else
+        #@orders = Order.find_by_marketer_id(@user.id)
+         @orders =Order.select("orders.status,campaigns.name,campaigns.budget,campaigns.start,orders.id,users.username,users.avatar").joins("LEFT JOIN campaigns  on orders.campaign_id=campaigns.id  LEFT JOIN users on orders.creator_id=users.id  left join creator_exts  on creator_exts.userid=users.id where orders.marketer_id=#{userId} and orders.status=#{orderstatus} order by orders.id desc")
+ 
+      end
+  end
+   @orders = @orders.paginate(:page => params[:page], :per_page => 30)
+end
+
   # GET /orders/1
   # GET /orders/1.json
   def show

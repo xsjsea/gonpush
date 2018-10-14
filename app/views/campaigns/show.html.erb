@@ -1,5 +1,8 @@
 <script type="text/javascript">
   function checkCreator(seq,creatorId){
+    var avatar=$("#avatar"+seq).val();
+    $("#avatar_"+seq).attr("src",avatar);
+
     var userName=$("#usrName_"+seq).text() ;
     $("#detailUsrName").text(userName);
     var userDescription=$("#userDescription_"+seq).val() ;
@@ -149,12 +152,13 @@
                         <%else -%>
                         <% @creators.each_with_index do |creator,i| %>
                         <input type="hidden" id="userDescription_<%=i%>" value="<%=creator.description%>"/>
+                        <input type="hidden" id="avatar<%=i%>" value="<%=creator.avatar%>"/>
                          <tr id="r_<%=i%>" attrStatus="0" onclick="checkCreator(<%=i%>,<%=creator.id%>)">
-                            <td class="client-avatar"><img alt="image" src="/uploads/<%=creator.avatar%>"> </td>
+                            <td class="client-avatar"><img id="avatar_<%=i%>" alt="image" src="/uploads/<%=creator.avatar%>" onerror="this.src='/uploads/default_small.png'"> </td>
                             <td><a data-toggle="tab" href="#contact-1" class="client-link" id="usrName_<%=i%>"><%=creator.username%></a></td>
-                            <td id="fans_<%=i%>"> <%=creator.totalfans%>万</td>
-                            <td id="reader_<%=i%>"> <%=creator.totalreaders%>万</td>
-                            <td id="price_<%=i%>"><%=creator.min_service_price%>万</td>
+                            <td id="fans_<%=i%>"> <%=creator.totalfans%></td>
+                            <td id="reader_<%=i%>"> <%=creator.totalreaders%></td>
+                            <td id="price_<%=i%>"><%=creator.min_service_price%></td>
                             <td class="client-status"><span id="inviteStatus_<%=i%>" class="label label-primary">未邀请</span></td>
                          </tr>
                         <% end %>
@@ -178,7 +182,7 @@
                       <div class="col-lg-4 text-center">
                         <div class="m-b-sm">
                           <img alt="image" class="img-circle" 
-                          src="/uploads/<%=@creators[0].avatar%>" style="width: 62px">
+                          src="/uploads/<%=@creators[0].avatar%>"  onerror="this.src='/uploads/default_small.png'" style="width: 62px">
                         </div>
                       </div>
                       <div class="col-lg-8">
