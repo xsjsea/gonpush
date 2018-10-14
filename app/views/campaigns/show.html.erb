@@ -1,7 +1,9 @@
 <script type="text/javascript">
   function checkCreator(seq,creatorId){
     var avatar=$("#avatar"+seq).val();
-    $("#avatar_"+seq).attr("src","/uploads/"+avatar);
+    var src="/uploads/"+avatar;
+    $("#avatarattr").attr("src",src);
+    
 
     var userName=$("#usrName_"+seq).text() ;
     $("#detailUsrName").text(userName);
@@ -154,7 +156,7 @@
                         <input type="hidden" id="userDescription_<%=i%>" value="<%=creator.description%>"/>
                         <input type="hidden" id="avatar<%=i%>" value="<%=creator.avatar%>"/>
                          <tr id="r_<%=i%>" attrStatus="0" onclick="checkCreator(<%=i%>,<%=creator.id%>)">
-                            <td class="client-avatar"><img id="avatar_<%=i%>" alt="image" src="/uploads/<%=creator.avatar%>" onerror="this.src='/uploads/default_small.png'"> </td>
+                            <td class="client-avatar"><img  alt="image" src="/uploads/<%=creator.avatar%>" onerror="this.src='/uploads/default_small.png'"> </td>
                             <td><a data-toggle="tab" href="#contact-1" class="client-link" id="usrName_<%=i%>"><%=creator.username%></a></td>
                             <td id="fans_<%=i%>"> <%=creator.totalfans%></td>
                             <td id="reader_<%=i%>"> <%=creator.totalreaders%></td>
@@ -181,7 +183,7 @@
                   <div class="row m-b-lg">
                       <div class="col-lg-4 text-center">
                         <div class="m-b-sm">
-                          <img alt="image" class="img-circle" 
+                          <img alt="image" class="img-circle" id="avatarattr"
                           src="/uploads/<%=@creators[0].avatar%>"  onerror="this.src='/uploads/default_small.png'" style="width: 62px">
                         </div>
                       </div>
