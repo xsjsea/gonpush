@@ -1,7 +1,7 @@
 <script type="text/javascript">
   function checkCreator(seq,creatorId){
     var avatar=$("#avatar"+seq).val();
-    $("#avatar_"+seq).attr("src",avatar);
+    $("#avatar_"+seq).attr("src","/uploads/"+avatar);
 
     var userName=$("#usrName_"+seq).text() ;
     $("#detailUsrName").text(userName);
