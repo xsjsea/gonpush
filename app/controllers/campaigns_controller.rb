@@ -19,10 +19,10 @@ class CampaignsController < ApplicationController
   user_id=session[:user_id]
   searchword=params[:searchword]
   if searchword==nil
-  @creators=User.select("users.id,users.username,users.description,users.avatar,IFNULL(v_socialaccounts.totalfans,1000) totalfans,IFNULL(v_socialaccounts.totalreaders,1000) totalreaders,IFNULL(v_services.min_service_price,1000) min_service_price")
+  @creators=User.select("users.id,users.username,users.description,users.avatar,IFNULL(v_socialaccounts.totalpraises,1000) totalpraises,IFNULL(v_socialaccounts.totalfans,1000) totalfans,IFNULL(v_socialaccounts.totalreaders,1000) totalreaders,IFNULL(v_services.min_service_price,1000) min_service_price")
  .joins("left join v_socialaccounts on users.id = v_socialaccounts.creator_id left join v_services on users.id=v_services.creator_id where users.usertype='0'") 
   else
-     @creators=User.select("users.id,users.username,users.description,users.avatar,IFNULL(v_socialaccounts.totalfans,1000) totalfans,IFNULL(v_socialaccounts.totalreaders,1000) totalreaders,IFNULL(v_services.min_service_price,1000) min_service_price")
+     @creators=User.select("users.id,users.username,users.description,users.avatar,IFNULL(v_socialaccounts.totalpraises,1000) totalpraises,IFNULL(v_socialaccounts.totalfans,1000) totalfans,IFNULL(v_socialaccounts.totalreaders,1000) totalreaders,IFNULL(v_services.min_service_price,1000) min_service_price")
  .joins("left join v_socialaccounts on users.id = v_socialaccounts.creator_id left join v_services on users.id=v_services.creator_id where users.usertype='0' and users.username like '%#{searchword}%'") 
  end
  # @creators=User.new.getcreator 

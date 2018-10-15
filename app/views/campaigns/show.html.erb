@@ -38,7 +38,7 @@
          jQuery.each(data, function(i,item){    
                 serviceHtml=serviceHtml+'<h5>#'+i+':'+item.service_name
                 +'</h5><span class="text-navy small">'+item.service_price
-                +'万元</span><p>'+item.service_description
+                +'元</span><p>'+item.service_description
                 +'</p><hr/>'
               })
  
@@ -160,7 +160,7 @@
                             <td><a data-toggle="tab" href="#contact-1" class="client-link" id="usrName_<%=i%>"><%=creator.username%></a></td>
                             <td id="fans_<%=i%>"> <%=creator.totalfans%></td>
                             <td id="reader_<%=i%>"> <%=creator.totalreaders%></td>
-                            <td id="price_<%=i%>"><%=creator.min_service_price%></td>
+                            <td id="price_<%=i%>"><%=@creators[0].min_service_price%></td>
                             <td class="client-status"><span id="inviteStatus_<%=i%>" class="label label-primary">未邀请</span></td>
                          </tr>
                         <% end %>
@@ -212,7 +212,8 @@
                             阅读量
                           </li>
                           <li class="list-group-item">
-                            <span class="pull-right" id="price"><%=@creators[0].min_service_price%></span>
+                            <span class="pull-right" id="praise"><%=@creators[0].totalpraises%>
+                            </span>
                             点赞数
                           </li>
                         </ul>
