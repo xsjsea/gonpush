@@ -30,7 +30,9 @@ class CampaignsController < ApplicationController
   creator_id=@creators[0].id
   #@creatorservices=Service.find_by_creator_id(@creators[0].id)
   @services=Service.select("services.creator_id,services.service_name,services.service_description,services.service_price").joins("where services.creator_id=#{creator_id}")
-  end
+  @creators = @creators.paginate(:page => params[:page], :per_page => 2)
+
+ end
   #@services=Services.all
   @user=User.find_by_id(session[:user_id])
   @order=Order.new
