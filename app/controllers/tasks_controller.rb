@@ -1,9 +1,10 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 def my_messages 
- 
 @messages=User.select("users.id,users.username,users.description,creator_exts.avatar,view_metric.fans, view_metric.reader,view_metric.price")
  .joins("left join view_metric on users.id = view_metric.creator_id left join creator_exts on users.id = creator_exts.userid where users.usertype='0'") 
+
+@messages = @messages.paginate(page: params[:page], per_page: 1)
 
 # @messages = Information.where(:user_id => @user_expand.user_id).order("created_at desc").paginate(page: params[:page], per_page: 7)   
  #@mess = Information.where(:user_id => @user_expand.user_id)    
