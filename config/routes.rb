@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
  
+  get 'landing/index'
   resources :marketer_exts
   resources :bizcases
   resources :socail_accounts
@@ -56,8 +57,12 @@ Rails.application.routes.draw do
  
   post '/upatesocialaccounts' , to:'social_accounts#upatesocialaccounts'
 
-  root to: 'sessions#new'
+  # root to: 'sessions#new'
   # Serve websocket cable requests in-process
   mount ActionCable.server => '/cable'
   get '/my_messages', to:'tasks#my_messages'
+  
+  # Add Landing Page
+  # get '/index' => 'landing#index'
+  root to: 'landing#index'
 end
