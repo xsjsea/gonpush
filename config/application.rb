@@ -23,5 +23,6 @@ module Gonpush
     config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
     config.active_record.default_timezone = :local
     config.time_zone = 'Beijing'
+    
   end
 end

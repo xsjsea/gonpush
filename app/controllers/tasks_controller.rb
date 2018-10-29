@@ -81,6 +81,15 @@ end
     end
   end
 
+def sendemail
+#@nm=NotificationMailer.new
+#@nm.sendemail
+NotificationMailer.send
+#UserMailer.account_activation.deliver_now
+  respond_to do |format|
+      format.html  
+    end
+end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task

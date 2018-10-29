@@ -5,7 +5,8 @@ class SessionsController < ApplicationController
 
   def create
   	#user = User.find_by_truename_and_password(params[:session][:truename] , params[:session][:password])
-    user = User.find_by_truename_and_password(params[:truename] , params[:password])#
+
+    user = User.find_by_truename_and_password(params[:truename] , params[:password])  
       # 如果找不到对应用户，提示用户输入的用户名和密码不对
     if user == nil then
   	#ser= User.find_by(truename:params[:session] [:truename].downcase)

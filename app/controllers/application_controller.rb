@@ -1,6 +1,17 @@
 class ApplicationController < ActionController::Base
  include SessionsHelper
+  before_action :prepare_exception_notifier
+  private
+  def prepare_exception_notifier
+    request.env["exception_notifier.exception_data"] = {
+      :current_user => current_user.username
+    }
+  end
  protect_from_forgery with: :null_session
+  
+
+  
+
   def new
     #@user_id = AES.encrypt(current_user.id.to_s, "自定义密钥")
   end
@@ -11,6 +22,6 @@ class ApplicationController < ActionController::Base
    # @attachment.user_id = @user_id
    # @attachment.save
   end
-
+ 
  
 end

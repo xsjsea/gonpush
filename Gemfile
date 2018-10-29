@@ -65,3 +65,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # https://makandracards.com/makandra/10517-fix-error-missing-the-mysql2-gem
 gem 'mysql2'
+gem 'exception_notification'
