@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   private
   def prepare_exception_notifier
     request.env["exception_notifier.exception_data"] = {
-      :current_user => current_user.username
+      :current_user => "test"
     }
   end
  protect_from_forgery with: :null_session
