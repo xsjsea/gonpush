@@ -9,9 +9,6 @@ class ApplicationController < ActionController::Base
   end
  protect_from_forgery with: :null_session
   
-
-  
-
   def new
     #@user_id = AES.encrypt(current_user.id.to_s, "自定义密钥")
   end

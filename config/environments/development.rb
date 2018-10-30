@@ -10,7 +10,7 @@ Rails.application.configure do
   config.eager_load = false
 
   # Show full error reports.
-  config.consider_all_requests_local = true
+  config.consider_all_requests_local = false
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
@@ -57,5 +57,31 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+#config.action_mailer.raise_delivery_errors = true
+#config.action_mailer.delivery_method = :test
+#host = 'localhost:3000'
+#config.action_mailer.default_url_options = {host: host}
+
+
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+address:"smtp.139.com",
+port:25,
+domain:"139.com",
+user_name:'13914129546',
+password:'jsclmzhcg261',
+authentication:'plain',
+enable_starttls_auto: true
+}
+ 
+
+ config.middleware.use ExceptionNotification::Rack,
+  :email => {
+    #:deliver_with => :deliver, # Rails >= 4.2.1 do not need this option since it defaults to :deliver_now
+    :email_prefix => "[gonpush异常] ",
+    :sender_address => %{"gonpush" <13914129546@139.com>},
+    :exception_recipients => %w{wangyingwei@gonpush.com,xieshoujie@wuxicloud.com}
+  }
+
 end
