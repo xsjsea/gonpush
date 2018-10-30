@@ -11,8 +11,7 @@ class OrdersController < ApplicationController
       @user=User.find_by_id(session[:user_id])
       orderstatus=params[:status]
       userId=@user.id
-      count=0
-      count=15/count
+     
     
     if orderstatus == nil
      if @user.usertype=="0"
