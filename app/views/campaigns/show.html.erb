@@ -84,7 +84,7 @@
       var order_id=$("#btn_invite").attr("orderId");
      
       $.ajax({    
-      type: "delete",
+      type: "post",
       url: '/orders/destroy/'+order_id,
       success: function(){
         $("#r_"+seq).attr("attrStatus","0");

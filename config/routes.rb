@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   post '/updatecomments', to: 'orders#updatecomments'
   post '/updatemessages', to: 'orders#updatemessages'
   post '/updateSchedule', to: 'orders#updateSchedule'
-  get "orders/destroy/:id" => "orders#destroy"
+  post "orders/destroy/:id" => "orders#destroy"
   get "reports/destroy/:id" => "reports#destroy"
   get "social_accounts/destroy/:id" => "social_accounts#destroy"
   get "services/destroy/:id",to: "services#destroy"
