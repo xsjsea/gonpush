@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
       @user=User.find_by_id(session[:user_id])
       orderstatus=params[:status]
       userId=@user.id
-     
+      
     
     if orderstatus == nil
      if @user.usertype=="0"
@@ -173,15 +173,15 @@ def showOrder
  
      for message in @unreadmessages do
        if message.step_order==1
-             @mestotal_1=message.total
+             @mestotal_1=" " #message.total
        elsif message.step_order==2
-             @mestotal_2=message.total
+             @mestotal_2=" "#message.total
        elsif message.step_order==3
-             @mestotal_3=message.total
+             @mestotal_3=" " #message.total
        elsif message.step_order==4
-             @mestotal_4=message.total
+             @mestotal_4=" " #message.total
        elsif message.step_order==5
-             @mestotal_5=message.total
+             @mestotal_5=" "#message.total
        end
       end
  
@@ -300,7 +300,6 @@ def updatepost
   # DELETE /orders/1
   # DELETE /orders/1.json
   def destroy
-    
     Schedule.find_by_order_id(params[:id])
     Order.find(params[:id]).destroy
   end
