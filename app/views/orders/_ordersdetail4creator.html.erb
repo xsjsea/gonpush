@@ -373,8 +373,8 @@ Date.prototype.format = function(format)
                            <td><input onblur="caculateDay(2)"  id="input_2" name="input_2" attrscheduleId="<%=schedule.id%>" type="text" size="2" value="<%=schedule.workdays%>"></td>
                             <td id="td_2"><%if schedule.ends_on==nil%>
                            <%else%>
-                            <%=schedule.ends_on.strftime('%Y-%m-%d %H')%>
-                           <%end%>点之前</td>
+                            <%=schedule.ends_on.strftime('%Y-%m-%d %H')%>点之前
+                           <%end%></td>
                         </tr>
                           <%elsif i==2
                           %>
