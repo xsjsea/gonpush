@@ -81,7 +81,7 @@ enable_starttls_auto: true
     #:deliver_with => :deliver, # Rails >= 4.2.1 do not need this option since it defaults to :deliver_now
     :email_prefix => "[gonpush异常] ",
     :sender_address => %{"gonpush" <13914129546@139.com>},
-    :exception_recipients => %w{wangyingwei@gonpush.com,xieshoujie@wuxicloud.com}
+    :exception_recipients => %w{xieshoujie@wuxicloud.com}
   }
 
 end
